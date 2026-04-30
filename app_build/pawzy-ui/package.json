@@ -1,0 +1,56 @@
+{
+  "name": "pawzy-ui",
+  "version": "0.1.0",
+  "description": "Pawzy — Desktop companion UI (Electron + React + Rive)",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently \"vite --config vite.character.config.js\" \"vite --config vite.lockscreen.config.js\" \"electron .\"",
+    "build": "vite build --config vite.character.config.js && vite build --config vite.lockscreen.config.js && vite build --config vite.settings.config.js && vite build --config vite.onboarding.config.js",
+    "electron": "electron .",
+    "preview": "vite preview",
+    "dist": "npm run build && electron-builder --linux AppImage"
+  },
+  "dependencies": {
+    "@rive-app/react-canvas": "^4.12.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "ws": "^8.20.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "concurrently": "^8.2.2",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.0.5",
+    "vite": "^5.4.10"
+  },
+  "build": {
+    "appId": "dev.pawzy.app",
+    "productName": "Pawzy",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "electron/**/*",
+      "dist/**/*",
+      "assets/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../pawzy-core/dist/pawzy-core/",
+        "to": "pawzy-core",
+        "filter": ["**/*"]
+      }
+    ],
+    "linux": {
+      "target": "AppImage",
+      "category": "Utility",
+      "icon": "assets/icon.png"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.png"
+    }
+  }
+}
+

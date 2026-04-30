@@ -1,0 +1,45 @@
+# ── Node / Electron ──────────────────────────────────────────────────────────
+node_modules/
+dist-electron/
+app_build/pawzy-ui/dist/
+app_build/pawzy-ui/.vite/
+
+# ── Python ───────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+app_build/pawzy-core/dist/
+app_build/pawzy-core/build/
+*.spec
+
+# ── Build artifacts / binaries (too large for GitHub) ────────────────────────
+production_artifacts/landing/*.AppImage
+production_artifacts/landing/*.exe
+*.AppImage
+*.exe
+*.dmg
+
+# ── Internal AI agent tooling (not for public) ───────────────────────────────
+.agents/
+.gemini/
+
+# ── Internal project docs ─────────────────────────────────────────────────────
+*PRD*.md
+*.PRD.*
+
+# ── OS ───────────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Editor ───────────────────────────────────────────────────────────────────
+.vscode/settings.json
+.idea/
+*.swp
+*.swo
+
+# ── Logs ─────────────────────────────────────────────────────────────────────
+*.log
+npm-debug.log*

@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pawzy — Your Furry Productivity Guardian</title>
+  <meta name="description" content="Pawzy is a desktop companion that enforces healthy work/break cycles. A cute character slides onto your screen when it's time to rest. Free for Linux." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --purple:  #a855f7;
+      --purple2: #7c3aed;
+      --pink:    #ec4899;
+      --bg:      #0a0812;
+      --card:    rgba(255,255,255,.04);
+      --border:  rgba(255,255,255,.08);
+      --text:    #f1f5f9;
+      --muted:   #94a3b8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── Navbar ─────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px;
+      background: rgba(10,8,18,.75);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-size: 20px; font-weight: 800; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      padding: 10px 24px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--purple2), var(--purple));
+      color: #fff; font-size: 14px; font-weight: 700;
+      text-decoration: none; transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(168,85,247,.35);
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(168,85,247,.5); }
+
+    /* ── Hero ────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 24px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-orb {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      filter: blur(80px); opacity: .35;
+    }
+    .hero-orb-1 { width: 600px; height: 600px; top: -100px; left: -150px; background: radial-gradient(circle, #7c3aed, transparent 70%); }
+    .hero-orb-2 { width: 500px; height: 500px; bottom: -80px; right: -100px; background: radial-gradient(circle, #ec4899, transparent 70%); }
+    .hero-orb-3 { width: 400px; height: 400px; top: 50%; left: 55%; background: radial-gradient(circle, #a855f7, transparent 70%); }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(168,85,247,.12); border: 1px solid rgba(168,85,247,.3);
+      border-radius: 100px; padding: 6px 16px;
+      font-size: 13px; font-weight: 600; color: var(--purple);
+      margin-bottom: 28px;
+      animation: fadeUp .6s ease both;
+    }
+    .hero h1 {
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #f1f5f9 30%, #a855f7 80%, #ec4899 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      margin-bottom: 24px;
+      animation: fadeUp .6s .1s ease both;
+    }
+    .hero-sub {
+      font-size: 20px; color: var(--muted); max-width: 560px;
+      line-height: 1.7; margin-bottom: 44px;
+      animation: fadeUp .6s .2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp .6s .3s ease both;
+    }
+    .btn-primary {
+      padding: 16px 36px; border-radius: 16px;
+      background: linear-gradient(135deg, var(--purple2), var(--purple));
+      color: #fff; font-size: 16px; font-weight: 700;
+      text-decoration: none; transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 32px rgba(168,85,247,.45);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(168,85,247,.6); }
+    .btn-secondary {
+      padding: 16px 36px; border-radius: 16px;
+      border: 1.5px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: var(--text); font-size: 16px; font-weight: 600;
+      text-decoration: none; transition: border-color .2s, background .2s;
+      backdrop-filter: blur(8px);
+    }
+    .btn-secondary:hover { border-color: rgba(168,85,247,.5); background: rgba(168,85,247,.08); }
+
+    .hero-note { font-size: 13px; color: #475569; margin-top: 20px; animation: fadeUp .6s .4s ease both; }
+
+    /* ── Characters strip ───────────────────────── */
+    .chars-strip {
+      padding: 40px 0; overflow: hidden; position: relative;
+    }
+    .chars-strip::before, .chars-strip::after {
+      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
+    }
+    .chars-strip::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
+    .chars-strip::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
+    .chars-inner {
+      display: flex; gap: 24px;
+      animation: scroll 18s linear infinite;
+      width: max-content;
+    }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .char-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 100px; padding: 12px 24px;
+      font-size: 15px; font-weight: 600; color: var(--text);
+      white-space: nowrap;
+    }
+    .char-pill span { font-size: 24px; }
+
+    /* ── Section shared ─────────────────────────── */
+    section { padding: 96px 24px; max-width: 1200px; margin: 0 auto; }
+    .section-label {
+      font-size: 12px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; color: var(--purple);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(32px, 4vw, 52px); font-weight: 800;
+      letter-spacing: -1px; color: var(--text); margin-bottom: 16px;
+    }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 520px; line-height: 1.7; }
+
+    /* ── How it works ───────────────────────────── */
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px; margin-top: 56px;
+    }
+    .step-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 24px; padding: 32px 28px;
+      transition: border-color .25s, transform .25s;
+    }
+    .step-card:hover { border-color: rgba(168,85,247,.35); transform: translateY(-4px); }
+    .step-num {
+      width: 44px; height: 44px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--purple2), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: #fff;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 16px rgba(168,85,247,.4);
+    }
+    .step-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
+    .step-card p  { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+    /* ── Features grid ──────────────────────────── */
+    .features-wrap { display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap; margin-top: 56px; }
+    .features-text { flex: 1; min-width: 280px; }
+    .features-grid {
+      flex: 1.4; min-width: 300px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .feat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 24px;
+      transition: border-color .25s, transform .25s;
+    }
+    .feat-card:hover { border-color: rgba(168,85,247,.35); transform: translateY(-3px); }
+    .feat-icon { font-size: 28px; margin-bottom: 12px; }
+    .feat-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .feat-card p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+    /* ── Characters section ─────────────────────── */
+    .char-cards {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; margin-top: 56px;
+    }
+    .char-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 24px; padding: 32px 20px;
+      text-align: center;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+      cursor: default;
+    }
+    .char-card:hover { transform: translateY(-6px); }
+    .char-card .emoji { font-size: 56px; margin-bottom: 16px; display: block; }
+    .char-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .char-card p  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .char-card.cat   { border-color: rgba(249,115,22,.25); }  .char-card.cat:hover   { border-color: rgba(249,115,22,.6);  box-shadow: 0 12px 40px rgba(249,115,22,.15); }
+    .char-card.shiba { border-color: rgba(212,119,60,.25); }  .char-card.shiba:hover { border-color: rgba(212,119,60,.6);  box-shadow: 0 12px 40px rgba(212,119,60,.15); }
+    .char-card.panda { border-color: rgba(100,116,139,.25); } .char-card.panda:hover { border-color: rgba(100,116,139,.6); box-shadow: 0 12px 40px rgba(100,116,139,.15); }
+    .char-card.fox   { border-color: rgba(239,68,68,.25); }   .char-card.fox:hover   { border-color: rgba(239,68,68,.6);   box-shadow: 0 12px 40px rgba(239,68,68,.15); }
+
+    /* ── CTA section ────────────────────────────── */
+    .cta-section {
+      max-width: 1200px; margin: 0 auto 96px;
+      padding: 72px 48px;
+      background: linear-gradient(135deg, rgba(124,58,237,.15) 0%, rgba(168,85,247,.08) 50%, rgba(236,72,153,.1) 100%);
+      border: 1px solid rgba(168,85,247,.2);
+      border-radius: 32px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-section::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(168,85,247,.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section h2 { font-size: 42px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; position: relative; }
+    .cta-section p  { font-size: 17px; color: var(--muted); margin-bottom: 36px; position: relative; }
+    .cta-actions    { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
+
+    /* ── Footer ─────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 48px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
+      max-width: 1200px; margin: 0 auto;
+      font-size: 13px; color: var(--muted);
+    }
+    footer a { color: var(--muted); text-decoration: none; }
+    footer a:hover { color: var(--text); }
+
+    /* ── Animations ─────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Responsive ─────────────────────────────── */
+    @media (max-width: 640px) {
+      nav { padding: 14px 20px; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 20px 60px; }
+      .features-wrap, footer { flex-direction: column; gap: 16px; text-align: center; }
+      .features-grid { grid-template-columns: 1fr; }
+      .cta-section { padding: 48px 24px; border-radius: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Navbar ──────────────────────────────────── -->
+<nav>
+  <a class="nav-logo" href="#"><span>🐾</span> Pawzy</a>
+  <div class="nav-links">
+    <a href="#how-it-works">How it works</a>
+    <a href="#features">Features</a>
+    <a href="#companions">Companions</a>
+  </div>
+  <a class="nav-cta" href="#download">Download Free</a>
+</nav>
+
+<!-- ── Hero ───────────────────────────────────── -->
+<div class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-orb hero-orb-3"></div>
+
+  <div class="hero-badge">🐾 Free &amp; Open Source · Linux</div>
+  <h1>Your furry<br/>productivity guardian</h1>
+  <p class="hero-sub">
+    Pawzy tracks your screen time and sends a cute companion sliding onto
+    your screen when it's time to take a real break. No willpower required.
+  </p>
+  <div class="hero-actions">
+    <a class="btn-primary" href="#download" id="hero-download">
+      ⬇ Download for Linux
+    </a>
+    <a class="btn-secondary" href="#how-it-works">See how it works</a>
+  </div>
+  <p class="hero-note">Free forever · AppImage · No Python required</p>
+</div>
+
+<!-- ── Characters strip ───────────────────────── -->
+<div class="chars-strip">
+  <div class="chars-inner">
+    <!-- duplicated for seamless loop -->
+    <div class="char-pill"><span>🐱</span> Neko Cat</div>
+    <div class="char-pill"><span>🐕</span> Shiba Inu</div>
+    <div class="char-pill"><span>🐼</span> Chill Panda</div>
+    <div class="char-pill"><span>🦊</span> Fox Kit</div>
+    <div class="char-pill"><span>⏱</span> Break timer</div>
+    <div class="char-pill"><span>🚫</span> No skipping</div>
+    <div class="char-pill"><span>🔔</span> Tray notifications</div>
+    <div class="char-pill"><span>🚀</span> Launch on login</div>
+    <div class="char-pill"><span>🐱</span> Neko Cat</div>
+    <div class="char-pill"><span>🐕</span> Shiba Inu</div>
+    <div class="char-pill"><span>🐼</span> Chill Panda</div>
+    <div class="char-pill"><span>🦊</span> Fox Kit</div>
+    <div class="char-pill"><span>⏱</span> Break timer</div>
+    <div class="char-pill"><span>🚫</span> No skipping</div>
+    <div class="char-pill"><span>🔔</span> Tray notifications</div>
+    <div class="char-pill"><span>🚀</span> Launch on login</div>
+  </div>
+</div>
+
+<!-- ── How it works ────────────────────────────── -->
+<section id="how-it-works">
+  <div class="section-label">How it works</div>
+  <h2 class="section-title">Simple. Automatic.<br/>Impossible to ignore.</h2>
+  <p class="section-sub">Three steps stand between you and healthier screen habits.</p>
+
+  <div class="steps">
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <h3>Set your schedule</h3>
+      <p>Tell Pawzy how long you want to work and how long your breaks should be. Adjust anytime from the tray menu.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <h3>Your companion arrives</h3>
+      <p>When your work session ends, your chosen companion slides dramatically onto your screen. Breaks are enforced — no sneaking past.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <h3>Break. Return. Repeat.</h3>
+      <p>Step away, stretch, hydrate. When the timer ends, your companion disappears and you're back to work, refreshed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Features ────────────────────────────────── -->
+<section id="features">
+  <div class="features-wrap">
+    <div class="features-text">
+      <div class="section-label">Features</div>
+      <h2 class="section-title">Everything you need,<br/>nothing you don't.</h2>
+      <p class="section-sub">
+        Pawzy is intentionally minimal. No subscriptions, no accounts,
+        no data collection. Just you and your companion.
+      </p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🖥️</div>
+        <h3>Full-screen enforcement</h3>
+        <p>Breaks can't be dismissed or skipped. The overlay is always-on-top.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎨</div>
+        <h3>4 companions</h3>
+        <p>Choose from Neko Cat, Shiba Inu, Chill Panda, or Fox Kit.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚙️</div>
+        <h3>Custom timers</h3>
+        <p>Any work duration from 5–120 min. Any break from 1–30 min.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🚀</div>
+        <h3>Launch on login</h3>
+        <p>Toggle auto-start so Pawzy is always running in the background.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🪶</div>
+        <h3>Lightweight</h3>
+        <p>Single AppImage, ~150MB installed. No Python needed on your machine.</p>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔒</div>
+        <h3>100% local</h3>
+        <p>No telemetry, no servers. Everything lives on your machine.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── Companions ──────────────────────────────── -->
+<section id="companions">
+  <div class="section-label">Companions</div>
+  <h2 class="section-title">Choose who shows up.</h2>
+  <p class="section-sub">
+    Pick your companion during first launch or change anytime in Settings.
+    Each one has their own personality and animations.
+  </p>
+
+  <div class="char-cards">
+    <div class="char-card cat">
+      <span class="emoji">🐱</span>
+      <h3>Neko Cat</h3>
+      <p>The original. Slides in from the right and judges your productivity silently.</p>
+    </div>
+    <div class="char-card shiba">
+      <span class="emoji">🐕</span>
+      <h3>Shiba Inu</h3>
+      <p>Much break. Very rest. Wow. Bobs happily and twitches ears during idle.</p>
+    </div>
+    <div class="char-card panda">
+      <span class="emoji">🐼</span>
+      <h3>Chill Panda</h3>
+      <p>Waddling in with bamboo in hand and ZZZs to share. Maximum chill energy.</p>
+    </div>
+    <div class="char-card fox">
+      <span class="emoji">🦊</span>
+      <h3>Fox Kit</h3>
+      <p>Trots in with a wagging tail and showers your screen in golden stars.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── Download CTA ─────────────────────────────── -->
+<div class="cta-section" id="download">
+  <h2>Ready to take real breaks?</h2>
+  <p>Download Pawzy free. Double-click the AppImage to install — no Python, no npm, no setup.</p>
+  <div class="cta-actions">
+    <a class="btn-primary" href="./Pawzy-0.1.0.AppImage" id="download-btn">
+      ⬇ Download AppImage (Linux)
+    </a>
+    <a class="btn-secondary" href="https://github.com/shivam/pawzy" id="github-btn">
+      ⭐ Star on GitHub
+    </a>
+  </div>
+</div>
+
+<!-- ── Footer ─────────────────────────────────── -->
+<footer>
+  <span>🐾 Pawzy — Made with ♥ for focused humans</span>
+  <span>Free &amp; Open Source · Linux · No data collected</span>
+</footer>
+
+</body>
+</html>

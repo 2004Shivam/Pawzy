@@ -1,0 +1,7 @@
+pywin32>=306; sys_platform == "win32"
+python-xlib>=0.33; sys_platform == "linux"
+ewmh>=0.1.6; sys_platform == "linux"
+psutil>=5.9.8
+PyQt6>=6.6.0
+websockets>=12.0
+# Ensure psutil is always installed (used by window_tracker on all platforms)

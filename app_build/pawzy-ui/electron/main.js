@@ -1,0 +1,398 @@
+/**
+ * electron/main.js — Electron main process for Pawzy UI.
+ *
+ * Windows:
+ *   - breakWindow:    Full-screen transparent overlay shown ONLY during breaks.
+ *                     Contains the neko cat video + timer. Always-on-top.
+ *                     Fully blocks mouse input — no click-through to desktop.
+ *   - settingsWindow: Small centred panel for configuring timers. Opens from tray.
+ *   - onboardingWindow: Full welcome flow shown only on first launch.
+ */
+
+const { app, BrowserWindow, ipcMain, screen } = require('electron');
+const { spawn } = require('child_process');
+const path = require('path');
+const fs   = require('fs');
+const os   = require('os');
+const WebSocket = require('ws');
+
+const WS_URL          = 'ws://localhost:8765';
+const LOCK_FILE       = path.join(__dirname, '../dist/lockscreen/index.html');
+const SETTINGS_FILE   = path.join(__dirname, '../dist/settings/index.html');
+const ONBOARDING_FILE = path.join(__dirname, '../dist/onboarding/index.html');
+const CONFIG_PATH     = path.join(os.homedir(), '.pawzy', 'config.json');
+const APP_ICON        = path.join(__dirname, '../assets/icon.png');
+
+let breakWindow      = null;
+let settingsWindow   = null;
+let onboardingWindow = null;
+let ws               = null;
+let wsReconnectTimer = null;
+let pythonProcess    = null;
+
+const AUTOSTART_DIR  = path.join(os.homedir(), '.config', 'autostart');
+const AUTOSTART_FILE = path.join(AUTOSTART_DIR, 'pawzy.desktop');
+
+// -------------------------------------------------------------------------- //
+// Config helpers (Node fs — runs in main process, safe)                      //
+// -------------------------------------------------------------------------- //
+
+function readConfig() {
+  try {
+    return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8'));
+  } catch {
+    return {};
+  }
+}
+
+function writeConfig(cfg) {
+  fs.mkdirSync(path.dirname(CONFIG_PATH), { recursive: true });
+  fs.writeFileSync(CONFIG_PATH, JSON.stringify(cfg, null, 2), 'utf8');
+}
+
+// -------------------------------------------------------------------------- //
+// Python backend spawner                                                      //
+// -------------------------------------------------------------------------- //
+
+function startPythonBackend() {
+  if (!app.isPackaged) return; // dev mode: started by run_dev.sh
+
+  const binary = path.join(process.resourcesPath, 'pawzy-core', 'pawzy-core');
+  console.log('[Electron] Starting pawzy-core:', binary);
+
+  pythonProcess = spawn(binary, [], {
+    cwd: path.join(process.resourcesPath, 'pawzy-core'),
+    stdio: 'pipe',
+  });
+
+  pythonProcess.stdout.on('data', d => console.log('[PawzyCore]', d.toString().trimEnd()));
+  pythonProcess.stderr.on('data', d => console.error('[PawzyCore]', d.toString().trimEnd()));
+  pythonProcess.on('exit', (code) => console.log('[PawzyCore] Exited with code', code));
+}
+
+// -------------------------------------------------------------------------- //
+// Autostart helpers                                                           //
+// -------------------------------------------------------------------------- //
+
+function getAutostartEnabled() {
+  return fs.existsSync(AUTOSTART_FILE);
+}
+
+function setAutostart(enabled) {
+  if (enabled) {
+    fs.mkdirSync(AUTOSTART_DIR, { recursive: true });
+    const execPath = app.isPackaged
+      ? process.execPath   // AppImage path
+      : '/bin/false';      // noop in dev
+    const desktop = [
+      '[Desktop Entry]',
+      'Type=Application',
+      'Name=Pawzy',
+      'Comment=Productivity break companion',
+      `Exec=${execPath}`,
+      'Icon=pawzy',
+      'Terminal=false',
+      'Categories=Utility;',
+      'X-GNOME-Autostart-enabled=true',
+    ].join('\n') + '\n';
+    fs.writeFileSync(AUTOSTART_FILE, desktop, 'utf8');
+    console.log('[Electron] Autostart enabled.');
+  } else {
+    if (fs.existsSync(AUTOSTART_FILE)) fs.unlinkSync(AUTOSTART_FILE);
+    console.log('[Electron] Autostart disabled.');
+  }
+}
+
+// -------------------------------------------------------------------------- //
+// Break window                                                                //
+// -------------------------------------------------------------------------- //
+
+function createBreakWindow() {
+  const { bounds } = screen.getPrimaryDisplay();
+
+  breakWindow = new BrowserWindow({
+    width:  bounds.width,
+    height: bounds.height,
+    x: bounds.x,
+    y: bounds.y,
+    transparent: true,
+    backgroundColor: '#00000000',
+    frame: false,
+    alwaysOnTop: true,
+    skipTaskbar: true,       // hide from taskbar so it can't be clicked
+    resizable: false,
+    movable:   false,        // prevent dragging
+    minimizable: false,      // block minimize button
+    maximizable: false,
+    closable:  false,        // block Alt+F4 / close during break
+    hasShadow: false,
+    fullscreenable: true,
+    show: false,
+    icon: APP_ICON,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+
+  breakWindow.loadFile(LOCK_FILE);
+  breakWindow.setIgnoreMouseEvents(false);
+
+  // Instantly reclaim focus if anything steals it
+  breakWindow.on('blur', () => {
+    if (breakWindow && breakWindow.isVisible()) {
+      breakWindow.focus();
+    }
+  });
+
+  // Prevent minimize — restore immediately
+  breakWindow.on('minimize', () => {
+    if (breakWindow && breakWindow.isVisible()) {
+      breakWindow.restore();
+      breakWindow.setAlwaysOnTop(true, 'screen-saver');
+      breakWindow.focus();
+    }
+  });
+
+  // Prevent hiding via any other means during a break
+  breakWindow.on('hide', () => {
+    if (breakWindow && breakWindow.isVisible && _breakActive) {
+      setTimeout(() => {
+        if (breakWindow && _breakActive) breakWindow.show();
+      }, 50);
+    }
+  });
+
+  // If fullscreen is somehow exited during a break, re-enter it immediately
+  breakWindow.on('leave-full-screen', () => {
+    if (_breakActive && breakWindow) {
+      setTimeout(() => {
+        if (_breakActive && breakWindow) {
+          breakWindow.setFullScreen(true);
+          breakWindow.focus();
+        }
+      }, 80);
+    }
+  });
+
+  breakWindow.on('closed', () => { breakWindow = null; });
+}
+
+
+let _breakActive = false;
+
+function showBreakWindow(data) {
+  if (!breakWindow) return;
+  _breakActive = true;
+  breakWindow.webContents.send('break_start', data);
+  setTimeout(() => {
+    breakWindow.setAlwaysOnTop(true, 'screen-saver');
+    breakWindow.show();
+    breakWindow.setFullScreen(true);  // TRUE fullscreen — blocks Super/Activities on GNOME
+    breakWindow.focus();
+  }, 300);
+}
+
+function hideBreakWindow() {
+  if (!breakWindow) return;
+  _breakActive = false;
+  breakWindow.setFullScreen(false);  // exit fullscreen before hiding
+  setTimeout(() => {
+    if (breakWindow) {
+      breakWindow.hide();
+      breakWindow.webContents.send('break_end', {});
+    }
+  }, 150);
+}
+
+
+// -------------------------------------------------------------------------- //
+// Settings window                                                             //
+// -------------------------------------------------------------------------- //
+
+function openSettingsWindow() {
+  if (settingsWindow) {
+    settingsWindow.focus();
+    return;
+  }
+
+  settingsWindow = new BrowserWindow({
+    width:  620,
+    height: 560,
+    resizable: false,
+    frame: true,
+    alwaysOnTop: false,
+    skipTaskbar: false,
+    title: 'Pawzy — Settings',
+    icon: APP_ICON,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+
+  settingsWindow.setMenuBarVisibility(false);
+  settingsWindow.loadFile(SETTINGS_FILE);
+  settingsWindow.on('closed', () => { settingsWindow = null; });
+}
+
+// -------------------------------------------------------------------------- //
+// Onboarding window                                                           //
+// -------------------------------------------------------------------------- //
+
+function openOnboardingWindow() {
+  if (onboardingWindow) { onboardingWindow.focus(); return; }
+
+  const { bounds } = screen.getPrimaryDisplay();
+
+  onboardingWindow = new BrowserWindow({
+    width:  560,
+    height: 720,
+    x: Math.round(bounds.x + (bounds.width  - 560) / 2),
+    y: Math.round(bounds.y + (bounds.height - 720) / 2),
+    resizable: false,
+    frame: false,
+    alwaysOnTop: true,
+    skipTaskbar: false,
+    title: 'Welcome to Pawzy',
+    icon: APP_ICON,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  });
+
+  onboardingWindow.loadFile(ONBOARDING_FILE);
+  onboardingWindow.on('closed', () => { onboardingWindow = null; });
+}
+
+// -------------------------------------------------------------------------- //
+// WebSocket client — connects to pawzy-core Python backend                   //
+// -------------------------------------------------------------------------- //
+
+function connectWebSocket() {
+  if (wsReconnectTimer) { clearTimeout(wsReconnectTimer); wsReconnectTimer = null; }
+
+  console.log(`[Electron] Connecting to ${WS_URL}...`);
+  ws = new WebSocket(WS_URL);
+
+  ws.on('open',  () => console.log('[Electron] Connected to pawzy-core ✅'));
+  ws.on('close', () => {
+    console.warn('[Electron] Disconnected — retrying in 3s...');
+    wsReconnectTimer = setTimeout(connectWebSocket, 3000);
+  });
+  ws.on('error', (err) => console.error('[Electron] WS error:', err.message));
+
+  ws.on('message', (raw) => {
+    try {
+      const msg = JSON.parse(raw.toString());
+      handleBackendEvent(msg.event, msg.data);
+    } catch (e) {
+      console.error('[Electron] Bad WS message:', e);
+    }
+  });
+}
+
+function sendToPython(event, data = {}) {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify({ event, data }));
+  }
+}
+
+// -------------------------------------------------------------------------- //
+// Event routing — backend → windows                                          //
+// -------------------------------------------------------------------------- //
+
+function handleBackendEvent(event, data) {
+  switch (event) {
+    case 'break_start':
+      console.log('[Electron] Break started — showing cat overlay');
+      showBreakWindow(data);
+      break;
+
+    case 'break_tick':
+      if (breakWindow) breakWindow.webContents.send('break_tick', data);
+      break;
+
+    case 'break_end':
+      console.log('[Electron] Break ended — hiding cat overlay');
+      hideBreakWindow();
+      break;
+
+    case 'open_settings':
+      openSettingsWindow();
+      break;
+
+    default:
+      break;
+  }
+}
+
+// -------------------------------------------------------------------------- //
+// IPC handlers — renderer → main                                             //
+// -------------------------------------------------------------------------- //
+
+// Forward user actions to Python backend
+ipcMain.on('user_action', (_, payload) => sendToPython('user_action', payload));
+
+// Config read/write (invokable — returns a value)
+ipcMain.handle('read_config', () => readConfig());
+
+ipcMain.handle('save_config', (_, newCfg) => {
+  writeConfig(newCfg);
+  // Tell Python to reload its config
+  sendToPython('user_action', { action: 'update_config' });
+  console.log('[Electron] Config saved and Python notified.');
+});
+
+// Onboarding complete — close onboarding window
+ipcMain.on('onboarding_complete', () => {
+  console.log('[Electron] Onboarding complete.');
+  if (onboardingWindow) { onboardingWindow.close(); onboardingWindow = null; }
+});
+
+// Autostart read / write
+ipcMain.handle('get_autostart', () => getAutostartEnabled());
+ipcMain.handle('set_autostart', (_, enabled) => setAutostart(enabled));
+
+// -------------------------------------------------------------------------- //
+// App lifecycle                                                               //
+// -------------------------------------------------------------------------- //
+
+app.whenReady().then(() => {
+  createBreakWindow();
+
+  // Start bundled Python backend (production only)
+  startPythonBackend();
+
+  // Auto-enable startup on login the very first time (packaged only)
+  if (app.isPackaged && !getAutostartEnabled()) {
+    setAutostart(true);
+    console.log('[Electron] Autostart enabled automatically on first run.');
+  }
+
+  // Check first_launch flag
+  const cfg = readConfig();
+  if (cfg.first_launch !== false) {
+    setTimeout(openOnboardingWindow, 800);
+  }
+
+  // In production give binary 2s to start; in dev it's already running
+  const wsDelay = app.isPackaged ? 2000 : 1500;
+  setTimeout(connectWebSocket, wsDelay);
+
+  app.on('activate', () => { if (!breakWindow) createBreakWindow(); });
+});
+
+app.on('window-all-closed', () => {
+  // Stay alive on Linux/Windows (tray keeps running)
+  if (process.platform === 'darwin') app.quit();
+});
+
+app.on('before-quit', () => {
+  if (ws) ws.close();
+  if (pythonProcess) { pythonProcess.kill('SIGTERM'); }
+});

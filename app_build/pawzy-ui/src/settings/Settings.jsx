@@ -134,7 +134,7 @@ export default function Settings() {
         <Slider
           label="Work Session"
           value={workMin}
-          min={5} max={120} unit="min"
+          min={1} max={120} unit="min"
           onChange={setWorkMin}
           description="How long you work before your companion arrives for a break"
         />

@@ -15,6 +15,12 @@ The PyQt6 LockOverlay has been removed — Electron is always connected.
 import sys
 import signal
 
+# Force UTF-8 output so emoji in print() don't crash on Windows (cp1252 terminals)
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+if hasattr(sys.stderr, 'reconfigure'):
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+
 from PyQt6.QtWidgets import QApplication
 
 import data_store

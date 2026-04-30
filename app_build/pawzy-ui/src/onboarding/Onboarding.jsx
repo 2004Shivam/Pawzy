@@ -91,12 +91,12 @@ export default function Onboarding() {
             <div style={s.bigNumber}>{workMin} <span style={s.unit}>minutes</span></div>
             <div style={s.sliderWrap}>
               <div style={s.track}>
-                <div style={{ ...s.fill, width: `${((workMin - 5) / 115) * 100}%` }} />
-                <input type="range" min={5} max={120} value={workMin}
+                <div style={{ ...s.fill, width: `${((workMin - 1) / 119) * 100}%` }} />
+                <input type="range" min={1} max={120} value={workMin}
                   onChange={e => setWorkMin(Number(e.target.value))}
                   style={s.sliderInput} />
               </div>
-              <div style={s.ticks}><span>5 min</span><span>120 min</span></div>
+              <div style={s.ticks}><span>1 min</span><span>120 min</span></div>
             </div>
             <div style={s.presets}>
               {[25, 45, 60, 90].map(m => (

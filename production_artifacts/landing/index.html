@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--or:#f97316;--or2:#ea580c;--ye:#fbbf24;--gr:#16a34a;--te:#0d9488;--bg:#fff;--tx:#1a0600;--mu:#78716c}
+:root{--or:#f97316;--or2:#ea580c;--ye:#fbbf24;--gr:#16a34a;--te:#0d9488;--bg:#fffdf8;--tx:#1a0600;--mu:#78716c}
 html{scroll-behavior:smooth}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden}
 
@@ -23,23 +23,23 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 .nc:hover{transform:translateY(-2px);box-shadow:0 6px 0 #15803d}
 
 /* HERO */
-.hero{position:relative;overflow:hidden;min-height:90vh;display:flex;align-items:center;padding:80px 48px 60px;gap:40px;background:#fff}
+.hero{position:relative;overflow:hidden;display:flex;align-items:center;padding:56px 64px 56px;gap:40px;background:var(--bg);min-height:auto}
 
-/* paint blobs */
+/* paint blobs — organic shapes matching reference */
 .blob{position:absolute;pointer-events:none;z-index:0}
-.b1{width:480px;height:480px;top:-160px;left:-160px;background:#f97316;border-radius:68% 32% 46% 54%/40% 55% 45% 60%;opacity:.9}
-.b2{width:380px;height:380px;bottom:-120px;right:-100px;background:#fbbf24;border-radius:42% 58% 63% 37%/55% 42% 58% 45%;opacity:.8}
-.b3{width:200px;height:200px;top:60%;left:38%;background:#fed7aa;border-radius:50%;opacity:.4}
+.b1{width:580px;height:560px;top:-200px;left:-180px;background:#f9a825;border-radius:60% 40% 55% 45%/50% 60% 40% 50%;opacity:1}
+.b2{width:440px;height:420px;bottom:-160px;right:-140px;background:#fbbf24;border-radius:45% 55% 40% 60%/55% 45% 55% 45%;opacity:1}
+.b3{width:0;height:0}
 
-.hl{position:relative;z-index:1;flex:1;max-width:540px}
-.hbadge{display:inline-flex;align-items:center;gap:6px;background:#fff7ed;border:2px solid #fed7aa;border-radius:50px;padding:5px 16px;font-size:13px;font-weight:800;color:var(--or2);margin-bottom:20px}
-.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(46px,5.5vw,74px);line-height:1.08;color:var(--tx);margin-bottom:18px}
+.hl{position:relative;z-index:1;flex:1;max-width:500px}
+.hbadge{display:none}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(40px,4.8vw,62px);line-height:1.1;color:var(--tx);margin-bottom:14px}
 .hero h1 em{color:var(--or);font-style:normal}
-.hsub{font-size:17px;color:var(--mu);line-height:1.7;margin-bottom:32px;max-width:440px;font-weight:600}
-.hbtns{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-.bg{background:var(--gr);color:#fff;padding:15px 34px;border-radius:50px;font-size:16px;font-weight:800;text-decoration:none;box-shadow:0 5px 0 #15803d;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:8px}
+.hsub{font-size:15px;color:#5a4840;line-height:1.65;margin-bottom:26px;max-width:400px;font-weight:700}
+.hbtns{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.bg{background:var(--gr);color:#fff;padding:13px 30px;border-radius:50px;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 5px 0 #15803d;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:8px}
 .bg:hover{transform:translateY(-2px);box-shadow:0 7px 0 #15803d}
-.blink{color:var(--or2);font-size:15px;font-weight:800;text-decoration:none;border-bottom:2.5px solid var(--or)}
+.blink{color:var(--or2);font-size:14px;font-weight:800;text-decoration:none;border-bottom:2px solid var(--or)}
 .hnote{font-size:12px;color:#a8a29e;font-weight:700}
 
 /* hero right — dashboard mockup */
@@ -64,18 +64,18 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 @keyframes sc{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* COMPANIONS */
-.sec{padding:80px 48px;max-width:1200px;margin:0 auto}
-.lbl{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:8px}
-.stitle{font-family:'Fredoka One',cursive;font-size:clamp(28px,3.5vw,46px);color:var(--tx);margin-bottom:10px}
-.ssub{font-size:16px;color:var(--mu);max-width:480px;line-height:1.7;font-weight:600;margin-bottom:48px}
+.sec{padding:56px 64px;max-width:1200px;margin:0 auto}
+.lbl{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:6px}
+.stitle{font-family:'Fredoka One',cursive;font-size:clamp(26px,3vw,40px);color:var(--tx);margin-bottom:8px}
+.ssub{font-size:15px;color:var(--mu);max-width:460px;line-height:1.65;font-weight:600;margin-bottom:36px}
 
-.ccards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
-.cc{border-radius:28px;padding:32px 20px 24px;text-align:center;transition:transform .2s,box-shadow .2s;cursor:default}
-.cc:hover{transform:translateY(-8px)}
-.cc .em{font-size:72px;display:block;margin-bottom:12px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.2))}
-.cc h3{font-family:'Fredoka One',cursive;font-size:22px;margin-bottom:6px}
-.cc p{font-size:13px;line-height:1.5;font-weight:700;margin-bottom:16px;opacity:.85}
-.sel{display:inline-block;padding:8px 28px;border-radius:50px;font-size:13px;font-weight:900;border:2.5px solid currentColor;cursor:pointer;transition:background .2s,color .2s;text-decoration:none}
+.ccards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.cc{border-radius:24px;padding:28px 18px 22px;text-align:center;transition:transform .2s,box-shadow .2s;cursor:default}
+.cc:hover{transform:translateY(-6px)}
+.cc .em{font-size:60px;display:block;margin-bottom:10px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.2))}
+.cc h3{font-family:'Fredoka One',cursive;font-size:20px;margin-bottom:5px}
+.cc p{font-size:12px;line-height:1.5;font-weight:700;margin-bottom:14px;opacity:.85}
+.sel{display:inline-block;padding:7px 26px;border-radius:50px;font-size:12px;font-weight:900;border:2px solid currentColor;cursor:pointer;transition:background .2s,color .2s;text-decoration:none}
 .cc-cat{background:#f97316;color:#fff;box-shadow:0 6px 0 #c2410c}
 .cc-cat .sel{border-color:#fff;color:#fff} .cc-cat .sel:hover{background:#fff;color:#f97316}
 .cc-shi{background:#fbbf24;color:#78350f;box-shadow:0 6px 0 #d97706}

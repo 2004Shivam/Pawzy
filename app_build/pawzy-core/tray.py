@@ -53,13 +53,6 @@ class PawzyTray:
         reset_action = QAction("🔄  Reset Timer", self._menu)
         reset_action.triggered.connect(self._manual_reset)
 
-        # ── Dev shortcuts ──────────────────────────────────────────────────
-        dev_10s_action = QAction("🧪  Set 10s break (dev)", self._menu)
-        dev_10s_action.triggered.connect(lambda: self._set_dev_break(10))
-        dev_60s_action = QAction("🧪  Set 60s break (dev)", self._menu)
-        dev_60s_action.triggered.connect(lambda: self._set_dev_break(60))
-        # ───────────────────────────────────────────────────────────────────
-
         quit_action = QAction("✖  Quit Pawzy", self._menu)
         quit_action.triggered.connect(self._quit)
 
@@ -69,9 +62,6 @@ class PawzyTray:
         self._menu.addAction(self._pause_action)
         self._menu.addAction(settings_action)
         self._menu.addAction(reset_action)
-        self._menu.addSeparator()
-        self._menu.addAction(dev_10s_action)
-        self._menu.addAction(dev_60s_action)
         self._menu.addSeparator()
         self._menu.addAction(quit_action)
 
@@ -148,10 +138,6 @@ class PawzyTray:
         bus.emit("user_action", {"action": "reset"})
         self._tray.showMessage("Pawzy", "Timer reset! Fresh start 🐾", QSystemTrayIcon.MessageIcon.Information, 2000)
 
-    def _set_dev_break(self, seconds: int) -> None:
-        """Temporarily override break duration for testing. Takes effect on next break."""
-        data_store.write_config("break_seconds", seconds)
-        self._tray.showMessage("Pawzy (Dev)", f"Next break = {seconds}s 🧪", QSystemTrayIcon.MessageIcon.Information, 2000)
 
     def _quit(self) -> None:
         print("[Tray] Quitting Pawzy...")

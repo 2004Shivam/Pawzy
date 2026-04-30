@@ -132,7 +132,7 @@ class PawzyTray:
         bus.emit("user_action", {"action": action})
 
     def _open_settings(self) -> None:
-        bus.emit("user_action", {"action": "open_settings"})
+        bus.emit("open_settings", {})  # ws_server forwards this directly to Electron
 
     def _manual_reset(self) -> None:
         bus.emit("user_action", {"action": "reset"})

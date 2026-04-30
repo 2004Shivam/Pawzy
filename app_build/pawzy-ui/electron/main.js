@@ -9,12 +9,25 @@
  *   - onboardingWindow: Full welcome flow shown only on first launch.
  */
 
-const { app, BrowserWindow, ipcMain, screen } = require('electron');
+const { app, BrowserWindow, ipcMain, screen, Notification } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs   = require('fs');
 const os   = require('os');
 const WebSocket = require('ws');
+
+// ── Single-instance lock ──────────────────────────────────────────────────────
+// If a second instance is launched (e.g. desktop shortcut clicked while
+// Pawzy is already running in the tray), focus/open Settings instead.
+const gotLock = app.requestSingleInstanceLock();
+if (!gotLock) {
+  app.quit(); // kill the second instance immediately
+}
+app.on('second-instance', () => {
+  // User clicked the shortcut again — open Settings as a helpful response
+  openSettingsWindow();
+});
+// ─────────────────────────────────────────────────────────────────────────────
 
 const WS_URL          = 'ws://localhost:8765';
 const LOCK_FILE       = path.join(__dirname, '../dist/lockscreen/index.html');
@@ -74,32 +87,53 @@ function startPythonBackend() {
 // Autostart helpers                                                           //
 // -------------------------------------------------------------------------- //
 
+// -------------------------------------------------------------------------- //
+// Autostart helpers (Windows + Linux)                                        //
+// -------------------------------------------------------------------------- //
+
 function getAutostartEnabled() {
+  if (process.platform === 'win32') {
+    // Windows: check Startup folder for our shortcut
+    const startupDir = path.join(os.homedir(), 'AppData', 'Roaming',
+      'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup');
+    return fs.existsSync(path.join(startupDir, 'Pawzy.lnk'))
+      || fs.existsSync(path.join(startupDir, 'Pawzy.bat'));
+  }
   return fs.existsSync(AUTOSTART_FILE);
 }
 
 function setAutostart(enabled) {
+  if (process.platform === 'win32') {
+    const startupDir = path.join(os.homedir(), 'AppData', 'Roaming',
+      'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup');
+    const batPath = path.join(startupDir, 'Pawzy.bat');
+    if (enabled && app.isPackaged) {
+      // Write a .bat that launches Pawzy silently
+      const bat = `@echo off\nstart "" "${process.execPath}"\n`;
+      fs.mkdirSync(startupDir, { recursive: true });
+      fs.writeFileSync(batPath, bat, 'utf8');
+      console.log('[Electron] Windows autostart enabled.');
+    } else {
+      if (fs.existsSync(batPath)) fs.unlinkSync(batPath);
+      console.log('[Electron] Windows autostart disabled.');
+    }
+    return;
+  }
+  // Linux: .desktop autostart
   if (enabled) {
     fs.mkdirSync(AUTOSTART_DIR, { recursive: true });
-    const execPath = app.isPackaged
-      ? process.execPath   // AppImage path
-      : '/bin/false';      // noop in dev
+    const execPath = app.isPackaged ? process.execPath : '/bin/false';
     const desktop = [
-      '[Desktop Entry]',
-      'Type=Application',
-      'Name=Pawzy',
+      '[Desktop Entry]', 'Type=Application', 'Name=Pawzy',
       'Comment=Productivity break companion',
-      `Exec=${execPath}`,
-      'Icon=pawzy',
-      'Terminal=false',
-      'Categories=Utility;',
-      'X-GNOME-Autostart-enabled=true',
+      `Exec=${execPath}`, 'Icon=pawzy', 'Terminal=false',
+      'Categories=Utility;', 'X-GNOME-Autostart-enabled=true',
     ].join('\n') + '\n';
     fs.writeFileSync(AUTOSTART_FILE, desktop, 'utf8');
-    console.log('[Electron] Autostart enabled.');
+    console.log('[Electron] Linux autostart enabled.');
   } else {
     if (fs.existsSync(AUTOSTART_FILE)) fs.unlinkSync(AUTOSTART_FILE);
-    console.log('[Electron] Autostart disabled.');
+    console.log('[Electron] Linux autostart disabled.');
   }
 }
 
@@ -363,6 +397,8 @@ ipcMain.handle('set_autostart', (_, enabled) => setAutostart(enabled));
 // -------------------------------------------------------------------------- //
 
 app.whenReady().then(() => {
+  if (!gotLock) return; // second instance already quit above
+
   createBreakWindow();
 
   // Start bundled Python backend (production only)
@@ -378,6 +414,17 @@ app.whenReady().then(() => {
   const cfg = readConfig();
   if (cfg.first_launch !== false) {
     setTimeout(openOnboardingWindow, 800);
+  } else {
+    // Show a tray notification so the user knows Pawzy started
+    setTimeout(() => {
+      if (Notification.isSupported()) {
+        new Notification({
+          title: 'Pawzy is running 🐾',
+          body: 'Look for the paw icon in your system tray.',
+          silent: true,
+        }).show();
+      }
+    }, 3000);
   }
 
   // In production give binary 2s to start; in dev it's already running

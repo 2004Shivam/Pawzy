@@ -43,6 +43,22 @@ export function LockScreen() {
     if (breakRemaining !== null) setPhase('slide');
   }, [breakRemaining !== null]);
 
+  // Block ALL keyboard input while the lock screen is active
+  useEffect(() => {
+    const swallow = (e) => {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+    };
+    window.addEventListener('keydown',  swallow, true);
+    window.addEventListener('keyup',    swallow, true);
+    window.addEventListener('keypress', swallow, true);
+    return () => {
+      window.removeEventListener('keydown',  swallow, true);
+      window.removeEventListener('keyup',    swallow, true);
+      window.removeEventListener('keypress', swallow, true);
+    };
+  }, []);
+
   // Cycle wellness prompts
   useEffect(() => {
     const iv = setInterval(() => {

@@ -9,7 +9,7 @@
  *   - onboardingWindow: Full welcome flow shown only on first launch.
  */
 
-const { app, BrowserWindow, ipcMain, screen, Notification } = require('electron');
+const { app, BrowserWindow, ipcMain, screen, Notification, globalShortcut } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs   = require('fs');
@@ -210,20 +210,62 @@ function createBreakWindow() {
     }
   });
 
-  breakWindow.on('closed', () => { breakWindow = null; });
+  // ── HARD CLOSE PREVENTION ──────────────────────────────────────────────
+  // 'close' fires before the window is actually destroyed — preventDefault()
+  // here is the only reliable way to block Alt+F4 on Windows.
+  breakWindow.on('close', (e) => {
+    if (_breakActive) {
+      e.preventDefault();
+    }
+  });
+
+  // Block keyboard shortcuts at the renderer level (Alt+Tab visuals, etc.)
+  breakWindow.webContents.on('before-input-event', (event, input) => {
+    if (_breakActive) {
+      // Block Alt, F4, Escape, and modifier combos
+      if (input.alt || input.key === 'Escape' || input.key === 'F4') {
+        event.preventDefault();
+      }
+    }
+  });
+
+  // If the window is somehow destroyed, recreate it for the next break
+  breakWindow.on('closed', () => {
+    breakWindow = null;
+    if (_breakActive) {
+      // Forcibly ended during break — reset state and reopen
+      console.warn('[Electron] Break window destroyed during break — recreating.');
+      _breakActive = false;
+      setTimeout(() => {
+        createBreakWindow();
+      }, 500);
+    }
+  });
 }
 
 
 let _breakActive = false;
 
 function showBreakWindow(data) {
-  if (!breakWindow) return;
+  // If the window was destroyed (e.g. forced close), recreate it first
+  if (!breakWindow) {
+    console.warn('[Electron] breakWindow was null — recreating before showing.');
+    createBreakWindow();
+    // Wait for the window to load before sending break_start
+    breakWindow.webContents.once('did-finish-load', () => showBreakWindow(data));
+    return;
+  }
   _breakActive = true;
+
+  // Swallow Alt+F4 at the OS level during the break
+  try { globalShortcut.register('Alt+F4', () => {}); } catch (_) {}
+
   breakWindow.webContents.send('break_start', data);
   setTimeout(() => {
+    if (!breakWindow) return;
     breakWindow.setAlwaysOnTop(true, 'screen-saver');
     breakWindow.show();
-    breakWindow.setFullScreen(true);  // TRUE fullscreen — blocks Super/Activities on GNOME
+    breakWindow.setFullScreen(true);
     breakWindow.focus();
   }, 300);
 }
@@ -231,7 +273,11 @@ function showBreakWindow(data) {
 function hideBreakWindow() {
   if (!breakWindow) return;
   _breakActive = false;
-  breakWindow.setFullScreen(false);  // exit fullscreen before hiding
+
+  // Release the Alt+F4 global shortcut now that the break is over
+  try { globalShortcut.unregister('Alt+F4'); } catch (_) {}
+
+  breakWindow.setFullScreen(false);
   setTimeout(() => {
     if (breakWindow) {
       breakWindow.hide();

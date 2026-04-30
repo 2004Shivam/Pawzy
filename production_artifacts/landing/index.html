@@ -4,266 +4,178 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Pawzy — Your Furry Productivity Guardian</title>
-  <meta name="description" content="Pawzy is a desktop companion that enforces healthy work/break cycles. A cute character slides onto your screen when it's time to rest. Free for Linux." />
+  <meta name="description" content="Pawzy is a free desktop app that sends a cute animal companion onto your screen when it's break time. No willpower required." />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
     :root {
-      --purple:  #a855f7;
-      --purple2: #7c3aed;
-      --pink:    #ec4899;
-      --bg:      #0a0812;
-      --card:    rgba(255,255,255,.04);
-      --border:  rgba(255,255,255,.08);
-      --text:    #f1f5f9;
-      --muted:   #94a3b8;
+      --orange: #f97316;
+      --orange2: #ea580c;
+      --yellow: #fbbf24;
+      --green: #16a34a;
+      --teal: #0d9488;
+      --bg: #fffbf5;
+      --text: #1c0a00;
+      --muted: #78716c;
+      --border: #e7e5e4;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-    body {
-      font-family: 'Inter', system-ui, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      overflow-x: hidden;
-    }
-
-    /* ── Navbar ─────────────────────────────────── */
+    /* NAV */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,251,245,.92); backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--border);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 48px;
-      background: rgba(10,8,18,.75);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--border);
+      padding: 14px 48px;
     }
-    .nav-logo { font-size: 20px; font-weight: 800; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-    .nav-links { display: flex; gap: 32px; }
-    .nav-links a { color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      padding: 10px 24px; border-radius: 12px;
-      background: linear-gradient(135deg, var(--purple2), var(--purple));
-      color: #fff; font-size: 14px; font-weight: 700;
-      text-decoration: none; transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 4px 20px rgba(168,85,247,.35);
-    }
-    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 8px 28px rgba(168,85,247,.5); }
+    .nav-logo { font-family: 'Fredoka One', cursive; font-size: 24px; color: var(--orange); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+    .nav-links { display: flex; gap: 28px; }
+    .nav-links a { color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 700; transition: color .2s; }
+    .nav-links a:hover { color: var(--orange); }
+    .nav-cta { background: var(--green); color: #fff; padding: 10px 24px; border-radius: 100px; font-size: 15px; font-weight: 800; text-decoration: none; transition: transform .15s, box-shadow .15s; box-shadow: 0 4px 0 #15803d; }
+    .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #15803d; }
 
-    /* ── Hero ────────────────────────────────────── */
+    /* BLOBS */
+    .blob { position: absolute; border-radius: 50%; pointer-events: none; z-index: 0; }
+    .blob-tl { width: 420px; height: 420px; top: -120px; left: -120px; background: radial-gradient(circle, #fed7aa 0%, transparent 70%); }
+    .blob-br { width: 360px; height: 360px; bottom: -100px; right: -100px; background: radial-gradient(circle, #fef08a 0%, transparent 70%); }
+
+    /* HERO */
     .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 120px 24px 80px;
       position: relative; overflow: hidden;
+      min-height: 92vh; display: flex; align-items: center;
+      padding: 80px 48px 60px;
+      gap: 48px;
     }
-    .hero-orb {
-      position: absolute; border-radius: 50%; pointer-events: none;
-      filter: blur(80px); opacity: .35;
-    }
-    .hero-orb-1 { width: 600px; height: 600px; top: -100px; left: -150px; background: radial-gradient(circle, #7c3aed, transparent 70%); }
-    .hero-orb-2 { width: 500px; height: 500px; bottom: -80px; right: -100px; background: radial-gradient(circle, #ec4899, transparent 70%); }
-    .hero-orb-3 { width: 400px; height: 400px; top: 50%; left: 55%; background: radial-gradient(circle, #a855f7, transparent 70%); }
-
+    .hero-left { position: relative; z-index: 1; flex: 1; max-width: 560px; }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(168,85,247,.12); border: 1px solid rgba(168,85,247,.3);
-      border-radius: 100px; padding: 6px 16px;
-      font-size: 13px; font-weight: 600; color: var(--purple);
-      margin-bottom: 28px;
-      animation: fadeUp .6s ease both;
+      background: #fff7ed; border: 2px solid #fed7aa;
+      border-radius: 100px; padding: 6px 18px;
+      font-size: 13px; font-weight: 800; color: var(--orange2);
+      margin-bottom: 24px;
     }
     .hero h1 {
-      font-size: clamp(48px, 7vw, 88px);
-      font-weight: 900; line-height: 1.05;
-      letter-spacing: -2px;
-      background: linear-gradient(135deg, #f1f5f9 30%, #a855f7 80%, #ec4899 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 24px;
-      animation: fadeUp .6s .1s ease both;
-    }
-    .hero-sub {
-      font-size: 20px; color: var(--muted); max-width: 560px;
-      line-height: 1.7; margin-bottom: 44px;
-      animation: fadeUp .6s .2s ease both;
-    }
-    .hero-actions {
-      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
-      animation: fadeUp .6s .3s ease both;
-    }
-    .btn-primary {
-      padding: 16px 36px; border-radius: 16px;
-      background: linear-gradient(135deg, var(--purple2), var(--purple));
-      color: #fff; font-size: 16px; font-weight: 700;
-      text-decoration: none; transition: transform .2s, box-shadow .2s;
-      box-shadow: 0 8px 32px rgba(168,85,247,.45);
-      display: flex; align-items: center; gap: 10px;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(168,85,247,.6); }
-    .btn-secondary {
-      padding: 16px 36px; border-radius: 16px;
-      border: 1.5px solid var(--border);
-      background: rgba(255,255,255,.04);
-      color: var(--text); font-size: 16px; font-weight: 600;
-      text-decoration: none; transition: border-color .2s, background .2s;
-      backdrop-filter: blur(8px);
-    }
-    .btn-secondary:hover { border-color: rgba(168,85,247,.5); background: rgba(168,85,247,.08); }
-
-    .hero-note { font-size: 13px; color: #475569; margin-top: 20px; animation: fadeUp .6s .4s ease both; }
-
-    /* ── Characters strip ───────────────────────── */
-    .chars-strip {
-      padding: 40px 0; overflow: hidden; position: relative;
-    }
-    .chars-strip::before, .chars-strip::after {
-      content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none;
-    }
-    .chars-strip::before { left: 0; background: linear-gradient(to right, var(--bg), transparent); }
-    .chars-strip::after  { right: 0; background: linear-gradient(to left, var(--bg), transparent); }
-    .chars-inner {
-      display: flex; gap: 24px;
-      animation: scroll 18s linear infinite;
-      width: max-content;
-    }
-    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .char-pill {
-      display: flex; align-items: center; gap: 10px;
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 100px; padding: 12px 24px;
-      font-size: 15px; font-weight: 600; color: var(--text);
-      white-space: nowrap;
-    }
-    .char-pill span { font-size: 24px; }
-
-    /* ── Section shared ─────────────────────────── */
-    section { padding: 96px 24px; max-width: 1200px; margin: 0 auto; }
-    .section-label {
-      font-size: 12px; font-weight: 700; letter-spacing: 2px;
-      text-transform: uppercase; color: var(--purple);
-      margin-bottom: 12px;
-    }
-    .section-title {
-      font-size: clamp(32px, 4vw, 52px); font-weight: 800;
-      letter-spacing: -1px; color: var(--text); margin-bottom: 16px;
-    }
-    .section-sub { font-size: 17px; color: var(--muted); max-width: 520px; line-height: 1.7; }
-
-    /* ── How it works ───────────────────────────── */
-    .steps {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px; margin-top: 56px;
-    }
-    .step-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 24px; padding: 32px 28px;
-      transition: border-color .25s, transform .25s;
-    }
-    .step-card:hover { border-color: rgba(168,85,247,.35); transform: translateY(-4px); }
-    .step-num {
-      width: 44px; height: 44px; border-radius: 14px;
-      background: linear-gradient(135deg, var(--purple2), var(--purple));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; font-weight: 900; color: #fff;
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(44px, 6vw, 76px);
+      line-height: 1.1; color: var(--text);
       margin-bottom: 20px;
-      box-shadow: 0 4px 16px rgba(168,85,247,.4);
     }
-    .step-card h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; }
-    .step-card p  { font-size: 14px; color: var(--muted); line-height: 1.65; }
+    .hero h1 span { color: var(--orange); }
+    .hero-sub { font-size: 18px; color: var(--muted); line-height: 1.7; margin-bottom: 36px; max-width: 460px; }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+    .btn-green { background: var(--green); color: #fff; padding: 16px 36px; border-radius: 100px; font-size: 17px; font-weight: 800; text-decoration: none; box-shadow: 0 5px 0 #15803d; transition: transform .15s, box-shadow .15s; display: inline-flex; align-items: center; gap: 10px; }
+    .btn-green:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #15803d; }
+    .btn-outline { color: var(--orange2); font-size: 15px; font-weight: 800; text-decoration: none; border-bottom: 2px solid var(--orange); padding-bottom: 2px; transition: opacity .2s; }
+    .btn-outline:hover { opacity: .7; }
+    .hero-note { margin-top: 18px; font-size: 13px; color: #a8a29e; font-weight: 600; }
 
-    /* ── Features grid ──────────────────────────── */
-    .features-wrap { display: flex; gap: 48px; align-items: flex-start; flex-wrap: wrap; margin-top: 56px; }
-    .features-text { flex: 1; min-width: 280px; }
-    .features-grid {
-      flex: 1.4; min-width: 300px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    .hero-right { position: relative; z-index: 1; flex: 1; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px; }
+    .char-preview {
+      background: #fff; border: 3px solid var(--border);
+      border-radius: 28px; padding: 24px 20px;
+      text-align: center; width: 130px;
+      box-shadow: 0 6px 0 #e5e7eb;
+      transition: transform .2s, box-shadow .2s;
+      animation: float 3s ease-in-out infinite;
     }
-    .feat-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 20px; padding: 24px;
-      transition: border-color .25s, transform .25s;
-    }
-    .feat-card:hover { border-color: rgba(168,85,247,.35); transform: translateY(-3px); }
-    .feat-icon { font-size: 28px; margin-bottom: 12px; }
-    .feat-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-    .feat-card p  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .char-preview:hover { transform: translateY(-6px); box-shadow: 0 12px 0 #e5e7eb; }
+    .char-preview:nth-child(2) { animation-delay: .5s; }
+    .char-preview:nth-child(3) { animation-delay: 1s; }
+    .char-preview:nth-child(4) { animation-delay: 1.5s; }
+    .char-preview .em { font-size: 52px; display: block; margin-bottom: 8px; }
+    .char-preview span { font-size: 13px; font-weight: 800; color: var(--muted); }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
-    /* ── Characters section ─────────────────────── */
-    .char-cards {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px; margin-top: 56px;
-    }
-    .char-card {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 24px; padding: 32px 20px;
-      text-align: center;
-      transition: border-color .25s, transform .25s, box-shadow .25s;
-      cursor: default;
-    }
-    .char-card:hover { transform: translateY(-6px); }
-    .char-card .emoji { font-size: 56px; margin-bottom: 16px; display: block; }
-    .char-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-    .char-card p  { font-size: 13px; color: var(--muted); line-height: 1.5; }
-    .char-card.cat   { border-color: rgba(249,115,22,.25); }  .char-card.cat:hover   { border-color: rgba(249,115,22,.6);  box-shadow: 0 12px 40px rgba(249,115,22,.15); }
-    .char-card.shiba { border-color: rgba(212,119,60,.25); }  .char-card.shiba:hover { border-color: rgba(212,119,60,.6);  box-shadow: 0 12px 40px rgba(212,119,60,.15); }
-    .char-card.panda { border-color: rgba(100,116,139,.25); } .char-card.panda:hover { border-color: rgba(100,116,139,.6); box-shadow: 0 12px 40px rgba(100,116,139,.15); }
-    .char-card.fox   { border-color: rgba(239,68,68,.25); }   .char-card.fox:hover   { border-color: rgba(239,68,68,.6);   box-shadow: 0 12px 40px rgba(239,68,68,.15); }
+    /* STRIP */
+    .strip { background: var(--orange); padding: 18px 0; overflow: hidden; }
+    .strip-inner { display: flex; gap: 40px; animation: scroll 20s linear infinite; width: max-content; }
+    .strip-item { font-family: 'Fredoka One', cursive; font-size: 18px; color: #fff; white-space: nowrap; display: flex; align-items: center; gap: 10px; }
+    @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-    /* ── CTA section ────────────────────────────── */
-    .cta-section {
-      max-width: 1200px; margin: 0 auto 96px;
+    /* SECTION SHARED */
+    .section { padding: 80px 48px; max-width: 1200px; margin: 0 auto; }
+    .section-label { font-size: 12px; font-weight: 800; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); margin-bottom: 10px; }
+    .section-title { font-family: 'Fredoka One', cursive; font-size: clamp(30px, 4vw, 48px); color: var(--text); margin-bottom: 12px; }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 500px; line-height: 1.7; }
+
+    /* COMPANIONS */
+    .char-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 48px; }
+    .char-card { border-radius: 28px; padding: 36px 24px; text-align: center; cursor: default; transition: transform .2s, box-shadow .2s; border: 3px solid transparent; }
+    .char-card:hover { transform: translateY(-8px); }
+    .char-card .em { font-size: 64px; display: block; margin-bottom: 16px; filter: drop-shadow(0 4px 8px rgba(0,0,0,.15)); }
+    .char-card h3 { font-family: 'Fredoka One', cursive; font-size: 22px; margin-bottom: 8px; }
+    .char-card p { font-size: 14px; line-height: 1.55; opacity: .8; font-weight: 600; }
+    .char-card .tag { display: inline-block; margin-top: 14px; background: rgba(0,0,0,.12); border-radius: 100px; padding: 4px 16px; font-size: 12px; font-weight: 800; letter-spacing: 1px; }
+    .cc-cat   { background: #fff7ed; border-color: #fed7aa; color: #9a3412; box-shadow: 0 6px 0 #fed7aa; }
+    .cc-shiba { background: #fefce8; border-color: #fef08a; color: #854d0e; box-shadow: 0 6px 0 #fef08a; }
+    .cc-panda { background: #f0fdf4; border-color: #bbf7d0; color: #166534; box-shadow: 0 6px 0 #bbf7d0; }
+    .cc-fox   { background: #f0fdfa; border-color: #99f6e4; color: #134e4a; box-shadow: 0 6px 0 #99f6e4; }
+
+    /* HOW IT WORKS */
+    .hiw-bg { background: #fff7ed; }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-top: 48px; }
+    .step { background: #fff; border-radius: 24px; padding: 32px 28px; border: 3px solid var(--border); box-shadow: 0 4px 0 var(--border); transition: transform .2s; }
+    .step:hover { transform: translateY(-4px); }
+    .step-num { width: 52px; height: 52px; border-radius: 16px; background: var(--orange); color: #fff; font-family: 'Fredoka One', cursive; font-size: 26px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 4px 0 var(--orange2); }
+    .step h3 { font-family: 'Fredoka One', cursive; font-size: 20px; margin-bottom: 10px; }
+    .step p { font-size: 14px; color: var(--muted); line-height: 1.65; font-weight: 600; }
+
+    /* FEATURES */
+    .feats { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-top: 48px; }
+    .feat { background: #fff; border: 3px solid var(--border); border-radius: 22px; padding: 28px 22px; box-shadow: 0 4px 0 var(--border); transition: transform .2s, border-color .2s; }
+    .feat:hover { transform: translateY(-4px); border-color: var(--orange); }
+    .feat .ico { font-size: 36px; margin-bottom: 14px; }
+    .feat h3 { font-family: 'Fredoka One', cursive; font-size: 18px; margin-bottom: 8px; }
+    .feat p { font-size: 13px; color: var(--muted); line-height: 1.6; font-weight: 600; }
+
+    /* CTA */
+    .cta-wrap {
+      margin: 0 48px 80px;
+      background: var(--orange);
+      border-radius: 36px;
       padding: 72px 48px;
-      background: linear-gradient(135deg, rgba(124,58,237,.15) 0%, rgba(168,85,247,.08) 50%, rgba(236,72,153,.1) 100%);
-      border: 1px solid rgba(168,85,247,.2);
-      border-radius: 32px; text-align: center;
+      text-align: center;
       position: relative; overflow: hidden;
+      box-shadow: 0 8px 0 var(--orange2);
     }
-    .cta-section::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 50% 0%, rgba(168,85,247,.15) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .cta-section h2 { font-size: 42px; font-weight: 800; letter-spacing: -1px; margin-bottom: 16px; position: relative; }
-    .cta-section p  { font-size: 17px; color: var(--muted); margin-bottom: 36px; position: relative; }
-    .cta-actions    { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .cta-blob1 { position: absolute; width: 300px; height: 300px; border-radius: 50%; background: rgba(255,255,255,.1); top: -80px; left: -80px; }
+    .cta-blob2 { position: absolute; width: 250px; height: 250px; border-radius: 50%; background: rgba(255,255,255,.08); bottom: -60px; right: -60px; }
+    .cta-wrap h2 { font-family: 'Fredoka One', cursive; font-size: clamp(32px, 4vw, 52px); color: #fff; margin-bottom: 14px; position: relative; }
+    .cta-wrap p { font-size: 17px; color: rgba(255,255,255,.85); margin-bottom: 36px; font-weight: 600; position: relative; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; position: relative; }
+    .btn-white { background: #fff; color: var(--orange2); padding: 16px 36px; border-radius: 100px; font-size: 17px; font-weight: 800; text-decoration: none; box-shadow: 0 5px 0 rgba(0,0,0,.15); transition: transform .15s, box-shadow .15s; display: inline-flex; align-items: center; gap: 10px; }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 7px 0 rgba(0,0,0,.15); }
+    .btn-ghost { border: 2.5px solid rgba(255,255,255,.7); color: #fff; padding: 16px 36px; border-radius: 100px; font-size: 17px; font-weight: 800; text-decoration: none; transition: background .2s; }
+    .btn-ghost:hover { background: rgba(255,255,255,.15); }
 
-    /* ── Footer ─────────────────────────────────── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 40px 48px;
-      display: flex; align-items: center; justify-content: space-between; flex-wrap: gap;
-      max-width: 1200px; margin: 0 auto;
-      font-size: 13px; color: var(--muted);
-    }
-    footer a { color: var(--muted); text-decoration: none; }
-    footer a:hover { color: var(--text); }
+    /* FOOTER */
+    footer { background: #1c0a00; color: rgba(255,255,255,.7); padding: 40px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 14px; font-weight: 600; }
+    footer a { color: rgba(255,255,255,.6); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    .footer-logo { font-family: 'Fredoka One', cursive; font-size: 20px; color: var(--orange); }
 
-    /* ── Animations ─────────────────────────────── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Responsive ─────────────────────────────── */
-    @media (max-width: 640px) {
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
       nav { padding: 14px 20px; }
       .nav-links { display: none; }
-      .hero { padding: 100px 20px 60px; }
-      .features-wrap, footer { flex-direction: column; gap: 16px; text-align: center; }
-      .features-grid { grid-template-columns: 1fr; }
-      .cta-section { padding: 48px 24px; border-radius: 24px; }
+      .hero { flex-direction: column; padding: 100px 24px 60px; min-height: auto; }
+      .section { padding: 60px 24px; }
+      .cta-wrap { margin: 0 20px 60px; padding: 48px 24px; border-radius: 28px; }
+      footer { flex-direction: column; text-align: center; padding: 32px 24px; }
     }
   </style>
 </head>
 <body>
 
-<!-- ── Navbar ──────────────────────────────────── -->
+<!-- NAV -->
 <nav>
-  <a class="nav-logo" href="#"><span>🐾</span> Pawzy</a>
+  <a class="nav-logo" href="#">🐾 Pawzy</a>
   <div class="nav-links">
     <a href="#how-it-works">How it works</a>
     <a href="#features">Features</a>
@@ -272,175 +184,195 @@
   <a class="nav-cta" href="#download">Download Free</a>
 </nav>
 
-<!-- ── Hero ───────────────────────────────────── -->
+<!-- HERO -->
 <div class="hero">
-  <div class="hero-orb hero-orb-1"></div>
-  <div class="hero-orb hero-orb-2"></div>
-  <div class="hero-orb hero-orb-3"></div>
+  <div class="blob blob-tl"></div>
+  <div class="blob blob-br"></div>
 
-  <div class="hero-badge">🐾 Free &amp; Open Source · Linux &amp; Windows</div>
-  <h1>Your furry<br/>productivity guardian</h1>
-  <p class="hero-sub">
-    Pawzy tracks your screen time and sends a cute companion sliding onto
-    your screen when it's time to take a real break. No willpower required.
-  </p>
-  <div class="hero-actions">
-    <a class="btn-primary" href="https://github.com/2004Shivam/Pawzy/releases/latest" id="hero-download">
-      ⬇ Download Free
-    </a>
-    <a class="btn-secondary" href="#how-it-works">See how it works</a>
+  <div class="hero-left">
+    <div class="hero-badge">🐾 Free &amp; Open Source</div>
+    <h1>Your <span>furry</span><br/>productivity<br/>guardian</h1>
+    <p class="hero-sub">Pawzy watches your screen time and sends a cute companion sliding onto your screen when it's break time. No willpower required.</p>
+    <div class="hero-btns">
+      <a class="btn-green" href="#download">⬇ Download Free</a>
+      <a class="btn-outline" href="#how-it-works">See how it works</a>
+    </div>
+    <p class="hero-note">🐧 Linux AppImage &nbsp;·&nbsp; 🪟 Windows EXE &nbsp;·&nbsp; No setup needed</p>
   </div>
-  <p class="hero-note">Free forever · AppImage · No Python required</p>
-</div>
 
-<!-- ── Characters strip ───────────────────────── -->
-<div class="chars-strip">
-  <div class="chars-inner">
-    <!-- duplicated for seamless loop -->
-    <div class="char-pill"><span>🐱</span> Neko Cat</div>
-    <div class="char-pill"><span>🐕</span> Shiba Inu</div>
-    <div class="char-pill"><span>🐼</span> Chill Panda</div>
-    <div class="char-pill"><span>🦊</span> Fox Kit</div>
-    <div class="char-pill"><span>⏱</span> Break timer</div>
-    <div class="char-pill"><span>🚫</span> No skipping</div>
-    <div class="char-pill"><span>🔔</span> Tray notifications</div>
-    <div class="char-pill"><span>🚀</span> Launch on login</div>
-    <div class="char-pill"><span>🐱</span> Neko Cat</div>
-    <div class="char-pill"><span>🐕</span> Shiba Inu</div>
-    <div class="char-pill"><span>🐼</span> Chill Panda</div>
-    <div class="char-pill"><span>🦊</span> Fox Kit</div>
-    <div class="char-pill"><span>⏱</span> Break timer</div>
-    <div class="char-pill"><span>🚫</span> No skipping</div>
-    <div class="char-pill"><span>🔔</span> Tray notifications</div>
-    <div class="char-pill"><span>🚀</span> Launch on login</div>
+  <div class="hero-right">
+    <div class="char-preview">
+      <span class="em">🐱</span>
+      <span>Neko Cat</span>
+    </div>
+    <div class="char-preview">
+      <span class="em">🐕</span>
+      <span>Shiba Inu</span>
+    </div>
+    <div class="char-preview">
+      <span class="em">🐼</span>
+      <span>Chill Panda</span>
+    </div>
+    <div class="char-preview">
+      <span class="em">🦊</span>
+      <span>Fox Kit</span>
+    </div>
   </div>
 </div>
 
-<!-- ── How it works ────────────────────────────── -->
-<section id="how-it-works">
-  <div class="section-label">How it works</div>
-  <h2 class="section-title">Simple. Automatic.<br/>Impossible to ignore.</h2>
-  <p class="section-sub">Three steps stand between you and healthier screen habits.</p>
-
-  <div class="steps">
-    <div class="step-card">
-      <div class="step-num">1</div>
-      <h3>Set your schedule</h3>
-      <p>Tell Pawzy how long you want to work and how long your breaks should be. Adjust anytime from the tray menu.</p>
-    </div>
-    <div class="step-card">
-      <div class="step-num">2</div>
-      <h3>Your companion arrives</h3>
-      <p>When your work session ends, your chosen companion slides dramatically onto your screen. Breaks are enforced — no sneaking past.</p>
-    </div>
-    <div class="step-card">
-      <div class="step-num">3</div>
-      <h3>Break. Return. Repeat.</h3>
-      <p>Step away, stretch, hydrate. When the timer ends, your companion disappears and you're back to work, refreshed.</p>
-    </div>
+<!-- SCROLLING STRIP -->
+<div class="strip">
+  <div class="strip-inner">
+    <div class="strip-item">🐱 Neko Cat</div>
+    <div class="strip-item">⭐ Break Enforcer</div>
+    <div class="strip-item">🐕 Shiba Inu</div>
+    <div class="strip-item">🚀 Auto Start</div>
+    <div class="strip-item">🐼 Chill Panda</div>
+    <div class="strip-item">🔒 No Skipping</div>
+    <div class="strip-item">🦊 Fox Kit</div>
+    <div class="strip-item">🆓 Always Free</div>
+    <div class="strip-item">🐱 Neko Cat</div>
+    <div class="strip-item">⭐ Break Enforcer</div>
+    <div class="strip-item">🐕 Shiba Inu</div>
+    <div class="strip-item">🚀 Auto Start</div>
+    <div class="strip-item">🐼 Chill Panda</div>
+    <div class="strip-item">🔒 No Skipping</div>
+    <div class="strip-item">🦊 Fox Kit</div>
+    <div class="strip-item">🆓 Always Free</div>
   </div>
-</section>
+</div>
 
-<!-- ── Features ────────────────────────────────── -->
-<section id="features">
-  <div class="features-wrap">
-    <div class="features-text">
-      <div class="section-label">Features</div>
-      <h2 class="section-title">Everything you need,<br/>nothing you don't.</h2>
-      <p class="section-sub">
-        Pawzy is intentionally minimal. No subscriptions, no accounts,
-        no data collection. Just you and your companion.
-      </p>
-    </div>
-    <div class="features-grid">
-      <div class="feat-card">
-        <div class="feat-icon">🖥️</div>
-        <h3>Full-screen enforcement</h3>
-        <p>Breaks can't be dismissed or skipped. The overlay is always-on-top.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🎨</div>
-        <h3>4 companions</h3>
-        <p>Choose from Neko Cat, Shiba Inu, Chill Panda, or Fox Kit.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">⚙️</div>
-        <h3>Custom timers</h3>
-        <p>Any work duration from 5–120 min. Any break from 1–30 min.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🚀</div>
-        <h3>Launch on login</h3>
-        <p>Toggle auto-start so Pawzy is always running in the background.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🪶</div>
-        <h3>Lightweight</h3>
-        <p>Single AppImage, ~150MB installed. No Python needed on your machine.</p>
-      </div>
-      <div class="feat-card">
-        <div class="feat-icon">🔒</div>
-        <h3>100% local</h3>
-        <p>No telemetry, no servers. Everything lives on your machine.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ── Companions ──────────────────────────────── -->
-<section id="companions">
+<!-- COMPANIONS -->
+<div class="section" id="companions">
   <div class="section-label">Companions</div>
-  <h2 class="section-title">Choose who shows up.</h2>
-  <p class="section-sub">
-    Pick your companion during first launch or change anytime in Settings.
-    Each one has their own personality and animations.
-  </p>
+  <h2 class="section-title">Choose your break buddy 🐾</h2>
+  <p class="section-sub">Pick your companion at first launch or change anytime in Settings. Each one has a unique personality.</p>
 
   <div class="char-cards">
-    <div class="char-card cat">
-      <span class="emoji">🐱</span>
+    <div class="char-card cc-cat">
+      <span class="em">🐱</span>
       <h3>Neko Cat</h3>
-      <p>The original. Slides in from the right and judges your productivity silently.</p>
+      <p>Slides in from the right and silently judges your productivity with maximum grace.</p>
+      <span class="tag">THE ORIGINAL</span>
     </div>
-    <div class="char-card shiba">
-      <span class="emoji">🐕</span>
+    <div class="char-card cc-shiba">
+      <span class="em">🐕</span>
       <h3>Shiba Inu</h3>
-      <p>Much break. Very rest. Wow. Bobs happily and twitches ears during idle.</p>
+      <p>Much break. Very rest. Wow. Bobs happily and twitches ears during idle time.</p>
+      <span class="tag">SO WOW</span>
     </div>
-    <div class="char-card panda">
-      <span class="emoji">🐼</span>
+    <div class="char-card cc-panda">
+      <span class="em">🐼</span>
       <h3>Chill Panda</h3>
-      <p>Waddling in with bamboo in hand and ZZZs to share. Maximum chill energy.</p>
+      <p>Waddles in with bamboo in hand and ZZZs to share. Maximum chill energy.</p>
+      <span class="tag">MAX CHILL</span>
     </div>
-    <div class="char-card fox">
-      <span class="emoji">🦊</span>
+    <div class="char-card cc-fox">
+      <span class="em">🦊</span>
       <h3>Fox Kit</h3>
       <p>Trots in with a wagging tail and showers your screen in golden stars.</p>
+      <span class="tag">SPARKLY</span>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ── Download CTA ─────────────────────────────── -->
-<div class="cta-section" id="download">
-  <h2>Ready to take real breaks?</h2>
-  <p>Download Pawzy free. Double-click the AppImage to install — no Python, no npm, no setup.</p>
-  <div class="cta-actions">
-    <a class="btn-primary" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" id="download-linux-btn">
+<!-- HOW IT WORKS -->
+<div class="hiw-bg">
+  <div class="section" id="how-it-works">
+    <div class="section-label">How it works</div>
+    <h2 class="section-title">Simple. Automatic. Impossible to ignore. 🚫</h2>
+    <p class="section-sub">Three steps stand between you and healthier screen habits.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Set your schedule</h3>
+        <p>Tell Pawzy how long you want to work and how long your breaks should be. Adjust anytime from the system tray.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Your companion arrives</h3>
+        <p>When your work session ends, your companion slides dramatically onto your screen. The overlay is fullscreen and inescapable.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Break. Return. Repeat.</h3>
+        <p>Step away, stretch, hydrate. When the timer ends, your companion disappears and you're back — refreshed and ready.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section" id="features">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Everything you need ✅</h2>
+  <p class="section-sub">No subscriptions, no accounts, no data collection. Just you and your companion.</p>
+
+  <div class="feats">
+    <div class="feat">
+      <div class="ico">🖥️</div>
+      <h3>Inescapable breaks</h3>
+      <p>True fullscreen enforcement. No Alt+F4, no minimize, no sneaking past.</p>
+    </div>
+    <div class="feat">
+      <div class="ico">⚙️</div>
+      <h3>Custom timers</h3>
+      <p>Work 5–120 min, break 1–30 min. Change anytime from the tray.</p>
+    </div>
+    <div class="feat">
+      <div class="ico">🚀</div>
+      <h3>Launches on login</h3>
+      <p>Toggle auto-start so Pawzy is always running, even after restarts.</p>
+    </div>
+    <div class="feat">
+      <div class="ico">🔒</div>
+      <h3>100% offline</h3>
+      <p>No telemetry, no servers, no accounts. Everything lives on your machine.</p>
+    </div>
+    <div class="feat">
+      <div class="ico">🪶</div>
+      <h3>Lightweight</h3>
+      <p>Single AppImage or EXE. No Python, no npm, no setup needed.</p>
+    </div>
+    <div class="feat">
+      <div class="ico">🎨</div>
+      <h3>4 companions</h3>
+      <p>Cat, Shiba, Panda, or Fox — each with unique animations and personality.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DOWNLOAD CTA -->
+<div class="cta-wrap" id="download">
+  <div class="cta-blob1"></div>
+  <div class="cta-blob2"></div>
+  <h2>Ready to take real breaks? 🐾</h2>
+  <p>Free forever. No setup. Just download and double-click.</p>
+  <div class="cta-btns">
+    <a class="btn-white" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" id="download-linux-btn">
       🐧 Download for Linux
     </a>
-    <a class="btn-primary" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-Setup-0.1.0.exe" id="download-win-btn" style="background: linear-gradient(135deg, #1d4ed8, #3b82f6); box-shadow: 0 8px 32px rgba(59,130,246,.45);">
+    <a class="btn-white" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-Setup-0.1.0.exe" id="download-win-btn">
       🪟 Download for Windows
     </a>
-    <a class="btn-secondary" href="https://github.com/2004Shivam/Pawzy" id="github-btn">
+    <a class="btn-ghost" href="https://github.com/2004Shivam/Pawzy" id="github-btn">
       ⭐ Star on GitHub
     </a>
   </div>
 </div>
 
-<!-- ── Footer ─────────────────────────────────── -->
+<!-- FOOTER -->
 <footer>
-  <span>🐾 Pawzy — Made with ♥ for focused humans</span>
-  <span>Free &amp; Open Source · Linux · No data collected</span>
+  <span class="footer-logo">🐾 Pawzy</span>
+  <span>Made with ♥ for focused humans</span>
+  <span>
+    <a href="https://github.com/2004Shivam/Pawzy">GitHub</a>
+    &nbsp;·&nbsp;
+    <a href="https://github.com/2004Shivam/Pawzy/releases">Releases</a>
+    &nbsp;·&nbsp;
+    Free &amp; Open Source
+  </span>
 </footer>
 
 </body>

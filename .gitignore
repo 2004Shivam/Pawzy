@@ -12,7 +12,7 @@ __pycache__/
 venv/
 app_build/pawzy-core/dist/
 app_build/pawzy-core/build/
-*.spec
+# *.spec files are source — do NOT ignore them
 
 # ── Build artifacts / binaries (too large for GitHub) ────────────────────────
 production_artifacts/landing/*.AppImage

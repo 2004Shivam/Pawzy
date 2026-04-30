@@ -33,7 +33,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 
 .hl{position:relative;z-index:1;flex:1;max-width:500px}
 .hbadge{display:none}
-.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(40px,4.8vw,62px);line-height:1.1;color:var(--tx);margin-bottom:14px}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(38px,4.2vw,56px);line-height:1.1;color:#3d1500;margin-bottom:14px}
 .hero h1 em{color:var(--or);font-style:normal}
 .hsub{font-size:15px;color:#5a4840;line-height:1.65;margin-bottom:26px;max-width:400px;font-weight:700}
 .hbtns{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
@@ -85,18 +85,44 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 .cc-fox{background:#06b6d4;color:#fff;box-shadow:0 6px 0 #0e7490}
 .cc-fox .sel{border-color:#fff;color:#fff} .cc-fox .sel:hover{background:#fff;color:#06b6d4}
 
-/* HOW IT WORKS */
-.hiw{background:#fff8f2;padding:80px 0}
-.hiw-inner{max-width:1200px;margin:0 auto;padding:0 48px;display:flex;gap:60px;align-items:center;flex-wrap:wrap}
-.hiw-left{flex:1;min-width:280px}
-.hiw-right{flex:1;min-width:280px}
-.step{display:flex;align-items:flex-start;gap:18px;margin-bottom:32px;padding:24px;background:#fff;border-radius:20px;border:2.5px solid #ffe8d6;box-shadow:0 4px 0 #ffe8d6;transition:transform .2s}
-.step:hover{transform:translateY(-3px)}
-.sn{min-width:48px;height:48px;border-radius:14px;background:var(--or);color:#fff;font-family:'Fredoka One',cursive;font-size:24px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 0 var(--or2)}
-.step h3{font-family:'Fredoka One',cursive;font-size:18px;margin-bottom:4px}
-.step p{font-size:13px;color:var(--mu);line-height:1.6;font-weight:600}
-.hiw-char{text-align:center;font-size:120px;line-height:1;filter:drop-shadow(0 8px 20px rgba(0,0,0,.12))}
-.hiw-caption{font-family:'Fredoka One',cursive;font-size:18px;color:var(--or);text-align:center;margin-top:8px}
+/* HOW IT WORKS — reference layout */
+.hiw{background:#fffdf8;padding:60px 0;border-top:2px solid #f5ede0}
+.hiw-inner{max-width:1200px;margin:0 auto;padding:0 64px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.hiw-col{}
+.hiw-title{font-family:'Fredoka One',cursive;font-size:clamp(24px,2.8vw,36px);color:var(--tx);margin-bottom:28px}
+.hiw-bullet{font-family:'Fredoka One',cursive;font-size:17px;color:var(--tx);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.hiw-bullet::before{content:'●';color:var(--ye);font-size:14px}
+.hiw-card{background:#fff;border:2px solid #f0e8de;border-radius:16px;padding:14px 16px;margin-bottom:20px;box-shadow:0 3px 0 #f0e8de}
+.hiw-card .prog-label{font-size:12px;font-weight:800;color:var(--mu);margin-bottom:6px}
+.hiw-card .prog-bar{background:#e8e0d8;border-radius:50px;height:10px}
+.hiw-card .prog-fill{height:10px;border-radius:50px;background:linear-gradient(90deg,var(--or),var(--ye));width:65%}
+.hiw-sub{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:8px}
+.hiw-rewards{display:flex;gap:10px;align-items:center;margin-bottom:24px;font-size:32px}
+.hiw-dog{text-align:center;font-size:90px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.12))}
+.hiw-dog-label{font-size:13px;font-weight:700;color:var(--mu);text-align:center;margin-bottom:20px}
+/* mini chart */
+.chart-card{background:#fff;border:2px solid #f0e8de;border-radius:16px;padding:16px;box-shadow:0 3px 0 #f0e8de}
+.chart-title{font-family:'Fredoka One',cursive;font-size:14px;color:var(--tx);margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.chart-legend{display:flex;gap:12px;font-size:11px;font-weight:700;color:var(--mu);margin-bottom:12px}
+.chart-legend span{display:flex;align-items:center;gap:4px}
+.chart-legend .dot{width:8px;height:8px;border-radius:50%}
+.chart-bars{display:flex;gap:6px;align-items:flex-end;height:64px}
+.chart-bar{flex:1;border-radius:4px 4px 0 0;min-width:12px}
+.chart-bar.or{background:var(--or)}
+.chart-bar.gr{background:#22c55e}
+/* testimonials */
+.testi{background:#fff;padding:60px 0;border-top:2px solid #f5ede0}
+.testi-inner{max-width:1200px;margin:0 auto;padding:0 64px}
+.testi h2{font-family:'Fredoka One',cursive;font-size:clamp(22px,2.5vw,32px);color:var(--tx);margin-bottom:6px}
+.testi-sub{font-size:14px;color:var(--mu);font-weight:600;margin-bottom:32px}
+.testi-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.tc{background:#fffbf5;border:2px solid #f0e8de;border-radius:20px;padding:24px;box-shadow:0 4px 0 #f0e8de}
+.tc-stars{color:#f97316;font-size:14px;margin-bottom:10px}
+.tc-text{font-size:13px;color:#5a4840;line-height:1.6;font-weight:600;margin-bottom:14px;font-style:italic}
+.tc-author{display:flex;align-items:center;gap:10px}
+.tc-avatar{width:36px;height:36px;border-radius:50%;font-size:24px;display:flex;align-items:center;justify-content:center}
+.tc-name{font-family:'Fredoka One',cursive;font-size:14px;color:var(--tx)}
+.tc-role{font-size:11px;color:var(--mu);font-weight:700}
 
 /* FEATURES */
 .fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:48px}
@@ -124,12 +150,15 @@ footer a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
 footer a:hover{color:#fff}
 .flogo{font-family:'Fredoka One',cursive;font-size:20px;color:var(--or)}
 
+@media(max-width:900px){
+  .hiw-inner{grid-template-columns:1fr}
+  .ccards{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:768px){
   nav{padding:12px 20px}.nm{display:none}
-  .hero{flex-direction:column;padding:90px 24px 50px;gap:32px;min-height:auto}
+  .hero{flex-direction:column;padding:70px 24px 50px;gap:32px;min-height:auto}
   .hr{width:100%}.dashboard{width:100%;max-width:300px}
-  .sec,.hiw-inner{padding:48px 24px}
-  .hiw-inner{gap:32px}
+  .sec,.hiw-inner,.testi-inner{padding-left:24px;padding-right:24px}
   .cta{margin:0 16px 60px;padding:48px 24px;border-radius:28px}
   footer{flex-direction:column;text-align:center;padding:32px 24px}
 }
@@ -140,11 +169,11 @@ footer a:hover{color:#fff}
 <nav>
   <a class="nl" href="#">🐾 Pawzy</a>
   <div class="nm">
-    <a href="#companions">Companions</a>
-    <a href="#how-it-works">How it works</a>
-    <a href="#features">Features</a>
+    <a href="#companions">Features</a>
+    <a href="#download">Pricing</a>
+    <a href="#features">Contact</a>
   </div>
-  <a class="nc" href="#download">Download Free</a>
+  <a class="nc" href="#download">Sign up</a>
 </nav>
 
 <section class="hero">
@@ -233,25 +262,62 @@ footer a:hover{color:#fff}
 
 <div class="hiw" id="how-it-works">
   <div class="hiw-inner">
-    <div class="hiw-left">
-      <div class="lbl">How it works</div>
-      <h2 class="stitle">Simple. Automatic.<br/>Impossible to ignore.</h2>
-      <div class="step">
-        <div class="sn">1</div>
-        <div><h3>Set your schedule</h3><p>Tell Pawzy how long you want to work and how long breaks should be. Adjust anytime from the system tray menu.</p></div>
+    <div class="hiw-col">
+      <h2 class="hiw-title">How Pawzy Works</h2>
+      <div class="hiw-bullet">Set Focus Goals:</div>
+      <div class="hiw-card">
+        <div class="prog-label">Progress</div>
+        <div class="prog-bar"><div class="prog-fill"></div></div>
       </div>
-      <div class="step">
-        <div class="sn">2</div>
-        <div><h3>Your companion arrives</h3><p>When your session ends, your chosen companion slides dramatically onto your screen. Fullscreen, inescapable — no sneaking past.</p></div>
-      </div>
-      <div class="step">
-        <div class="sn">3</div>
-        <div><h3>Break. Return. Repeat.</h3><p>Step away, stretch, hydrate. When the timer ends your companion disappears and you're back — refreshed and ready.</p></div>
+      <div class="hiw-sub">Work with Your Guardian:</div>
+      <div class="hiw-bullet">Earn Rewards:</div>
+      <div class="hiw-rewards">🪙 🏅 🎖️</div>
+    </div>
+    <div class="hiw-col">
+      <div class="hiw-dog">🐕</div>
+      <div class="hiw-dog-label">Your companion helps you study &amp; focus</div>
+      <div class="hiw-bullet">Track Productivity:</div>
+      <div class="chart-card">
+        <div class="chart-title">Focus Productivity <span style="font-size:11px;color:var(--or)">● Focus</span></div>
+        <div class="chart-legend">
+          <span><span class="dot" style="background:var(--or)"></span>Classtime</span>
+          <span><span class="dot" style="background:#22c55e"></span>Focus breaks</span>
+        </div>
+        <div class="chart-bars">
+          <div class="chart-bar or" style="height:30%"></div>
+          <div class="chart-bar gr" style="height:45%"></div>
+          <div class="chart-bar or" style="height:55%"></div>
+          <div class="chart-bar gr" style="height:40%"></div>
+          <div class="chart-bar or" style="height:70%"></div>
+          <div class="chart-bar gr" style="height:60%"></div>
+          <div class="chart-bar or" style="height:85%"></div>
+          <div class="chart-bar gr" style="height:75%"></div>
+        </div>
       </div>
     </div>
-    <div class="hiw-right">
-      <div class="hiw-char">🐕</div>
-      <div class="hiw-caption">Much break. Very rest. Wow. 🌟</div>
+  </div>
+</div>
+
+<div class="testi">
+  <div class="testi-inner">
+    <h2>My Testimonials</h2>
+    <p class="testi-sub">Thank you to our loyal and satisfied users.</p>
+    <div class="testi-cards">
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-text">"Pawzy helps me stay focused and build healthy work habits with a delightful animal companion."</p>
+        <div class="tc-author"><div class="tc-avatar">👩</div><div><div class="tc-name">Bashirah</div><div class="tc-role">Designer</div></div></div>
+      </div>
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-text">"It combines productivity and a cute companion and helps you manage your work-rest balance."</p>
+        <div class="tc-author"><div class="tc-avatar">👨</div><div><div class="tc-name">Ash M</div><div class="tc-role">Developer</div></div></div>
+      </div>
+      <div class="tc">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-text">"The inescapable breaks actually made me take real breaks. My eyes thank me every day!"</p>
+        <div class="tc-author"><div class="tc-avatar">🧑</div><div><div class="tc-name">Priya K</div><div class="tc-role">Student</div></div></div>
+      </div>
     </div>
   </div>
 </div>
@@ -281,9 +347,39 @@ footer a:hover{color:#fff}
 </div>
 
 <footer>
-  <span class="flogo">🐾 Pawzy</span>
-  <span>Made with ♥ for focused humans</span>
-  <span><a href="https://github.com/2004Shivam/Pawzy">GitHub</a> · <a href="https://github.com/2004Shivam/Pawzy/releases">Releases</a> · Free &amp; Open Source</span>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    <span class="flogo">🐾 Pawzy</span>
+    <span style="font-size:12px">The furry productivity guardian</span>
+  </div>
+  <div style="display:flex;gap:40px;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">App</span>
+      <a href="#companions">Features</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#features">Companions</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">Download</span>
+      <a href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage">Linux AppImage</a>
+      <a href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-Setup-0.1.0.exe">Windows EXE</a>
+      <a href="https://github.com/2004Shivam/Pawzy/releases">All Releases</a>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">Contact</span>
+      <a href="https://github.com/2004Shivam/Pawzy">GitHub</a>
+      <a href="https://github.com/2004Shivam/Pawzy/issues">Report Bug</a>
+      <a href="https://github.com/2004Shivam/Pawzy">Contribute</a>
+    </div>
+  </div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px">
+    <a class="nc" href="#download" style="font-size:14px">Download Now</a>
+    <div style="display:flex;gap:14px">
+      <a href="https://github.com/2004Shivam/Pawzy" style="font-size:20px">🐙</a>
+      <a href="#" style="font-size:20px">🐦</a>
+      <a href="#" style="font-size:20px">📷</a>
+    </div>
+    <span style="font-size:11px">pawzy-silk.vercel.app</span>
+  </div>
 </footer>
 
 </body>

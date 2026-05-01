@@ -1145,36 +1145,45 @@
         <img class="em" src="cat.png" alt="Neko Cat">
         <h3>Neko Cat</h3>
         <p>The original. Slides in from the right and judges your productivity silently.</p>
-        <div style="display:flex; gap:8px; justify-content:center;">
-          <a class="sel" href="#download">Get Pawzy</a>
-          <button class="sel" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5);" onclick="showPreview('cat_preview.png')">Preview</button>
-        </div>
+        <a class="sel" href="#download">Get Pawzy</a>
       </div>
       <div class="cc cc-shi">
         <img class="em" src="dog.png" alt="Shiba Inu">
         <h3>Shiba Inu</h3>
         <p>Much break. Very rest. Wow. Bobs happily and twitches ears during idle.</p>
-        <div style="display:flex; gap:8px; justify-content:center;">
-          <a class="sel" href="#download">Get Pawzy</a>
-          <button class="sel" style="background:rgba(255,255,255,0.2); color:inherit; border-color:currentColor;" onclick="showPreview('shiba_preview.png')">Preview</button>
-        </div>
+        <a class="sel" href="#download">Get Pawzy</a>
       </div>
       <div class="cc cc-pan">
-        <img class="em" src="capybara.png" alt="Chill King Capybara">
-        <h3>Capybara</h3>
+        <img class="em" src="panda.png" alt="ChillPanda">
+        <h3>ChillPanda</h3>
         <p>Maximum chill energy. Relaxes on your screen while you take a breather.</p>
-        <div style="display:flex; gap:8px; justify-content:center;">
-          <a class="sel" href="#download">Get Pawzy</a>
-          <button class="sel" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5);" onclick="showPreview('capybara_preview.png')">Preview</button>
-        </div>
+        <a class="sel" href="#download">Get Pawzy</a>
       </div>
       <div class="cc cc-fox">
-        <img class="em" src="monkey.png" alt="Playful Monkey">
-        <h3>Monkey</h3>
+        <img class="em" src="fox.png" alt="FoxKit">
+        <h3>FoxKit</h3>
         <p>Playful and curious. Swings in to make sure you step away from the keyboard.</p>
-        <div style="display:flex; gap:8px; justify-content:center;">
-          <a class="sel" href="#download">Get Pawzy</a>
-          <button class="sel" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5);" onclick="showPreview('monkey_preview.png')">Preview</button>
+        <a class="sel" href="#download">Get Pawzy</a>
+      </div>
+    </div>
+
+    <div style="margin-top: 80px; text-align: center;">
+      <div class="lbl">In Action</div>
+      <h2 class="stitle">The Hijacking Experience</h2>
+      <p class="ssub" style="margin-left: auto; margin-right: auto;">See exactly how Pawzy takes over your screen to enforce your wellness break.</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 40px;">
+        <div style="background: #fff; padding: 12px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #f0ece8;">
+          <img src="cat_preview.png" style="width: 100%; border-radius: 8px; display: block;" alt="Cat Hijacking Preview">
+          <p style="font-size: 13px; font-weight: 800; color: #4a3728; margin-top: 12px;">Neko Cat enforcing a hydration break</p>
+        </div>
+        <div style="background: #fff; padding: 12px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #f0ece8;">
+          <img src="shiba_preview.png" style="width: 100%; border-radius: 8px; display: block;" alt="Shiba Hijacking Preview">
+          <p style="font-size: 13px; font-weight: 800; color: #4a3728; margin-top: 12px;">Shiba Inu watching your focus session</p>
+        </div>
+        <div style="background: #fff; padding: 12px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #f0ece8;">
+          <img src="capybara_preview.png" style="width: 100%; border-radius: 8px; display: block;" alt="Capybara Hijacking Preview">
+          <p style="font-size: 13px; font-weight: 800; color: #4a3728; margin-top: 12px;">Capybara bringing the chill energy</p>
         </div>
       </div>
     </div>
@@ -1280,7 +1289,7 @@
       <div class="fc">
         <div class="ico">🎨</div>
         <h3>4 Companions</h3>
-        <p>Cat, Shiba, Capybara, Monkey — each with unique animations and personality.</p>
+        <p>Cat, Shiba, ChillPanda, FoxKit — each with unique animations and personality.</p>
       </div>
     </div>
   </div>
@@ -1364,20 +1373,7 @@
     </div>
   </footer>
 
-  <!-- Preview Modal -->
-  <div id="preview-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:1000; align-items:center; justify-content:center; cursor:pointer;" onclick="this.style.display='none'">
-    <img id="modal-img" src="" style="max-width:90%; max-height:90%; border-radius:12px; box-shadow:0 0 40px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.1);">
-    <div style="position:absolute; top:20px; right:30px; color:#fff; font-size:40px; font-weight:bold;">&times;</div>
-  </div>
-
   <script>
-    function showPreview(imgSrc) {
-      const modal = document.getElementById('preview-modal');
-      const img = document.getElementById('modal-img');
-      img.src = imgSrc;
-      modal.style.display = 'flex';
-    }
-
     // Email Gate Logic (Formspree)
     document.getElementById('email-form').addEventListener('submit', function (e) {
       e.preventDefault();

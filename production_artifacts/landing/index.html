@@ -1305,11 +1305,11 @@
     <p id="dl-disclaimer" style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 40px; font-weight: 600; max-width: 400px; margin-left: auto; margin-right: auto; display: none;">Windows may show a SmartScreen warning since it's a new indie app — click 'More info' → 'Run anyway'. It's fully open source and safe.</p>
 
     <div id="email-gate" style="position:relative;z-index:2; max-width: 600px; margin: 0 auto;">
-      <div style="font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Stay Updated</div>
+      <div style="font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Enter email to download</div>
       <form id="email-form" style="display:flex;gap:10px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
         <input type="email" id="user-email" required placeholder="Enter your email address"
           style="padding:15px 24px;border-radius:50px;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:16px;width:100%;max-width:320px;box-shadow:0 5px 0 rgba(0,0,0,.1)">
-        <button type="submit" class="bgh" style="cursor:pointer">💌 Subscribe</button>
+        <button type="submit" class="bgh" style="cursor:pointer">⬇️ Download</button>
       </form>
       <p style="font-size:13px;color:rgba(255,255,255,.75);font-weight:600">We'll email you occasional product updates. No spam.</p>
     </div>
@@ -1373,7 +1373,7 @@
         body: JSON.stringify({ email: email })
       })
         .then(response => {
-          submitBtn.innerText = "Subscribed! 🎉";
+          submitBtn.innerText = "Success! 🐾";
           submitBtn.style.opacity = "1";
           document.getElementById('user-email').value = '';
           

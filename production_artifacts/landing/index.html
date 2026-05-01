@@ -1078,6 +1078,9 @@
       .action-sec {
         padding: 60px 20px;
       }
+      .contact-row {
+        flex-direction: column;
+      }
     }
 
     .carousel-track {
@@ -1447,29 +1450,43 @@
       </div>
       <div class="fc">
         <div class="ico">🎨</div>
-        <h3>4 Companions</h3>
-        <p>Cat, Shiba, ChillPanda, FoxKit — each with unique animations and personality.</p>
+        <div class="sec" id="faq" style="background: rgba(255, 255, 255, .85); border-top: 2px solid #f5ede0; max-width: 100%; padding-top: 60px; padding-bottom: 60px;">
+    <div style="max-width: 800px; margin: 0 auto;">
+      <div style="text-align:center; margin-bottom:48px;">
+        <h2 class="stitle">Frequently Asked Questions</h2>
+      </div>
+      <div class="faq-item">
+        <h3>What if I get an urgent call?</h3>
+        <p>Pawzy is designed to be inescapable to build discipline, but there's a strict emergency override sequence
+          if absolutely necessary (though we don't make it too easy!).</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does it work over fullscreen games or videos?</h3>
+        <p>Yes. Pawzy runs at the OS level and will show up over most borderless/fullscreen applications when your
+          break starts.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is my data private?</h3>
+        <p>100%. Pawzy is completely offline. It doesn't connect to any servers, has no accounts, and requires no
+          internet access to work.</p>
       </div>
     </div>
   </div>
 
-  <div class="sec" id="faq" style="background: rgba(255, 255, 255, .85); border-top: 2px solid #f5ede0; max-width: 100%; padding-top: 60px; padding-bottom: 60px;">
-    <div style="max-width: 800px; margin: 0 auto; padding: 0 64px;">
-      <h2 class="stitle" style="margin-bottom: 32px; text-align: center;">Frequently Asked Questions</h2>
-      
-      <div style="margin-bottom: 24px;">
-        <h4 style="font-family: 'Fredoka One', cursive; font-size: 16px; margin-bottom: 8px;">What if I get an urgent call?</h4>
-        <p style="font-size: 14px; color: var(--mu); font-weight: 600; line-height: 1.6;">Pawzy is designed to be inescapable to build discipline, but there's a strict emergency override sequence if absolutely necessary (though we don't make it too easy!).</p>
+  <div class="sec" id="contact" style="max-width: 800px; margin: 80px auto; text-align: center; padding: 0 20px;">
+    <div class="lbl">Contact</div>
+    <h2 class="stitle" style="margin-bottom: 16px;">Get in touch 🐾</h2>
+    <p class="ssub" style="margin-bottom: 40px;">Questions, feedback, or just want to say hi? Send us a message!</p>
+    
+    <form id="contact-form" style="display: flex; flex-direction: column; gap: 16px; text-align: left;">
+      <div class="contact-row" style="display: flex; gap: 16px;">
+        <input type="text" id="contact-name" placeholder="Your Name" required style="flex: 1; padding: 16px; border-radius: 12px; border: 2px solid #f0e8dc; font-family: inherit; font-size: 15px;">
+        <input type="email" id="contact-email" placeholder="Your Email" required style="flex: 1; padding: 16px; border-radius: 12px; border: 2px solid #f0e8dc; font-family: inherit; font-size: 15px;">
       </div>
-
-      <div style="margin-bottom: 24px;">
-        <h4 style="font-family: 'Fredoka One', cursive; font-size: 16px; margin-bottom: 8px;">Does it work over fullscreen games or videos?</h4>
-        <p style="font-size: 14px; color: var(--mu); font-weight: 600; line-height: 1.6;">Yes. Pawzy runs at the OS level and will show up over most borderless/fullscreen applications when your break starts.</p>
-      </div>
-
-      <div style="margin-bottom: 24px;">
-        <h4 style="font-family: 'Fredoka One', cursive; font-size: 16px; margin-bottom: 8px;">Is my data private?</h4>
-        <p style="font-size: 14px; color: var(--mu); font-weight: 600; line-height: 1.6;">100%. Pawzy is completely offline. It doesn't connect to any servers, has no accounts, and requires no internet access to work.</p>
+      <textarea id="contact-message" placeholder="Your Message" required style="padding: 16px; border-radius: 12px; border: 2px solid #f0e8dc; font-family: inherit; min-height: 150px; resize: vertical; font-size: 15px;"></textarea>
+      <button type="submit" class="bw" style="width: 100%; padding: 18px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.2s; background: var(--or); color: #fff; border: none; font-size: 16px; box-shadow: 0 4px 0 var(--or2);">Send Message</button>
+    </form>
+  </div>
       </div>
     </div>
   </div>
@@ -1517,8 +1534,13 @@
         <a href="https://github.com/2004Shivam/Pawzy/releases">All Releases</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">Legal</span>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="https://github.com/2004Shivam/Pawzy/blob/main/LICENSE">License</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
         <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">Contact</span>
-        <a href="https://github.com/2004Shivam/Pawzy">GitHub</a>
+        <a href="#contact">Contact Us</a>
         <a href="https://github.com/2004Shivam/Pawzy/issues">Report Bug</a>
         <a href="https://github.com/2004Shivam/Pawzy">Contribute</a>
       </div>
@@ -1604,6 +1626,41 @@
           submitBtn.innerText = "Error! Try again.";
           submitBtn.style.opacity = "1";
         });
+    });
+
+    // Contact Form Logic (Formspree)
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const submitBtn = this.querySelector('button[type="submit"]');
+      const name = document.getElementById('contact-name').value;
+      const email = document.getElementById('contact-email').value;
+      const message = document.getElementById('contact-message').value;
+
+      submitBtn.innerText = "Sending...";
+      submitBtn.disabled = true;
+
+      const formspreeUrl = "https://formspree.io/f/xkoynelg";
+
+      fetch(formspreeUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ name: name, email: email, message: message })
+      })
+      .then(response => {
+        submitBtn.innerText = "Message Sent! 🐾";
+        this.reset();
+        setTimeout(() => {
+          submitBtn.innerText = "Send Message";
+          submitBtn.disabled = false;
+        }, 3000);
+      })
+      .catch(error => {
+        submitBtn.innerText = "Error! Try again.";
+        submitBtn.disabled = false;
+      });
     });
   </script>
 

@@ -108,8 +108,8 @@ function setAutostart(enabled) {
       'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup');
     const batPath = path.join(startupDir, 'Pawzy.bat');
     if (enabled && app.isPackaged) {
-      // Write a .bat that launches Pawzy silently
-      const bat = `@echo off\nstart "" "${process.execPath}"\n`;
+      // Write a .bat that launches Pawzy silently in the background
+      const bat = `@echo off\nstart "" "${process.execPath}" --hidden\n`;
       fs.mkdirSync(startupDir, { recursive: true });
       fs.writeFileSync(batPath, bat, 'utf8');
       console.log('[Electron] Windows autostart enabled.');
@@ -126,7 +126,7 @@ function setAutostart(enabled) {
     const desktop = [
       '[Desktop Entry]', 'Type=Application', 'Name=Pawzy',
       'Comment=Productivity break companion',
-      `Exec=${execPath}`, 'Icon=pawzy', 'Terminal=false',
+      `Exec=${execPath} --hidden`, 'Icon=pawzy', 'Terminal=false',
       'Categories=Utility;', 'X-GNOME-Autostart-enabled=true',
     ].join('\n') + '\n';
     fs.writeFileSync(AUTOSTART_FILE, desktop, 'utf8');
@@ -304,7 +304,7 @@ function openSettingsWindow() {
     frame: true,
     alwaysOnTop: false,
     skipTaskbar: false,
-    title: 'Pawzy — Settings',
+    title: 'Pawzy — Dashboard',
     icon: APP_ICON,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
@@ -461,16 +461,21 @@ app.whenReady().then(() => {
   if (cfg.first_launch !== false) {
     setTimeout(openOnboardingWindow, 800);
   } else {
-    // Show a tray notification so the user knows Pawzy started
-    setTimeout(() => {
-      if (Notification.isSupported()) {
-        new Notification({
-          title: 'Pawzy is running 🐾',
-          body: 'Look for the paw icon in your system tray.',
-          silent: true,
-        }).show();
-      }
-    }, 3000);
+    // If not launched via autostart (no --hidden flag), open the dashboard immediately
+    if (!process.argv.includes('--hidden')) {
+      setTimeout(openSettingsWindow, 800);
+    } else {
+      // Show a tray notification so the user knows Pawzy started in background
+      setTimeout(() => {
+        if (Notification.isSupported()) {
+          new Notification({
+            title: 'Pawzy is running 🐾',
+            body: 'Look for the paw icon in your system tray.',
+            silent: true,
+          }).show();
+        }
+      }, 3000);
+    }
   }
 
   // In production give binary 2s to start; in dev it's already running

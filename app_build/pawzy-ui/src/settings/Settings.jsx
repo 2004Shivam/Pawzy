@@ -122,7 +122,7 @@ export default function Settings() {
       <div style={s.header}>
         <div style={s.logo}>🐾</div>
         <div>
-          <h1 style={s.title}>Pawzy Settings</h1>
+          <h1 style={s.title}>Pawzy Dashboard</h1>
           <p style={s.subtitle}>Customize your focus sessions</p>
         </div>
       </div>

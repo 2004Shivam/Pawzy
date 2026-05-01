@@ -66,6 +66,9 @@ class PawzyTray:
         self._menu.addAction(quit_action)
 
         self._tray.setContextMenu(self._menu)
+        
+        # Open interface on tray icon click
+        self._tray.activated.connect(self._on_tray_activated)
 
         # Connect signals (thread-safe Qt updates)
         self._signals.stats_updated.connect(self._update_stats_display)
@@ -138,6 +141,9 @@ class PawzyTray:
         bus.emit("user_action", {"action": "reset"})
         self._tray.showMessage("Pawzy", "Timer reset! Fresh start 🐾", QSystemTrayIcon.MessageIcon.Information, 2000)
 
+    def _on_tray_activated(self, reason: QSystemTrayIcon.ActivationReason) -> None:
+        if reason in (QSystemTrayIcon.ActivationReason.Trigger, QSystemTrayIcon.ActivationReason.DoubleClick):
+            self._open_settings()
 
     def _quit(self) -> None:
         print("[Tray] Quitting Pawzy...")

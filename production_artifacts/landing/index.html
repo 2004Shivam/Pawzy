@@ -1,434 +1,1376 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Pawzy — Your Furry Productivity Guardian</title>
-<meta name="description" content="Pawzy sends a cute animal companion onto your screen at break time. Free for Linux & Windows."/>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>"/>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--or:#f97316;--or2:#ea580c;--ye:#fbbf24;--dk-ye:#e6a800;--gr:#16a34a;--te:#0d9488;--bg:#fdf8f0;--tx:#2d1200;--mu:#78716c}
-html{scroll-behavior:smooth}
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Pawzy — Your Furry Productivity Guardian</title>
+  <meta name="description"
+    content="Pawzy sends a cute animal companion onto your screen at break time. Free for Linux & Windows." />
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
 
-/* NAV */
-nav{position:sticky;top:0;z-index:200;background:rgba(253,248,240,.96);backdrop-filter:blur(12px);border-bottom:2px solid #f0e8dc;display:flex;align-items:center;justify-content:space-between;padding:14px 48px}
-.nl{font-family:'Fredoka One',cursive;font-size:22px;color:var(--or);text-decoration:none;display:flex;align-items:center;gap:6px}
-.nm{display:flex;gap:28px}
-.nm a{color:var(--mu);text-decoration:none;font-size:15px;font-weight:700;transition:color .2s}
-.nm a:hover{color:var(--or)}
-.nc{background:var(--gr);color:#fff;padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 0 #15803d;transition:transform .15s,box-shadow .15s}
-.nc:hover{transform:translateY(-2px);box-shadow:0 6px 0 #15803d}
+    :root {
+      --or: #f97316;
+      --or2: #ea580c;
+      --ye: #fbbf24;
+      --dk-ye: #e6a800;
+      --gr: #16a34a;
+      --te: #0d9488;
+      --bg: #fdf8f0;
+      --tx: #2d1200;
+      --mu: #78716c
+    }
 
-/* PAGE BACKGROUND — soft warm cream with doodly shapes */
-body{background:var(--bg)}
+    html {
+      scroll-behavior: smooth
+    }
 
-/* Doodly background layer — large smooth corner blobs */
-.bg-doodles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.dblob{position:absolute}
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--bg);
+      color: var(--tx);
+      overflow-x: hidden
+    }
 
-/* TOP-LEFT — giant flowing amber blob, bleeds from top-left corner */
-.db-tl{
-  width:620px;height:580px;
-  background:#f9a825;
-  top:-220px;left:-220px;
-  border-radius:44% 56% 68% 32% / 52% 40% 60% 48%;
-  animation:wobble-a 9s ease-in-out infinite;
-}
-/* small dark-yellow accent bump — below and clear of hero text */
-.db-tl-s{
-  width:140px;height:130px;
-  background:#e6a800;
-  top:440px;left:20px;
-  border-radius:55% 45% 40% 60% / 48% 58% 42% 52%;
-  animation:wobble-b 7s ease-in-out infinite;
-}
-/* TOP-RIGHT — medium golden accent */
-.db-tr{
-  width:280px;height:260px;
-  background:#e6a800;
-  top:-80px;right:-80px;
-  border-radius:58% 42% 36% 64% / 52% 64% 36% 48%;
-  animation:wobble-b 11s ease-in-out infinite;
-}
-/* BOTTOM-RIGHT — large warm-yellow blob */
-.db-br{
-  width:540px;height:500px;
-  background:#fbbf24;
-  bottom:-160px;right:-160px;
-  border-radius:52% 48% 38% 62% / 44% 60% 40% 56%;
-  animation:wobble-a 10s ease-in-out infinite reverse;
-}
-/* BOTTOM-LEFT — small accent */
-.db-bl{
-  width:200px;height:185px;
-  background:#f9a825;
-  bottom:-60px;left:-50px;
-  border-radius:48% 52% 58% 42% / 55% 44% 56% 45%;
-  animation:wobble-b 8s ease-in-out infinite;
-}
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(253, 248, 240, .96);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid #f0e8dc;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 48px
+    }
 
-@keyframes wobble-a{
-  0%,100%{border-radius:44% 56% 68% 32% / 52% 40% 60% 48%;transform:rotate(0deg)}
-  50%{border-radius:56% 44% 32% 68% / 48% 60% 40% 52%;transform:rotate(3deg)}
-}
-@keyframes wobble-b{
-  0%,100%{border-radius:58% 42% 36% 64% / 52% 64% 36% 48%;transform:rotate(0deg)}
-  50%{border-radius:42% 58% 64% 36% / 64% 36% 64% 36%;transform:rotate(-4deg)}
-}
+    .nl {
+      font-family: 'Fredoka One', cursive;
+      font-size: 22px;
+      color: var(--or);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
 
-/* HERO — content centered with generous padding so text clears the blob */
-.hero{
-  position:relative;z-index:1;
-  display:flex;align-items:center;justify-content:center;
-  padding:80px 100px 80px 160px;
-  gap:60px;
-  min-height:auto;
-}
+    .nm {
+      display: flex;
+      gap: 28px
+    }
 
-.hl{
-  position:relative;z-index:2;
-  flex:0 0 auto;width:440px;
-}
-.hbadge{display:none}
-.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(42px,4.8vw,62px);line-height:1.06;color:#2a0e00;margin-bottom:16px;letter-spacing:-0.5px}
-.hero h1 em{color:var(--or);font-style:normal}
-.hsub{font-size:16px;color:#5c3d28;line-height:1.72;margin-bottom:28px;max-width:400px;font-weight:600}
-.hbtns{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
-.bg{background:var(--gr);color:#fff;padding:14px 32px;border-radius:50px;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 5px 0 #15803d;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:8px}
-.bg:hover{transform:translateY(-2px);box-shadow:0 7px 0 #15803d}
-.blink{color:var(--or2);font-size:14px;font-weight:800;text-decoration:none;border-bottom:2px solid var(--or);transition:opacity .2s}
-.blink:hover{opacity:.75}
-.hnote{font-size:12px;color:#9a7560;font-weight:700;display:flex;align-items:center;gap:6px}
+    .nm a {
+      color: var(--mu);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 700;
+      transition: color .2s
+    }
 
-/* hero right */
-.hr{position:relative;z-index:2;flex:1;display:flex;justify-content:center;align-items:center}
-.dashboard{background:#fff;border-radius:24px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.12);border:2px solid #f0ece8;width:320px}
-.db-bar{display:flex;align-items:center;gap:6px;margin-bottom:16px}
-.db-dot{width:10px;height:10px;border-radius:50%}
-.db-title{font-family:'Fredoka One',cursive;font-size:14px;color:var(--mu);margin-left:6px}
-.db-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.db-stat{background:#fff7ed;border-radius:14px;padding:14px 12px;text-align:center}
-.db-stat .n{font-family:'Fredoka One',cursive;font-size:24px;color:var(--or)}
-.db-stat .l{font-size:11px;color:var(--mu);font-weight:700}
-.db-bar2{background:#f5f0eb;border-radius:50px;height:10px;margin:4px 0}
-.db-fill{height:10px;border-radius:50px;background:linear-gradient(90deg,var(--or),var(--ye))}
-.db-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:12px;font-weight:700;color:var(--mu)}
-.db-char{font-size:40px;text-align:center;padding:8px 0}
+    .nm a:hover {
+      color: var(--or)
+    }
 
-/* MARQUEE */
-.mq{background:var(--or);padding:14px 0;overflow:hidden;position:relative;z-index:1}
-.mqi{display:flex;gap:36px;animation:sc 22s linear infinite;width:max-content}
-.mqt{font-family:'Fredoka One',cursive;font-size:17px;color:#fff;white-space:nowrap;display:flex;align-items:center;gap:8px}
-@keyframes sc{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .nc {
+      background: var(--gr);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 4px 0 #15803d;
+      transition: transform .15s, box-shadow .15s
+    }
 
-/* COMPANIONS */
-.sec{padding:56px 64px;max-width:1200px;margin:0 auto;position:relative;z-index:1}
-.lbl{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:6px}
-.stitle{font-family:'Fredoka One',cursive;font-size:clamp(26px,3vw,40px);color:var(--tx);margin-bottom:8px}
-.ssub{font-size:15px;color:var(--mu);max-width:460px;line-height:1.65;font-weight:600;margin-bottom:36px}
+    .nc:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #15803d
+    }
 
-.ccards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.cc{border-radius:24px;padding:28px 18px 22px;text-align:center;transition:transform .2s,box-shadow .2s;cursor:default}
-.cc:hover{transform:translateY(-6px)}
-.cc .em{width:90px;height:90px;display:block;margin:0 auto 14px;object-fit:cover;border-radius:50%;background:#fff;padding:6px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
-.cc h3{font-family:'Fredoka One',cursive;font-size:20px;margin-bottom:5px}
-.cc p{font-size:12px;line-height:1.5;font-weight:700;margin-bottom:14px;opacity:.85}
-.sel{display:inline-block;padding:7px 26px;border-radius:50px;font-size:12px;font-weight:900;border:2px solid currentColor;cursor:pointer;transition:background .2s,color .2s;text-decoration:none}
-.cc-cat{background:#f97316;color:#fff;box-shadow:0 6px 0 #c2410c}
-.cc-cat .sel{border-color:#fff;color:#fff} .cc-cat .sel:hover{background:#fff;color:#f97316}
-.cc-shi{background:#fbbf24;color:#78350f;box-shadow:0 6px 0 #d97706}
-.cc-shi .sel{border-color:#78350f;color:#78350f} .cc-shi .sel:hover{background:#78350f;color:#fbbf24}
-.cc-pan{background:#22c55e;color:#fff;box-shadow:0 6px 0 #15803d}
-.cc-pan .sel{border-color:#fff;color:#fff} .cc-pan .sel:hover{background:#fff;color:#22c55e}
-.cc-fox{background:#06b6d4;color:#fff;box-shadow:0 6px 0 #0e7490}
-.cc-fox .sel{border-color:#fff;color:#fff} .cc-fox .sel:hover{background:#fff;color:#06b6d4}
+    /* PAGE BACKGROUND — soft warm cream with doodly shapes */
+    body {
+      background: var(--bg)
+    }
 
-/* HOW IT WORKS — reference layout */
-.hiw{background:rgba(255,253,248,.85);padding:60px 0;border-top:2px solid #f5ede0;position:relative;z-index:1}
-.hiw-inner{max-width:1200px;margin:0 auto;padding:0 64px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+    /* Doodly background layer — large smooth corner blobs */
+    .bg-doodles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden
+    }
 
-.hiw-title{font-family:'Fredoka One',cursive;font-size:clamp(24px,2.8vw,36px);color:var(--tx);margin-bottom:28px}
-.hiw-bullet{font-family:'Fredoka One',cursive;font-size:17px;color:var(--tx);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.hiw-bullet::before{content:'●';color:var(--ye);font-size:14px}
-.hiw-card{background:#fff;border:2px solid #f0e8de;border-radius:16px;padding:14px 16px;margin-bottom:20px;box-shadow:0 3px 0 #f0e8de}
-.hiw-card .prog-label{font-size:12px;font-weight:800;color:var(--mu);margin-bottom:6px}
-.hiw-card .prog-bar{background:#e8e0d8;border-radius:50px;height:10px}
-.hiw-card .prog-fill{height:10px;border-radius:50px;background:linear-gradient(90deg,var(--or),var(--ye));width:65%}
-.hiw-sub{font-size:14px;font-weight:700;color:var(--tx);margin-bottom:8px}
-.hiw-rewards{display:flex;gap:10px;align-items:center;margin-bottom:24px;font-size:32px}
-.hiw-dog{text-align:center;font-size:90px;line-height:1;margin-bottom:8px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.12))}
-.hiw-dog-label{font-size:13px;font-weight:700;color:var(--mu);text-align:center;margin-bottom:20px}
-/* mini chart */
-.chart-card{background:#fff;border:2px solid #f0e8de;border-radius:16px;padding:16px;box-shadow:0 3px 0 #f0e8de}
-.chart-title{font-family:'Fredoka One',cursive;font-size:14px;color:var(--tx);margin-bottom:4px;display:flex;align-items:center;gap:8px}
-.chart-legend{display:flex;gap:12px;font-size:11px;font-weight:700;color:var(--mu);margin-bottom:12px}
-.chart-legend span{display:flex;align-items:center;gap:4px}
-.chart-legend .dot{width:8px;height:8px;border-radius:50%}
-.chart-bars{display:flex;gap:6px;align-items:flex-end;height:64px}
-.chart-bar{flex:1;border-radius:4px 4px 0 0;min-width:12px}
-.chart-bar.or{background:var(--or)}
-.chart-bar.gr{background:#22c55e}
-/* testimonials */
-.testi{background:rgba(255,255,255,.85);padding:60px 0;border-top:2px solid #f5ede0;position:relative;z-index:1}
-.testi-inner{max-width:1200px;margin:0 auto;padding:0 64px}
-.testi h2{font-family:'Fredoka One',cursive;font-size:clamp(22px,2.5vw,32px);color:var(--tx);margin-bottom:6px}
-.testi-sub{font-size:14px;color:var(--mu);font-weight:600;margin-bottom:32px}
-.testi-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
-.tc{background:#fffbf5;border:2px solid #f0e8de;border-radius:20px;padding:24px;box-shadow:0 4px 0 #f0e8de}
-.tc-stars{color:#f97316;font-size:14px;margin-bottom:10px}
-.tc-text{font-size:13px;color:#5a4840;line-height:1.6;font-weight:600;margin-bottom:14px;font-style:italic}
-.tc-author{display:flex;align-items:center;gap:10px}
-.tc-avatar{width:36px;height:36px;border-radius:50%;font-size:24px;display:flex;align-items:center;justify-content:center}
-.tc-name{font-family:'Fredoka One',cursive;font-size:14px;color:var(--tx)}
-.tc-role{font-size:11px;color:var(--mu);font-weight:700}
+    .dblob {
+      position: absolute
+    }
 
-/* FEATURES */
-.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-top:48px}
-.fc{background:#fff;border:2.5px solid #f0ece8;border-radius:22px;padding:26px 20px;box-shadow:0 4px 0 #f0ece8;transition:transform .2s,border-color .2s}
-.fc:hover{transform:translateY(-4px);border-color:var(--or)}
-.fc .ico{font-size:32px;margin-bottom:12px}
-.fc h3{font-family:'Fredoka One',cursive;font-size:17px;margin-bottom:6px}
-.fc p{font-size:13px;color:var(--mu);line-height:1.6;font-weight:600}
+    /* TOP-LEFT — giant flowing amber blob, bleeds from top-left corner */
+    .db-tl {
+      width: 620px;
+      height: 580px;
+      background: #f9a825;
+      top: -220px;
+      left: -220px;
+      border-radius: 44% 56% 68% 32% / 52% 40% 60% 48%;
+      animation: wobble-a 9s ease-in-out infinite;
+    }
 
-/* CTA */
-.cta{margin:0 40px 80px;background:var(--or);border-radius:36px;padding:70px 48px;text-align:center;position:relative;z-index:1;overflow:hidden;box-shadow:0 8px 0 var(--or2)}
-.cta::before{content:'';position:absolute;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.1);top:-100px;left:-80px}
-.cta::after{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.08);bottom:-80px;right:-60px}
-.cta h2{font-family:'Fredoka One',cursive;font-size:clamp(30px,4vw,52px);color:#fff;margin-bottom:12px;position:relative}
-.cta p{font-size:16px;color:rgba(255,255,255,.85);margin-bottom:32px;font-weight:700;position:relative}
-.ctabtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative}
-.bw{background:#fff;color:var(--or2);padding:15px 32px;border-radius:50px;font-size:16px;font-weight:800;text-decoration:none;box-shadow:0 5px 0 rgba(0,0,0,.15);transition:transform .15s;display:inline-flex;align-items:center;gap:8px}
-.bw:hover{transform:translateY(-2px)}
-.bgh{border:2.5px solid rgba(255,255,255,.8);color:#fff;padding:15px 32px;border-radius:50px;font-size:16px;font-weight:800;text-decoration:none;transition:background .2s;display:inline-flex;align-items:center;gap:8px}
-.bgh:hover{background:rgba(255,255,255,.15)}
+    /* small dark-yellow accent bump — below and clear of hero text */
+    .db-tl-s {
+      width: 140px;
+      height: 130px;
+      background: #e6a800;
+      top: 440px;
+      left: 20px;
+      border-radius: 55% 45% 40% 60% / 48% 58% 42% 52%;
+      animation: wobble-b 7s ease-in-out infinite;
+    }
 
-/* FOOTER */
-footer{background:#1a0600;color:rgba(255,255,255,.65);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:14px;font-weight:600;position:relative;z-index:1}
-footer a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
-footer a:hover{color:#fff}
-.flogo{font-family:'Fredoka One',cursive;font-size:20px;color:var(--or)}
+    /* TOP-RIGHT — medium golden accent */
+    .db-tr {
+      width: 280px;
+      height: 260px;
+      background: #e6a800;
+      top: -80px;
+      right: -80px;
+      border-radius: 58% 42% 36% 64% / 52% 64% 36% 48%;
+      animation: wobble-b 11s ease-in-out infinite;
+    }
 
-@media(max-width:900px){
-  .hiw-inner{grid-template-columns:1fr}
-  .ccards{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:768px){
-  nav{padding:12px 20px}.nm{display:none}
-  .hero{flex-direction:column;padding:80px 24px 56px;gap:32px;min-height:auto}
-  .hl{width:100%}
-  .sec,.hiw-inner,.testi-inner{padding-left:24px;padding-right:24px}
-  .cta{margin:0 16px 60px;padding:48px 24px;border-radius:28px}
-  footer{flex-direction:column;text-align:center;padding:32px 24px}
-  .bg-doodles{opacity:.7}
-  .hl{padding:28px 24px}
-}
-</style>
+    /* BOTTOM-RIGHT — large warm-yellow blob */
+    .db-br {
+      width: 540px;
+      height: 500px;
+      background: #fbbf24;
+      bottom: -160px;
+      right: -160px;
+      border-radius: 52% 48% 38% 62% / 44% 60% 40% 56%;
+      animation: wobble-a 10s ease-in-out infinite reverse;
+    }
+
+    /* BOTTOM-LEFT — small accent */
+    .db-bl {
+      width: 200px;
+      height: 185px;
+      background: #f9a825;
+      bottom: -60px;
+      left: -50px;
+      border-radius: 48% 52% 58% 42% / 55% 44% 56% 45%;
+      animation: wobble-b 8s ease-in-out infinite;
+    }
+
+    @keyframes wobble-a {
+
+      0%,
+      100% {
+        border-radius: 44% 56% 68% 32% / 52% 40% 60% 48%;
+        transform: rotate(0deg)
+      }
+
+      50% {
+        border-radius: 56% 44% 32% 68% / 48% 60% 40% 52%;
+        transform: rotate(3deg)
+      }
+    }
+
+    @keyframes wobble-b {
+
+      0%,
+      100% {
+        border-radius: 58% 42% 36% 64% / 52% 64% 36% 48%;
+        transform: rotate(0deg)
+      }
+
+      50% {
+        border-radius: 42% 58% 64% 36% / 64% 36% 64% 36%;
+        transform: rotate(-4deg)
+      }
+    }
+
+    /* HERO — content centered with generous padding so text clears the blob */
+    .hero {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 100px 80px 160px;
+      gap: 60px;
+      min-height: auto;
+    }
+
+    .hl {
+      position: relative;
+      z-index: 2;
+      flex: 0 0 auto;
+      width: 440px;
+    }
+
+    .hbadge {
+      display: none
+    }
+
+    .hero h1 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(42px, 4.8vw, 62px);
+      line-height: 1.06;
+      color: #2a0e00;
+      margin-bottom: 16px;
+      letter-spacing: -0.5px
+    }
+
+    .hero h1 em {
+      color: var(--or);
+      font-style: normal
+    }
+
+    .hsub {
+      font-size: 16px;
+      color: #5c3d28;
+      line-height: 1.72;
+      margin-bottom: 28px;
+      max-width: 400px;
+      font-weight: 600
+    }
+
+    .hbtns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 16px
+    }
+
+    .bg {
+      background: var(--gr);
+      color: #fff;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 5px 0 #15803d;
+      transition: transform .15s, box-shadow .15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .bg:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 7px 0 #15803d
+    }
+
+    .blink {
+      color: var(--or2);
+      font-size: 14px;
+      font-weight: 800;
+      text-decoration: none;
+      border-bottom: 2px solid var(--or);
+      transition: opacity .2s
+    }
+
+    .blink:hover {
+      opacity: .75
+    }
+
+    .hnote {
+      font-size: 12px;
+      color: #9a7560;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    /* hero right */
+    .hr {
+      position: relative;
+      z-index: 2;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center
+    }
+
+    .dashboard {
+      background: #fff;
+      border-radius: 24px;
+      padding: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .12);
+      border: 2px solid #f0ece8;
+      width: 320px
+    }
+
+    .db-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px
+    }
+
+    .db-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%
+    }
+
+    .db-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 14px;
+      color: var(--mu);
+      margin-left: 6px
+    }
+
+    .db-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 14px
+    }
+
+    .db-stat {
+      background: #fff7ed;
+      border-radius: 14px;
+      padding: 14px 12px;
+      text-align: center
+    }
+
+    .db-stat .n {
+      font-family: 'Fredoka One', cursive;
+      font-size: 24px;
+      color: var(--or)
+    }
+
+    .db-stat .l {
+      font-size: 11px;
+      color: var(--mu);
+      font-weight: 700
+    }
+
+    .db-bar2 {
+      background: #f5f0eb;
+      border-radius: 50px;
+      height: 10px;
+      margin: 4px 0
+    }
+
+    .db-fill {
+      height: 10px;
+      border-radius: 50px;
+      background: linear-gradient(90deg, var(--or), var(--ye))
+    }
+
+    .db-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--mu)
+    }
+
+    .db-char {
+      font-size: 40px;
+      text-align: center;
+      padding: 8px 0
+    }
+
+    /* MARQUEE */
+    .mq {
+      background: var(--or);
+      padding: 14px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 1
+    }
+
+    .mqi {
+      display: flex;
+      gap: 36px;
+      animation: sc 22s linear infinite;
+      width: max-content
+    }
+
+    .mqt {
+      font-family: 'Fredoka One', cursive;
+      font-size: 17px;
+      color: #fff;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    @keyframes sc {
+      from {
+        transform: translateX(0)
+      }
+
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    /* COMPANIONS */
+    .sec {
+      padding: 56px 64px;
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1
+    }
+
+    .lbl {
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--or);
+      margin-bottom: 6px
+    }
+
+    .stitle {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(26px, 3vw, 40px);
+      color: var(--tx);
+      margin-bottom: 8px
+    }
+
+    .ssub {
+      font-size: 15px;
+      color: var(--mu);
+      max-width: 460px;
+      line-height: 1.65;
+      font-weight: 600;
+      margin-bottom: 36px
+    }
+
+    .ccards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px
+    }
+
+    .cc {
+      border-radius: 24px;
+      padding: 28px 18px 22px;
+      text-align: center;
+      transition: transform .2s, box-shadow .2s;
+      cursor: default
+    }
+
+    .cc:hover {
+      transform: translateY(-6px)
+    }
+
+    .cc .em {
+      width: 90px;
+      height: 90px;
+      display: block;
+      margin: 0 auto 14px;
+      object-fit: cover;
+      border-radius: 50%;
+      background: #fff;
+      padding: 6px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, .15)
+    }
+
+    .cc h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 20px;
+      margin-bottom: 5px
+    }
+
+    .cc p {
+      font-size: 12px;
+      line-height: 1.5;
+      font-weight: 700;
+      margin-bottom: 14px;
+      opacity: .85
+    }
+
+    .sel {
+      display: inline-block;
+      padding: 7px 26px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 900;
+      border: 2px solid currentColor;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+      text-decoration: none
+    }
+
+    .cc-cat {
+      background: #f97316;
+      color: #fff;
+      box-shadow: 0 6px 0 #c2410c
+    }
+
+    .cc-cat .sel {
+      border-color: #fff;
+      color: #fff
+    }
+
+    .cc-cat .sel:hover {
+      background: #fff;
+      color: #f97316
+    }
+
+    .cc-shi {
+      background: #fbbf24;
+      color: #78350f;
+      box-shadow: 0 6px 0 #d97706
+    }
+
+    .cc-shi .sel {
+      border-color: #78350f;
+      color: #78350f
+    }
+
+    .cc-shi .sel:hover {
+      background: #78350f;
+      color: #fbbf24
+    }
+
+    .cc-pan {
+      background: #22c55e;
+      color: #fff;
+      box-shadow: 0 6px 0 #15803d
+    }
+
+    .cc-pan .sel {
+      border-color: #fff;
+      color: #fff
+    }
+
+    .cc-pan .sel:hover {
+      background: #fff;
+      color: #22c55e
+    }
+
+    .cc-fox {
+      background: #06b6d4;
+      color: #fff;
+      box-shadow: 0 6px 0 #0e7490
+    }
+
+    .cc-fox .sel {
+      border-color: #fff;
+      color: #fff
+    }
+
+    .cc-fox .sel:hover {
+      background: #fff;
+      color: #06b6d4
+    }
+
+    /* HOW IT WORKS — reference layout */
+    .hiw {
+      background: rgba(255, 253, 248, .85);
+      padding: 60px 0;
+      border-top: 2px solid #f5ede0;
+      position: relative;
+      z-index: 1
+    }
+
+    .hiw-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start
+    }
+
+    .hiw-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(24px, 2.8vw, 36px);
+      color: var(--tx);
+      margin-bottom: 28px
+    }
+
+    .hiw-bullet {
+      font-family: 'Fredoka One', cursive;
+      font-size: 17px;
+      color: var(--tx);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .hiw-bullet::before {
+      content: '●';
+      color: var(--ye);
+      font-size: 14px
+    }
+
+    .hiw-card {
+      background: #fff;
+      border: 2px solid #f0e8de;
+      border-radius: 16px;
+      padding: 14px 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 0 #f0e8de
+    }
+
+    .hiw-card .prog-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--mu);
+      margin-bottom: 6px
+    }
+
+    .hiw-card .prog-bar {
+      background: #e8e0d8;
+      border-radius: 50px;
+      height: 10px
+    }
+
+    .hiw-card .prog-fill {
+      height: 10px;
+      border-radius: 50px;
+      background: linear-gradient(90deg, var(--or), var(--ye));
+      width: 65%
+    }
+
+    .hiw-sub {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--tx);
+      margin-bottom: 8px
+    }
+
+    .hiw-rewards {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 24px;
+      font-size: 32px
+    }
+
+    .hiw-dog {
+      text-align: center;
+      font-size: 90px;
+      line-height: 1;
+      margin-bottom: 8px;
+      filter: drop-shadow(0 6px 16px rgba(0, 0, 0, .12))
+    }
+
+    .hiw-dog-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--mu);
+      text-align: center;
+      margin-bottom: 20px
+    }
+
+    /* mini chart */
+    .chart-card {
+      background: #fff;
+      border: 2px solid #f0e8de;
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 3px 0 #f0e8de
+    }
+
+    .chart-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 14px;
+      color: var(--tx);
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--mu);
+      margin-bottom: 12px
+    }
+
+    .chart-legend span {
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .chart-legend .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%
+    }
+
+    .chart-bars {
+      display: flex;
+      gap: 6px;
+      align-items: flex-end;
+      height: 64px
+    }
+
+    .chart-bar {
+      flex: 1;
+      border-radius: 4px 4px 0 0;
+      min-width: 12px
+    }
+
+    .chart-bar.or {
+      background: var(--or)
+    }
+
+    .chart-bar.gr {
+      background: #22c55e
+    }
+
+    /* testimonials */
+    .testi {
+      background: rgba(255, 255, 255, .85);
+      padding: 60px 0;
+      border-top: 2px solid #f5ede0;
+      position: relative;
+      z-index: 1
+    }
+
+    .testi-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 64px
+    }
+
+    .testi h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(22px, 2.5vw, 32px);
+      color: var(--tx);
+      margin-bottom: 6px
+    }
+
+    .testi-sub {
+      font-size: 14px;
+      color: var(--mu);
+      font-weight: 600;
+      margin-bottom: 32px
+    }
+
+    .testi-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px
+    }
+
+    .tc {
+      background: #fffbf5;
+      border: 2px solid #f0e8de;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 0 #f0e8de
+    }
+
+    .tc-stars {
+      color: #f97316;
+      font-size: 14px;
+      margin-bottom: 10px
+    }
+
+    .tc-text {
+      font-size: 13px;
+      color: #5a4840;
+      line-height: 1.6;
+      font-weight: 600;
+      margin-bottom: 14px;
+      font-style: italic
+    }
+
+    .tc-author {
+      display: flex;
+      align-items: center;
+      gap: 10px
+    }
+
+    .tc-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center
+    }
+
+    .tc-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: 14px;
+      color: var(--tx)
+    }
+
+    .tc-role {
+      font-size: 11px;
+      color: var(--mu);
+      font-weight: 700
+    }
+
+    /* FEATURES */
+    .fgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-top: 48px
+    }
+
+    .fc {
+      background: #fff;
+      border: 2.5px solid #f0ece8;
+      border-radius: 22px;
+      padding: 26px 20px;
+      box-shadow: 0 4px 0 #f0ece8;
+      transition: transform .2s, border-color .2s
+    }
+
+    .fc:hover {
+      transform: translateY(-4px);
+      border-color: var(--or)
+    }
+
+    .fc .ico {
+      font-size: 32px;
+      margin-bottom: 12px
+    }
+
+    .fc h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 17px;
+      margin-bottom: 6px
+    }
+
+    .fc p {
+      font-size: 13px;
+      color: var(--mu);
+      line-height: 1.6;
+      font-weight: 600
+    }
+
+    /* CTA */
+    .cta {
+      margin: 0 40px 80px;
+      background: var(--or);
+      border-radius: 36px;
+      padding: 70px 48px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      box-shadow: 0 8px 0 var(--or2)
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .1);
+      top: -100px;
+      left: -80px
+    }
+
+    .cta::after {
+      content: '';
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, .08);
+      bottom: -80px;
+      right: -60px
+    }
+
+    .cta h2 {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(30px, 4vw, 52px);
+      color: #fff;
+      margin-bottom: 12px;
+      position: relative
+    }
+
+    .cta p {
+      font-size: 16px;
+      color: rgba(255, 255, 255, .85);
+      margin-bottom: 32px;
+      font-weight: 700;
+      position: relative
+    }
+
+    .ctabtns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative
+    }
+
+    .bw {
+      background: #fff;
+      color: var(--or2);
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 5px 0 rgba(0, 0, 0, .15);
+      transition: transform .15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .bw:hover {
+      transform: translateY(-2px)
+    }
+
+    .bgh {
+      border: 2.5px solid rgba(255, 255, 255, .8);
+      color: #fff;
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: background .2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .bgh:hover {
+      background: rgba(255, 255, 255, .15)
+    }
+
+    /* FOOTER */
+    footer {
+      background: #1a0600;
+      color: rgba(255, 255, 255, .65);
+      padding: 36px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 14px;
+      font-weight: 600;
+      position: relative;
+      z-index: 1
+    }
+
+    footer a {
+      color: rgba(255, 255, 255, .5);
+      text-decoration: none;
+      transition: color .2s
+    }
+
+    footer a:hover {
+      color: #fff
+    }
+
+    .flogo {
+      font-family: 'Fredoka One', cursive;
+      font-size: 20px;
+      color: var(--or)
+    }
+
+    @media(max-width:900px) {
+      .hiw-inner {
+        grid-template-columns: 1fr
+      }
+
+      .ccards {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:768px) {
+      nav {
+        padding: 12px 20px
+      }
+
+      .nm {
+        display: none
+      }
+
+      .hero {
+        flex-direction: column;
+        padding: 80px 24px 56px;
+        gap: 32px;
+        min-height: auto
+      }
+
+      .hl {
+        width: 100%
+      }
+
+      .sec,
+      .hiw-inner,
+      .testi-inner {
+        padding-left: 24px;
+        padding-right: 24px
+      }
+
+      .cta {
+        margin: 0 16px 60px;
+        padding: 48px 24px;
+        border-radius: 28px
+      }
+
+      footer {
+        flex-direction: column;
+        text-align: center;
+        padding: 32px 24px
+      }
+
+      .bg-doodles {
+        opacity: .7
+      }
+
+      .hl {
+        padding: 28px 24px
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<nav>
-  <a class="nl" href="#">🐾 Pawzy</a>
-  <div class="nm">
-    <a href="#companions">Features</a>
-    <a href="#download">Pricing</a>
-    <a href="#features">Contact</a>
-  </div>
-  <a class="nc" href="#download">Sign up</a>
-</nav>
-
-<div class="bg-doodles" aria-hidden="true">
-  <div class="dblob db-tl"></div>
-  <div class="dblob db-tl-s"></div>
-  <div class="dblob db-tr"></div>
-  <div class="dblob db-br"></div>
-  <div class="dblob db-bl"></div>
-</div>
-
-<section class="hero">
-  <div class="hl">
-    <h1>Your <em>furry</em><br/>productivity<br/>guardian</h1>
-    <p class="hsub">Pawzy tracks your screen time and sends a cute companion sliding onto your screen when it's break time. No willpower required.</p>
-    <div class="hbtns">
-      <a class="bg" href="#download">⬇ Download Free</a>
-      <a class="blink" href="#how-it-works">See how it works</a>
-    </div>
-    <p class="hnote">🐧 Linux AppImage &nbsp;·&nbsp; 🪟 Windows EXE &nbsp;·&nbsp; Zero setup</p>
-  </div>
-
-  <div class="hr">
-    <img src="hero_char.png" alt="Productivity character" style="width:100%;max-width:460px;display:block;margin:0 auto">
-  </div>
-</section>
-
-<div class="mq">
-  <div class="mqi">
-    <div class="mqt">🐱 Neko Cat</div><div class="mqt">⭐ Break Enforcer</div>
-    <div class="mqt">🐕 Shiba Inu</div><div class="mqt">🚀 Auto Start</div>
-    <div class="mqt">🐼 Chill Panda</div><div class="mqt">🔒 Can't Skip</div>
-    <div class="mqt">🦊 Fox Kit</div><div class="mqt">🆓 Always Free</div>
-    <div class="mqt">🐱 Neko Cat</div><div class="mqt">⭐ Break Enforcer</div>
-    <div class="mqt">🐕 Shiba Inu</div><div class="mqt">🚀 Auto Start</div>
-    <div class="mqt">🐼 Chill Panda</div><div class="mqt">🔒 Can't Skip</div>
-    <div class="mqt">🦊 Fox Kit</div><div class="mqt">🆓 Always Free</div>
-  </div>
-</div>
-
-<div class="sec" id="companions">
-  <div class="lbl">Companions</div>
-  <h2 class="stitle">Choose Your Focus Guardian 🐾</h2>
-  <p class="ssub">Pick during first launch or change anytime in Settings. Each one has a unique personality and animations.</p>
-  <div class="ccards">
-    <div class="cc cc-cat">
-      <img class="em" src="cat.png" alt="Neko Cat">
-      <h3>Neko Cat</h3>
-      <p>The original. Slides in from the right and judges your productivity silently.</p>
-      <a class="sel" href="#download">Select</a>
-    </div>
-    <div class="cc cc-shi">
-      <img class="em" src="dog.png" alt="Shiba Inu">
-      <h3>Shiba Inu</h3>
-      <p>Much break. Very rest. Wow. Bobs happily and twitches ears during idle.</p>
-      <a class="sel" href="#download">Select</a>
-    </div>
-    <div class="cc cc-pan">
-      <img class="em" src="panda.png" alt="Chill Panda">
-      <h3>Chill Panda</h3>
-      <p>Waddling in with bamboo and ZZZs to share. Maximum chill energy.</p>
-      <a class="sel" href="#download">Select</a>
-    </div>
-    <div class="cc cc-fox">
-      <img class="em" src="fox.png" alt="Fox Kit">
-      <h3>Fox Kit</h3>
-      <p>Trots in with a wagging tail and showers your screen in golden stars.</p>
-      <a class="sel" href="#download">Select</a>
-    </div>
-  </div>
-</div>
-
-<div class="hiw" id="how-it-works">
-  <div class="hiw-inner">
-    <div class="hiw-col">
-      <h2 class="hiw-title">How Pawzy Works</h2>
-      <div class="hiw-bullet">Set Focus Goals:</div>
-      <div class="hiw-card">
-        <div class="prog-label">Progress</div>
-        <div class="prog-bar"><div class="prog-fill"></div></div>
-      </div>
-      <div class="hiw-sub">Work with Your Guardian:</div>
-      <div class="hiw-bullet">Earn Rewards:</div>
-      <img src="rewards.png" alt="Earn Rewards" style="width:100%;max-width:240px;display:block;margin-top:16px">
-    </div>
-    <div class="hiw-col">
-      <img src="dog_desk.png" alt="Dog studying at desk" style="width:100%;max-width:280px;display:block;margin:0 auto 8px">
-      <div class="hiw-dog-label">Your companion helps you study &amp; focus</div>
-      <div class="hiw-bullet">Track Productivity:</div>
-      <div class="chart-card">
-        <div class="chart-title">Focus Productivity <span style="font-size:11px;color:var(--or)">● Focus</span></div>
-        <div class="chart-legend">
-          <span><span class="dot" style="background:var(--or)"></span>Classtime</span>
-          <span><span class="dot" style="background:#22c55e"></span>Focus breaks</span>
-        </div>
-        <div class="chart-bars">
-          <div class="chart-bar or" style="height:30%"></div>
-          <div class="chart-bar gr" style="height:45%"></div>
-          <div class="chart-bar or" style="height:55%"></div>
-          <div class="chart-bar gr" style="height:40%"></div>
-          <div class="chart-bar or" style="height:70%"></div>
-          <div class="chart-bar gr" style="height:60%"></div>
-          <div class="chart-bar or" style="height:85%"></div>
-          <div class="chart-bar gr" style="height:75%"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="testi">
-  <div class="testi-inner">
-    <h2>My Testimonials</h2>
-    <p class="testi-sub">Thank you to our loyal and satisfied users.</p>
-    <div class="testi-cards">
-      <div class="tc">
-        <div class="tc-stars">★★★★★</div>
-        <p class="tc-text">"Pawzy helps me stay focused and build healthy work habits with a delightful animal companion."</p>
-        <div class="tc-author"><div class="tc-avatar">👩</div><div><div class="tc-name">Bashirah</div><div class="tc-role">Designer</div></div></div>
-      </div>
-      <div class="tc">
-        <div class="tc-stars">★★★★★</div>
-        <p class="tc-text">"It combines productivity and a cute companion and helps you manage your work-rest balance."</p>
-        <div class="tc-author"><div class="tc-avatar">👨</div><div><div class="tc-name">Ash M</div><div class="tc-role">Developer</div></div></div>
-      </div>
-      <div class="tc">
-        <div class="tc-stars">★★★★★</div>
-        <p class="tc-text">"The inescapable breaks actually made me take real breaks. My eyes thank me every day!"</p>
-        <div class="tc-author"><div class="tc-avatar">🧑</div><div><div class="tc-name">Priya K</div><div class="tc-role">Student</div></div></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="sec" id="features">
-  <div class="lbl">Features</div>
-  <h2 class="stitle">Everything you need ✅</h2>
-  <p class="ssub">No subscriptions, no accounts, no data collection. Just you and your companion.</p>
-  <div class="fgrid">
-    <div class="fc"><div class="ico">🖥️</div><h3>Inescapable Breaks</h3><p>True fullscreen. No Alt+F4, no minimize, no skipping. Your body will thank you.</p></div>
-    <div class="fc"><div class="ico">⚙️</div><h3>Custom Timers</h3><p>Work 5–120 min, break 1–30 min. Change anytime from the tray icon.</p></div>
-    <div class="fc"><div class="ico">🚀</div><h3>Launches on Login</h3><p>Toggle auto-start so Pawzy is always running — even after restarts.</p></div>
-    <div class="fc"><div class="ico">🔒</div><h3>100% Offline</h3><p>No telemetry, no servers, no accounts. Everything lives on your machine.</p></div>
-    <div class="fc"><div class="ico">🪶</div><h3>Lightweight</h3><p>One AppImage or EXE. No Python, no npm, no setup. Just download and run.</p></div>
-    <div class="fc"><div class="ico">🎨</div><h3>4 Companions</h3><p>Cat, Shiba, Panda, Fox — each with unique animations and personality.</p></div>
-  </div>
-</div>
-
-<div class="cta" id="download">
-  <h2>Ready to take real breaks? 🐾</h2>
-  <p>Free forever. No setup. Just download and double-click.</p>
-  <div class="ctabtns">
-    <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" id="dl-linux">🐧 Download for Linux</a>
-    <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" id="dl-win">🪟 Download for Windows</a>
-    <a class="bgh" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">⭐ Star on GitHub</a>
-  </div>
-</div>
-
-<footer>
-  <div style="display:flex;flex-direction:column;gap:6px">
-    <span class="flogo">🐾 Pawzy</span>
-    <span style="font-size:12px">The furry productivity guardian</span>
-  </div>
-  <div style="display:flex;gap:40px;flex-wrap:wrap">
-    <div style="display:flex;flex-direction:column;gap:6px">
-      <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">App</span>
+  <nav>
+    <a class="nl" href="#">🐾 Pawzy</a>
+    <div class="nm">
       <a href="#companions">Features</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="#features">Companions</a>
+      <a href="#download">Pricing</a>
+      <a href="#features">Contact</a>
     </div>
-    <div style="display:flex;flex-direction:column;gap:6px">
-      <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">Download</span>
-      <a href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage">Linux AppImage</a>
-      <a href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe">Windows EXE</a>
-      <a href="https://github.com/2004Shivam/Pawzy/releases">All Releases</a>
+    <a class="nc" href="#download">Sign up</a>
+  </nav>
+
+  <div class="bg-doodles" aria-hidden="true">
+    <div class="dblob db-tl"></div>
+    <div class="dblob db-tl-s"></div>
+    <div class="dblob db-tr"></div>
+    <div class="dblob db-br"></div>
+    <div class="dblob db-bl"></div>
+  </div>
+
+  <section class="hero">
+    <div class="hl">
+      <h1>Your <em>furry</em><br />productivity<br />guardian</h1>
+      <p class="hsub">Pawzy tracks your screen time and sends a cute companion sliding onto your screen when it's break
+        time. No willpower required.</p>
+      <div class="hbtns">
+        <a class="bg" href="#download">⬇ Download Free</a>
+        <a class="blink" href="#how-it-works">See how it works</a>
+      </div>
+      <p class="hnote">🐧 Linux AppImage &nbsp;·&nbsp; 🪟 Windows EXE &nbsp;·&nbsp; Zero setup</p>
     </div>
-    <div style="display:flex;flex-direction:column;gap:6px">
-      <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">Contact</span>
-      <a href="https://github.com/2004Shivam/Pawzy">GitHub</a>
-      <a href="https://github.com/2004Shivam/Pawzy/issues">Report Bug</a>
-      <a href="https://github.com/2004Shivam/Pawzy">Contribute</a>
+
+    <div class="hr">
+      <img src="hero_char.png" alt="Productivity character"
+        style="width:100%;max-width:460px;display:block;margin:0 auto">
+    </div>
+  </section>
+
+  <div class="mq">
+    <div class="mqi">
+      <div class="mqt">🐱 Neko Cat</div>
+      <div class="mqt">⭐ Break Enforcer</div>
+      <div class="mqt">🐕 Shiba Inu</div>
+      <div class="mqt">🚀 Auto Start</div>
+      <div class="mqt">🐼 Chill Panda</div>
+      <div class="mqt">🔒 Can't Skip</div>
+      <div class="mqt">🦊 Fox Kit</div>
+      <div class="mqt">🆓 Always Free</div>
+      <div class="mqt">🐱 Neko Cat</div>
+      <div class="mqt">⭐ Break Enforcer</div>
+      <div class="mqt">🐕 Shiba Inu</div>
+      <div class="mqt">🚀 Auto Start</div>
+      <div class="mqt">🐼 Chill Panda</div>
+      <div class="mqt">🔒 Can't Skip</div>
+      <div class="mqt">🦊 Fox Kit</div>
+      <div class="mqt">🆓 Always Free</div>
     </div>
   </div>
-  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px">
-    <a class="nc" href="#download" style="font-size:14px">Download Now</a>
-    <div style="display:flex;gap:14px">
-      <a href="https://github.com/2004Shivam/Pawzy" style="font-size:20px">🐙</a>
-      <a href="#" style="font-size:20px">🐦</a>
-      <a href="#" style="font-size:20px">📷</a>
+
+  <div class="sec" id="companions">
+    <div class="lbl">Companions</div>
+    <h2 class="stitle">Choose Your Focus Guardian 🐾</h2>
+    <p class="ssub">Pick during first launch or change anytime in Settings. Each one has a unique personality and
+      animations.</p>
+    <div class="ccards">
+      <div class="cc cc-cat">
+        <img class="em" src="cat.png" alt="Neko Cat">
+        <h3>Neko Cat</h3>
+        <p>The original. Slides in from the right and judges your productivity silently.</p>
+        <a class="sel" href="#download">Select</a>
+      </div>
+      <div class="cc cc-shi">
+        <img class="em" src="dog.png" alt="Shiba Inu">
+        <h3>Shiba Inu</h3>
+        <p>Much break. Very rest. Wow. Bobs happily and twitches ears during idle.</p>
+        <a class="sel" href="#download">Select</a>
+      </div>
+      <div class="cc cc-pan">
+        <img class="em" src="panda.png" alt="Chill Panda">
+        <h3>Chill Panda</h3>
+        <p>Waddling in with bamboo and ZZZs to share. Maximum chill energy.</p>
+        <a class="sel" href="#download">Select</a>
+      </div>
+      <div class="cc cc-fox">
+        <img class="em" src="fox.png" alt="Fox Kit">
+        <h3>Fox Kit</h3>
+        <p>Trots in with a wagging tail and showers your screen in golden stars.</p>
+        <a class="sel" href="#download">Select</a>
+      </div>
     </div>
-    <span style="font-size:11px">pawzy-silk.vercel.app</span>
   </div>
-</footer>
+
+  <div class="hiw" id="how-it-works">
+    <div class="hiw-inner">
+      <div class="hiw-col">
+        <h2 class="hiw-title">How Pawzy Works</h2>
+        <div class="hiw-bullet">Set Focus Goals:</div>
+        <div class="hiw-card">
+          <div class="prog-label">Progress</div>
+          <div class="prog-bar">
+            <div class="prog-fill"></div>
+          </div>
+        </div>
+        <div class="hiw-sub">Work with Your Guardian:</div>
+        <div class="hiw-bullet">Earn Rewards:</div>
+        <img src="rewards.png" alt="Earn Rewards" style="width:100%;max-width:240px;display:block;margin-top:16px">
+      </div>
+      <div class="hiw-col">
+        <img src="dog_desk.png" alt="Dog studying at desk"
+          style="width:100%;max-width:280px;display:block;margin:0 auto 8px">
+        <div class="hiw-dog-label">Your companion helps you study &amp; focus</div>
+        <div class="hiw-bullet">Track Productivity:</div>
+        <div class="chart-card">
+          <div class="chart-title">Focus Productivity <span style="font-size:11px;color:var(--or)">● Focus</span></div>
+          <div class="chart-legend">
+            <span><span class="dot" style="background:var(--or)"></span>Classtime</span>
+            <span><span class="dot" style="background:#22c55e"></span>Focus breaks</span>
+          </div>
+          <div class="chart-bars">
+            <div class="chart-bar or" style="height:30%"></div>
+            <div class="chart-bar gr" style="height:45%"></div>
+            <div class="chart-bar or" style="height:55%"></div>
+            <div class="chart-bar gr" style="height:40%"></div>
+            <div class="chart-bar or" style="height:70%"></div>
+            <div class="chart-bar gr" style="height:60%"></div>
+            <div class="chart-bar or" style="height:85%"></div>
+            <div class="chart-bar gr" style="height:75%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testi">
+    <div class="testi-inner">
+      <h2>My Testimonials</h2>
+      <p class="testi-sub">Thank you to our loyal and satisfied users.</p>
+      <div class="testi-cards">
+        <div class="tc">
+          <div class="tc-stars">★★★★★</div>
+          <p class="tc-text">"Pawzy helps me stay focused and build healthy work habits with a delightful animal
+            companion."</p>
+          <div class="tc-author">
+            <div class="tc-avatar">👩</div>
+            <div>
+              <div class="tc-name">Bashirah</div>
+              <div class="tc-role">Designer</div>
+            </div>
+          </div>
+        </div>
+        <div class="tc">
+          <div class="tc-stars">★★★★★</div>
+          <p class="tc-text">"It combines productivity and a cute companion and helps you manage your work-rest
+            balance."</p>
+          <div class="tc-author">
+            <div class="tc-avatar">👨</div>
+            <div>
+              <div class="tc-name">Ash M</div>
+              <div class="tc-role">Developer</div>
+            </div>
+          </div>
+        </div>
+        <div class="tc">
+          <div class="tc-stars">★★★★★</div>
+          <p class="tc-text">"The inescapable breaks actually made me take real breaks. My eyes thank me every day!"</p>
+          <div class="tc-author">
+            <div class="tc-avatar">🧑</div>
+            <div>
+              <div class="tc-name">Priya K</div>
+              <div class="tc-role">Student</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="features">
+    <div class="lbl">Features</div>
+    <h2 class="stitle">Everything you need ✅</h2>
+    <p class="ssub">No subscriptions, no accounts, no data collection. Just you and your companion.</p>
+    <div class="fgrid">
+      <div class="fc">
+        <div class="ico">🖥️</div>
+        <h3>Inescapable Breaks</h3>
+        <p>True fullscreen. No Alt+F4, no minimize, no skipping. Your body will thank you.</p>
+      </div>
+      <div class="fc">
+        <div class="ico">⚙️</div>
+        <h3>Custom Timers</h3>
+        <p>Work 5–120 min, break 1–30 min. Change anytime from the tray icon.</p>
+      </div>
+      <div class="fc">
+        <div class="ico">🚀</div>
+        <h3>Launches on Login</h3>
+        <p>Toggle auto-start so Pawzy is always running — even after restarts.</p>
+      </div>
+      <div class="fc">
+        <div class="ico">🔒</div>
+        <h3>100% Offline</h3>
+        <p>No telemetry, no servers, no accounts. Everything lives on your machine.</p>
+      </div>
+      <div class="fc">
+        <div class="ico">🪶</div>
+        <h3>Lightweight</h3>
+        <p>One AppImage or EXE. No Python, no npm, no setup. Just download and run.</p>
+      </div>
+      <div class="fc">
+        <div class="ico">🎨</div>
+        <h3>4 Companions</h3>
+        <p>Cat, Shiba, Panda, Fox — each with unique animations and personality.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta" id="download">
+    <h2>Ready to take real breaks? 🐾</h2>
+    <p>Free forever. No setup. Just download and double-click.</p>
+    <div id="email-gate" style="position:relative;z-index:2">
+      <form id="email-form" style="display:flex;gap:10px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
+        <input type="email" id="user-email" required placeholder="Enter your email address"
+          style="padding:15px 24px;border-radius:50px;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:16px;width:100%;max-width:320px;box-shadow:0 5px 0 rgba(0,0,0,.1)">
+        <button type="submit" class="bw" style="border:none;cursor:pointer">💌 Get Download Links</button>
+      </form>
+      <p style="font-size:13px;color:rgba(255,255,255,.75);font-weight:600">We'll email you the link, plus occasional
+        updates. No spam.</p>
+    </div>
+
+    <div id="actual-downloads" class="ctabtns" style="display:none">
+      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage"
+        id="dl-linux">🐧 Download for Linux</a>
+      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe"
+        id="dl-win">🪟 Download for Windows</a>
+      <a class="bgh" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">⭐ Star on GitHub</a>
+    </div>
+  </div>
+
+  <footer>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <span class="flogo">🐾 Pawzy</span>
+      <span style="font-size:12px">The furry productivity guardian</span>
+    </div>
+    <div style="display:flex;gap:40px;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">App</span>
+        <a href="#companions">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#features">Companions</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">Download</span>
+        <a href="#download">Linux AppImage</a>
+        <a href="#download">Windows EXE</a>
+        <a href="https://github.com/2004Shivam/Pawzy/releases">All Releases</a>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">Contact</span>
+        <a href="https://github.com/2004Shivam/Pawzy">GitHub</a>
+        <a href="https://github.com/2004Shivam/Pawzy/issues">Report Bug</a>
+        <a href="https://github.com/2004Shivam/Pawzy">Contribute</a>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:12px">
+      <a class="nc" href="#download" style="font-size:14px">Download Now</a>
+      <div style="display:flex;gap:14px">
+        <a href="https://github.com/2004Shivam/Pawzy" style="font-size:20px">🐙</a>
+        <a href="#" style="font-size:20px">🐦</a>
+        <a href="#" style="font-size:20px">📷</a>
+      </div>
+      <span style="font-size:11px">pawzy-silk.vercel.app</span>
+    </div>
+  </footer>
+
+  <script>
+    // Email Gate Logic (Formspree)
+    document.getElementById('email-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('user-email').value;
+      const submitBtn = this.querySelector('button[type="submit"]');
+
+      // Visual feedback while sending
+      submitBtn.innerText = "Sending...";
+      submitBtn.style.opacity = "0.7";
+
+      // IMPORTANT: Replace 'YOUR_FORM_ID' with your actual Formspree ID
+      const formspreeUrl = "https://formspree.io/f/xkoynelg";
+
+      fetch(formspreeUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify({ email: email })
+      })
+        .then(response => {
+          // UI Update: Hide email gate, show actual downloads
+          document.getElementById('email-gate').style.display = 'none';
+          document.getElementById('actual-downloads').style.display = 'flex';
+
+          // Update the CTA header
+          document.querySelector('.cta h2').innerText = "Thanks! Here are your downloads 🎉";
+          document.querySelector('.cta p').innerText = "Choose your operating system below:";
+        })
+        .catch(error => {
+          console.error("Error saving email:", error);
+          submitBtn.innerText = "Error! Try again.";
+          submitBtn.style.opacity = "1";
+        });
+    });
+  </script>
 
 </body>
+
 </html>

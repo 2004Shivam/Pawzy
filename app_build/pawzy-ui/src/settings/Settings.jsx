@@ -104,132 +104,139 @@ export default function Settings() {
     <div style={s.root}>
       <style>{`
         * { margin:0; padding:0; box-sizing:border-box; }
-        body { background:#0f0d1a; }
         input[type=range] { -webkit-appearance:none; appearance:none; background:transparent; width:100%; cursor:pointer; }
         input[type=range]::-webkit-slider-thumb {
           -webkit-appearance:none; appearance:none;
-          width:20px; height:20px; border-radius:50%;
-          background:#a855f7; border:2px solid #d8b4fe;
-          box-shadow:0 0 8px rgba(168,85,247,.6);
-          margin-top:-8px;
+          width:24px; height:24px; border-radius:50%;
+          background:#f97316; border:3px solid #fff;
+          box-shadow:0 2px 6px rgba(0,0,0,.2);
+          margin-top:-10px;
         }
-        input[type=range]::-webkit-slider-runnable-track { height:4px; background:transparent; border-radius:2px; }
+        input[type=range]::-webkit-slider-runnable-track { height:6px; background:transparent; border-radius:3px; }
         input[type=range]:focus { outline:none; }
         button { font-family:inherit; }
       `}</style>
 
-      {/* Header */}
-      <div style={s.header}>
-        <div style={s.logo}>🐾</div>
-        <div>
-          <h1 style={s.title}>Pawzy Dashboard</h1>
-          <p style={s.subtitle}>Customize your focus sessions</p>
-        </div>
+      {/* Custom Title Bar */}
+      <div style={s.titleBar}>
+        <div style={s.dragRegion}>Pawzy Settings</div>
+        <button style={s.closeBtn} onClick={() => window.close()}>×</button>
       </div>
 
-      {/* Timer card */}
-      <div style={s.card}>
-        <h2 style={s.sectionTitle}>⏱ Session Timers</h2>
-
-        <Slider
-          label="Work Session"
-          value={workMin}
-          min={1} max={120} unit="min"
-          onChange={setWorkMin}
-          description="How long you work before your companion arrives for a break"
-        />
-
-        <div style={s.divider} />
-
-        <Slider
-          label="Break Duration"
-          value={breakMin}
-          min={1} max={30} unit="min"
-          onChange={setBreakMin}
-          description="How long the break lasts — you cannot skip it!"
-        />
-      </div>
-
-      {/* Character picker card */}
-      <div style={s.card}>
-        <h2 style={s.sectionTitle}>🐾 Choose Your Companion</h2>
-        <p style={s.sliderDesc}>Pick who shows up to guard your breaks</p>
-        <div style={s.charGrid}>
-          {CHARACTERS.map(char => (
-            <CharCard
-              key={char.key}
-              char={char}
-              selected={character === char.key}
-              onClick={() => setCharacter(char.key)}
-            />
-          ))}
+      <div style={s.content}>
+        {/* Header */}
+        <div style={s.header}>
+          <div style={s.logo}>🐾</div>
+          <div>
+            <h1 style={s.title}>Pawzy Dashboard</h1>
+            <p style={s.subtitle}>Customize your workflow</p>
+          </div>
         </div>
-      </div>
 
-      {/* Autostart toggle card */}
-      <div style={{ ...s.card, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-        <div>
-          <h2 style={s.sectionTitle}>🚀 Launch on Login</h2>
-          <p style={{ ...s.sliderDesc, marginTop: '4px' }}>Start Pawzy automatically when you log in</p>
-        </div>
-        <button
-          onClick={() => setAutostart(a => !a)}
-          style={{
-            width: '52px', height: '28px', borderRadius: '14px',
-            background: autostart ? 'linear-gradient(135deg,#7c3aed,#a855f7)' : 'rgba(255,255,255,.1)',
-            border: autostart ? '2px solid #a855f7' : '2px solid rgba(255,255,255,.2)',
-            cursor: 'pointer', position: 'relative', transition: 'all .25s ease',
-            boxShadow: autostart ? '0 0 12px rgba(168,85,247,.5)' : 'none',
-          }}
-        >
-          <span style={{
-            position: 'absolute', top: '3px',
-            left: autostart ? '24px' : '3px',
-            width: '18px', height: '18px', borderRadius: '50%',
-            background: '#fff', transition: 'left .25s ease',
-            boxShadow: '0 1px 4px rgba(0,0,0,.3)',
-          }} />
-        </button>
-      </div>
+        {/* Timer card */}
+        <div style={s.card}>
+          <h2 style={s.sectionTitle}>⏱ Session Timers</h2>
 
-      {/* Summary row */}
-      <div style={s.summary}>
-        <div style={s.summaryItem}>
-          <span style={s.summaryNumber}>{workMin}</span>
-          <span style={s.summaryLabel}>min work</span>
-        </div>
-        <div style={s.summaryArrow}>→</div>
-        <div style={s.summaryItem}>
-          <span style={s.summaryNumber}>{breakMin}</span>
-          <span style={s.summaryLabel}>min break</span>
-        </div>
-        <div style={s.summaryArrow}>→</div>
-        <div style={s.summaryItem}>
-          <span style={s.summaryNumber}>
-            {CHARACTERS.find(c => c.key === character)?.emoji ?? '🐾'}
-          </span>
-          <span style={s.summaryLabel}>companion</span>
-        </div>
-      </div>
+          <Slider
+            label="Work Session"
+            value={workMin}
+            min={1} max={120} unit="min"
+            onChange={setWorkMin}
+            description="How long you work before your break is enforced"
+          />
 
-      {/* Actions */}
-      <div style={s.actions}>
-        <div style={{ flex: 1 }}>
-          <button 
-            style={s.previewBtn} 
-            onClick={() => window.pawzy?.testCharacter?.(character)}
-            title="Preview how this character looks on your screen for 10 seconds"
+          <div style={s.divider} />
+
+          <Slider
+            label="Break Duration"
+            value={breakMin}
+            min={1} max={30} unit="min"
+            onChange={setBreakMin}
+            description="How long the inescapable lock screen lasts"
+          />
+        </div>
+
+        {/* Character picker card */}
+        <div style={s.card}>
+          <h2 style={s.sectionTitle}>🐾 Choose Your Hijacker</h2>
+          <p style={s.sliderDesc}>Pick who takes over your screen</p>
+          <div style={s.charGrid}>
+            {CHARACTERS.map(char => (
+              <CharCard
+                key={char.key}
+                char={char}
+                selected={character === char.key}
+                onClick={() => setCharacter(char.key)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Autostart toggle card */}
+        <div style={{ ...s.card, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div>
+            <h2 style={s.sectionTitle}>🚀 Launch on Login</h2>
+            <p style={{ ...s.sliderDesc, marginTop: '4px' }}>Ensure Pawzy is always running</p>
+          </div>
+          <button
+            onClick={() => setAutostart(a => !a)}
+            style={{
+              width: '56px', height: '32px', borderRadius: '16px',
+              background: autostart ? '#16a34a' : '#e2e8f0',
+              border: 'none',
+              cursor: 'pointer', position: 'relative', transition: 'all .25s ease',
+              boxShadow: autostart ? 'inset 0 2px 4px rgba(0,0,0,.1)' : 'inset 0 2px 4px rgba(0,0,0,.05)',
+            }}
           >
-            👁️ Preview
+            <span style={{
+              position: 'absolute', top: '4px',
+              left: autostart ? '28px' : '4px',
+              width: '24px', height: '24px', borderRadius: '50%',
+              background: '#fff', transition: 'left .25s ease',
+              boxShadow: '0 2px 5px rgba(0,0,0,.2)',
+            }} />
           </button>
         </div>
-        <button style={s.cancelBtn} onClick={() => window.close()}>Cancel</button>
-        <button
-          style={{ ...s.saveBtn, ...(saved ? s.savedBtn : {}) }}
-          onClick={handleSave}
-        >
-          {saved ? '✓ Saved!' : 'Save Changes'}
-        </button>
+
+        {/* Summary row */}
+        <div style={s.summary}>
+          <div style={s.summaryItem}>
+            <span style={s.summaryNumber}>{workMin}</span>
+            <span style={s.summaryLabel}>min work</span>
+          </div>
+          <div style={s.summaryArrow}>→</div>
+          <div style={s.summaryItem}>
+            <span style={s.summaryNumber}>{breakMin}</span>
+            <span style={s.summaryLabel}>min lock</span>
+          </div>
+          <div style={s.summaryArrow}>→</div>
+          <div style={s.summaryItem}>
+            <span style={s.summaryNumber}>
+              {CHARACTERS.find(c => c.key === character)?.emoji ?? '🐾'}
+            </span>
+            <span style={s.summaryLabel}>enforcer</span>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div style={s.actions}>
+          <div style={{ flex: 1 }}>
+            <button 
+              style={s.previewBtn} 
+              onClick={() => window.pawzy?.testCharacter?.(character)}
+              title="Preview how this character looks on your screen for 10 seconds"
+            >
+              👁️ Preview
+            </button>
+          </div>
+          <button style={s.cancelBtn} onClick={() => window.close()}>Cancel</button>
+          <button
+            style={{ ...s.saveBtn, ...(saved ? s.savedBtn : {}) }}
+            onClick={handleSave}
+          >
+            {saved ? '✓ Saved!' : 'Save Changes'}
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -237,53 +244,95 @@ export default function Settings() {
 
 const s = {
   root: {
-    minHeight: '100vh',
-    background: 'linear-gradient(135deg, #0f0d1a 0%, #1a1330 100%)',
-    padding: '32px 28px',
-    color: '#e2e8f0',
+    height: '100vh',
+    background: '#fdf8f0', // Web app warm cream
+    color: '#2d1200',
+    display: 'flex', flexDirection: 'column',
+    borderRadius: '20px',
+    overflow: 'hidden',
+    border: '2px solid rgba(0,0,0,.1)',
+    boxShadow: '0 12px 40px rgba(0,0,0,.2)',
+  },
+  titleBar: {
+    height: '40px',
+    background: '#f5efe6',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    borderBottom: '1px solid rgba(0,0,0,.05)',
+  },
+  dragRegion: {
+    WebkitAppRegion: 'drag',
+    flex: 1,
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    paddingLeft: '16px',
+    fontFamily: "'Fredoka One', cursive",
+    fontSize: '13px',
+    color: '#78716c',
+  },
+  closeBtn: {
+    WebkitAppRegion: 'no-drag',
+    background: 'transparent',
+    border: 'none',
+    width: '46px',
+    height: '100%',
+    fontSize: '20px',
+    color: '#78716c',
+    cursor: 'pointer',
+    transition: 'background .2s',
+  },
+  content: {
+    flex: 1,
+    overflowY: 'auto',
+    padding: '28px 32px',
     display: 'flex', flexDirection: 'column', gap: '24px',
   },
   loading: {
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    height: '100vh', color: '#94a3b8', fontSize: '18px',
+    height: '100%', color: '#78716c', fontSize: '18px',
   },
   header: { display: 'flex', alignItems: 'center', gap: '16px' },
   logo: {
-    fontSize: '40px',
-    background: 'rgba(168,85,247,.15)', borderRadius: '16px',
-    width: '60px', height: '60px',
+    fontSize: '36px',
+    background: '#fff', borderRadius: '16px',
+    width: '64px', height: '64px',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    border: '1px solid rgba(168,85,247,.3)',
+    boxShadow: '0 4px 12px rgba(0,0,0,.06)',
   },
-  title:    { fontSize: '22px', fontWeight: 700, color: '#f1f5f9' },
-  subtitle: { fontSize: '13px', color: '#94a3b8', marginTop: '2px' },
+  title:    { fontFamily: "'Fredoka One', cursive", fontSize: '24px', color: '#f97316' },
+  subtitle: { fontSize: '14px', color: '#78716c', fontWeight: 700 },
   card: {
-    background: 'rgba(255,255,255,.04)',
-    border: '1px solid rgba(255,255,255,.08)',
-    borderRadius: '20px', padding: '28px',
+    background: '#fff',
+    borderRadius: '24px', padding: '28px',
+    boxShadow: '0 10px 30px rgba(0,0,0,.04)',
+    border: '2px solid #f0e8dc',
     display: 'flex', flexDirection: 'column', gap: '20px',
   },
   sectionTitle: {
-    fontSize: '14px', fontWeight: 600, color: '#a855f7',
-    textTransform: 'uppercase', letterSpacing: '0.08em',
+    fontFamily: "'Fredoka One', cursive",
+    fontSize: '15px', color: '#78716c',
+    textTransform: 'uppercase', letterSpacing: '0.05em',
   },
-  sliderGroup:  { display: 'flex', flexDirection: 'column', gap: '10px' },
+  sliderGroup:  { display: 'flex', flexDirection: 'column', gap: '8px' },
   sliderHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' },
-  sliderLabel:  { fontSize: '16px', fontWeight: 600, color: '#e2e8f0' },
-  sliderValue:  { fontSize: '22px', fontWeight: 800, color: '#d8b4fe', fontVariantNumeric: 'tabular-nums' },
-  sliderDesc:   { fontSize: '12px', color: '#64748b', lineHeight: 1.5 },
+  sliderLabel:  { fontSize: '16px', fontWeight: 800, color: '#2d1200' },
+  sliderValue:  { fontFamily: "'Fredoka One', cursive", fontSize: '22px', color: '#f97316' },
+  sliderDesc:   { fontSize: '13px', color: '#78716c', fontWeight: 600 },
   sliderTrack: {
-    position: 'relative', height: '4px',
-    background: 'rgba(255,255,255,.1)', borderRadius: '2px',
+    position: 'relative', height: '6px',
+    background: '#f5f0eb', borderRadius: '3px',
+    marginTop: '6px',
   },
   sliderFill: {
     position: 'absolute', top: 0, left: 0, height: '100%',
-    background: 'linear-gradient(90deg, #7c3aed, #a855f7)',
-    borderRadius: '2px', pointerEvents: 'none',
+    background: 'linear-gradient(90deg, #f97316, #fbbf24)',
+    borderRadius: '3px', pointerEvents: 'none',
   },
-  sliderInput: { position: 'absolute', top: '-8px', left: 0, width: '100%' },
-  sliderTicks: { display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#475569' },
-  divider:     { height: '1px', background: 'rgba(255,255,255,.06)', margin: '0 -4px' },
+  sliderInput: { position: 'absolute', top: '-10px', left: 0, width: '100%' },
+  sliderTicks: { display: 'flex', justifyContent: 'space-between', fontSize: '11px', color: '#a8a29e', fontWeight: 700 },
+  divider:     { height: '2px', background: '#f5f0eb', margin: '4px -4px' },
 
   /* Character picker */
   charGrid: {
@@ -295,65 +344,69 @@ const s = {
     position: 'relative',
     display: 'flex', flexDirection: 'column', alignItems: 'center',
     gap: '6px',
-    padding: '18px 12px',
-    borderRadius: '16px',
-    background: 'rgba(255,255,255,.04)',
-    border: '1.5px solid rgba(255,255,255,.1)',
+    padding: '16px 12px',
+    borderRadius: '20px',
+    background: '#fff7ed',
+    border: '2px solid #ffedd5',
     cursor: 'pointer',
-    transition: 'all .2s ease',
-    color: '#e2e8f0',
+    transition: 'all .15s ease',
+    color: '#2d1200',
   },
   charCardActive: {
-    background: 'rgba(255,255,255,.08)',
+    background: '#fff',
+    transform: 'translateY(-2px)',
   },
-  charEmoji: { fontSize: '36px', lineHeight: 1 },
-  charLabel: { fontSize: '14px', fontWeight: 700, color: '#f1f5f9' },
-  charDesc:  { fontSize: '11px', color: '#64748b', textAlign: 'center' },
+  charEmoji: { fontSize: '38px', lineHeight: 1 },
+  charLabel: { fontFamily: "'Fredoka One', cursive", fontSize: '15px', color: '#ea580c' },
+  charDesc:  { fontSize: '12px', color: '#78716c', textAlign: 'center', fontWeight: 600 },
   charCheck: {
-    position: 'absolute', top: '8px', right: '8px',
-    width: '20px', height: '20px',
-    borderRadius: '50%', fontSize: '11px',
+    position: 'absolute', top: '-6px', right: '-6px',
+    width: '24px', height: '24px',
+    borderRadius: '50%', fontSize: '13px',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     color: '#fff', fontWeight: 800,
+    boxShadow: '0 2px 8px rgba(0,0,0,.15)',
   },
 
   /* Summary */
   summary: {
     display: 'flex', alignItems: 'center', justifyContent: 'center',
-    gap: '20px',
-    background: 'rgba(168,85,247,.08)',
-    border: '1px solid rgba(168,85,247,.2)',
-    borderRadius: '16px', padding: '20px',
+    gap: '24px',
+    background: '#fff',
+    border: '2px solid #f0e8dc',
+    boxShadow: '0 10px 30px rgba(0,0,0,.04)',
+    borderRadius: '24px', padding: '24px',
   },
-  summaryItem:   { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' },
-  summaryNumber: { fontSize: '28px', fontWeight: 800, color: '#d8b4fe', fontVariantNumeric: 'tabular-nums' },
-  summaryLabel:  { fontSize: '11px', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em' },
-  summaryArrow:  { fontSize: '20px', color: '#475569' },
+  summaryItem:   { display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' },
+  summaryNumber: { fontFamily: "'Fredoka One', cursive", fontSize: '32px', color: '#f97316' },
+  summaryLabel:  { fontSize: '12px', color: '#78716c', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' },
+  summaryArrow:  { fontSize: '20px', color: '#d6d3d1', fontWeight: 800 },
 
   /* Actions */
-  actions: { display: 'flex', gap: '12px', justifyContent: 'flex-end' },
+  actions: { display: 'flex', gap: '12px', justifyContent: 'flex-end', marginTop: '8px' },
   cancelBtn: {
-    padding: '12px 24px', borderRadius: '12px',
-    background: 'rgba(255,255,255,.06)',
-    border: '1px solid rgba(255,255,255,.1)',
-    color: '#94a3b8', fontSize: '14px', fontWeight: 600, cursor: 'pointer',
+    padding: '14px 24px', borderRadius: '50px',
+    background: '#f5f0eb',
+    border: 'none',
+    color: '#78716c', fontSize: '15px', fontWeight: 800, cursor: 'pointer',
   },
   previewBtn: {
-    padding: '12px 24px', borderRadius: '12px',
-    background: 'rgba(234, 179, 8, .15)',
-    border: '1px solid rgba(234, 179, 8, .3)',
-    color: '#fef08a', fontSize: '14px', fontWeight: 700, cursor: 'pointer',
+    padding: '14px 24px', borderRadius: '50px',
+    background: '#fffbeb',
+    border: '2px solid #fde68a',
+    color: '#d97706', fontSize: '14px', fontWeight: 800, cursor: 'pointer',
     transition: 'all .2s',
   },
   saveBtn: {
-    padding: '12px 32px', borderRadius: '12px',
-    background: 'linear-gradient(135deg, #7c3aed, #a855f7)',
-    border: 'none', color: '#fff', fontSize: '14px', fontWeight: 700,
-    cursor: 'pointer', boxShadow: '0 4px 20px rgba(168,85,247,.4)',
-    transition: 'all .2s',
+    padding: '14px 32px', borderRadius: '50px',
+    background: '#16a34a',
+    border: 'none', color: '#fff', fontSize: '15px', fontWeight: 800,
+    cursor: 'pointer', boxShadow: '0 5px 0 #15803d',
+    transition: 'all .1s',
   },
   savedBtn: {
-    background: 'linear-gradient(135deg, #059669, #10b981)',
-    boxShadow: '0 4px 20px rgba(16,185,129,.4)',
+    background: '#059669',
+    boxShadow: '0 2px 0 #047857',
+    transform: 'translateY(3px)',
   },
 };

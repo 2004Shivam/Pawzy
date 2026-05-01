@@ -30,7 +30,7 @@ export function LockScreen() {
   const [previewRemaining, setPreviewRemaining] = useState(null);
   const [previewCharKey,   setPreviewCharKey]   = useState(null);
 
-  // Load character from config on mount
+  // Load character from config on mount AND when break starts
   useEffect(() => {
     if (window.pawzy?.readConfig) {
       window.pawzy.readConfig().then(cfg => {
@@ -39,7 +39,7 @@ export function LockScreen() {
         }
       }).catch(() => {});
     }
-  }, []);
+  }, [breakRemaining !== null]);
 
   // Handle preview mode
   useEffect(() => {

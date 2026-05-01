@@ -1145,25 +1145,37 @@
         <img class="em" src="cat.png" alt="Neko Cat">
         <h3>Neko Cat</h3>
         <p>The original. Slides in from the right and judges your productivity silently.</p>
-        <a class="sel" href="#download">Get Pawzy</a>
+        <div style="display:flex; gap:8px; justify-content:center;">
+          <a class="sel" href="#download">Get Pawzy</a>
+          <button class="sel" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5);" onclick="showPreview('cat_preview.png')">Preview</button>
+        </div>
       </div>
       <div class="cc cc-shi">
         <img class="em" src="dog.png" alt="Shiba Inu">
         <h3>Shiba Inu</h3>
         <p>Much break. Very rest. Wow. Bobs happily and twitches ears during idle.</p>
-        <a class="sel" href="#download">Get Pawzy</a>
+        <div style="display:flex; gap:8px; justify-content:center;">
+          <a class="sel" href="#download">Get Pawzy</a>
+          <button class="sel" style="background:rgba(255,255,255,0.2); color:inherit; border-color:currentColor;" onclick="showPreview('shiba_preview.png')">Preview</button>
+        </div>
       </div>
       <div class="cc cc-pan">
-        <img class="em" src="panda.png" alt="ChillPanda">
-        <h3>ChillPanda</h3>
+        <img class="em" src="capybara.png" alt="Chill King Capybara">
+        <h3>Capybara</h3>
         <p>Maximum chill energy. Relaxes on your screen while you take a breather.</p>
-        <a class="sel" href="#download">Get Pawzy</a>
+        <div style="display:flex; gap:8px; justify-content:center;">
+          <a class="sel" href="#download">Get Pawzy</a>
+          <button class="sel" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5);" onclick="showPreview('capybara_preview.png')">Preview</button>
+        </div>
       </div>
       <div class="cc cc-fox">
-        <img class="em" src="fox.png" alt="FoxKit">
-        <h3>FoxKit</h3>
+        <img class="em" src="monkey.png" alt="Playful Monkey">
+        <h3>Monkey</h3>
         <p>Playful and curious. Swings in to make sure you step away from the keyboard.</p>
-        <a class="sel" href="#download">Get Pawzy</a>
+        <div style="display:flex; gap:8px; justify-content:center;">
+          <a class="sel" href="#download">Get Pawzy</a>
+          <button class="sel" style="background:rgba(255,255,255,0.2); color:#fff; border-color:rgba(255,255,255,0.5);" onclick="showPreview('monkey_preview.png')">Preview</button>
+        </div>
       </div>
     </div>
   </div>
@@ -1268,7 +1280,7 @@
       <div class="fc">
         <div class="ico">🎨</div>
         <h3>4 Companions</h3>
-        <p>Cat, Shiba, ChillPanda, FoxKit — each with unique animations and personality.</p>
+        <p>Cat, Shiba, Capybara, Monkey — each with unique animations and personality.</p>
       </div>
     </div>
   </div>
@@ -1352,7 +1364,20 @@
     </div>
   </footer>
 
+  <!-- Preview Modal -->
+  <div id="preview-modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:1000; align-items:center; justify-content:center; cursor:pointer;" onclick="this.style.display='none'">
+    <img id="modal-img" src="" style="max-width:90%; max-height:90%; border-radius:12px; box-shadow:0 0 40px rgba(0,0,0,0.5); border: 2px solid rgba(255,255,255,0.1);">
+    <div style="position:absolute; top:20px; right:30px; color:#fff; font-size:40px; font-weight:bold;">&times;</div>
+  </div>
+
   <script>
+    function showPreview(imgSrc) {
+      const modal = document.getElementById('preview-modal');
+      const img = document.getElementById('modal-img');
+      img.src = imgSrc;
+      modal.style.display = 'flex';
+    }
+
     // Email Gate Logic (Formspree)
     document.getElementById('email-form').addEventListener('submit', function (e) {
       e.preventDefault();

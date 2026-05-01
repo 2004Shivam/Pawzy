@@ -9,12 +9,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{--or:#f97316;--or2:#ea580c;--ye:#fbbf24;--gr:#16a34a;--te:#0d9488;--bg:#fffdf8;--tx:#1a0600;--mu:#78716c}
+:root{--or:#f97316;--or2:#ea580c;--ye:#fbbf24;--dk-ye:#e6a800;--gr:#16a34a;--te:#0d9488;--bg:#fdf8f0;--tx:#2d1200;--mu:#78716c}
 html{scroll-behavior:smooth}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--tx);overflow-x:hidden}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:2px solid #f5f0eb;display:flex;align-items:center;justify-content:space-between;padding:14px 48px}
+nav{position:sticky;top:0;z-index:200;background:rgba(253,248,240,.96);backdrop-filter:blur(12px);border-bottom:2px solid #f0e8dc;display:flex;align-items:center;justify-content:space-between;padding:14px 48px}
 .nl{font-family:'Fredoka One',cursive;font-size:22px;color:var(--or);text-decoration:none;display:flex;align-items:center;gap:6px}
 .nm{display:flex;gap:28px}
 .nm a{color:var(--mu);text-decoration:none;font-size:15px;font-weight:700;transition:color .2s}
@@ -22,28 +22,89 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 .nc{background:var(--gr);color:#fff;padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;text-decoration:none;box-shadow:0 4px 0 #15803d;transition:transform .15s,box-shadow .15s}
 .nc:hover{transform:translateY(-2px);box-shadow:0 6px 0 #15803d}
 
-/* HERO */
-.hero{position:relative;overflow:hidden;display:flex;align-items:center;padding:56px 64px 56px;gap:40px;background:var(--bg);min-height:auto}
+/* PAGE BACKGROUND — soft warm cream with doodly shapes */
+body{background:var(--bg)}
 
-/* paint blobs — organic shapes matching reference */
-.blob{position:absolute;pointer-events:none;z-index:0}
-.b1{width:580px;height:560px;top:-200px;left:-180px;background:#f9a825;border-radius:60% 40% 55% 45%/50% 60% 40% 50%;opacity:1}
-.b2{width:440px;height:420px;bottom:-160px;right:-140px;background:#fbbf24;border-radius:45% 55% 40% 60%/55% 45% 55% 45%;opacity:1}
-.b3{width:0;height:0}
+/* Doodly background layer — large smooth corner blobs */
+.bg-doodles{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.dblob{position:absolute}
 
-.hl{position:relative;z-index:1;flex:1;max-width:500px}
+/* TOP-LEFT — giant flowing amber blob, bleeds from top-left corner */
+.db-tl{
+  width:620px;height:580px;
+  background:#f9a825;
+  top:-220px;left:-220px;
+  border-radius:44% 56% 68% 32% / 52% 40% 60% 48%;
+  animation:wobble-a 9s ease-in-out infinite;
+}
+/* small dark-yellow accent bump — below and clear of hero text */
+.db-tl-s{
+  width:140px;height:130px;
+  background:#e6a800;
+  top:440px;left:20px;
+  border-radius:55% 45% 40% 60% / 48% 58% 42% 52%;
+  animation:wobble-b 7s ease-in-out infinite;
+}
+/* TOP-RIGHT — medium golden accent */
+.db-tr{
+  width:280px;height:260px;
+  background:#e6a800;
+  top:-80px;right:-80px;
+  border-radius:58% 42% 36% 64% / 52% 64% 36% 48%;
+  animation:wobble-b 11s ease-in-out infinite;
+}
+/* BOTTOM-RIGHT — large warm-yellow blob */
+.db-br{
+  width:540px;height:500px;
+  background:#fbbf24;
+  bottom:-160px;right:-160px;
+  border-radius:52% 48% 38% 62% / 44% 60% 40% 56%;
+  animation:wobble-a 10s ease-in-out infinite reverse;
+}
+/* BOTTOM-LEFT — small accent */
+.db-bl{
+  width:200px;height:185px;
+  background:#f9a825;
+  bottom:-60px;left:-50px;
+  border-radius:48% 52% 58% 42% / 55% 44% 56% 45%;
+  animation:wobble-b 8s ease-in-out infinite;
+}
+
+@keyframes wobble-a{
+  0%,100%{border-radius:44% 56% 68% 32% / 52% 40% 60% 48%;transform:rotate(0deg)}
+  50%{border-radius:56% 44% 32% 68% / 48% 60% 40% 52%;transform:rotate(3deg)}
+}
+@keyframes wobble-b{
+  0%,100%{border-radius:58% 42% 36% 64% / 52% 64% 36% 48%;transform:rotate(0deg)}
+  50%{border-radius:42% 58% 64% 36% / 64% 36% 64% 36%;transform:rotate(-4deg)}
+}
+
+/* HERO — content centered with generous padding so text clears the blob */
+.hero{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:80px 100px 80px 160px;
+  gap:60px;
+  min-height:auto;
+}
+
+.hl{
+  position:relative;z-index:2;
+  flex:0 0 auto;width:440px;
+}
 .hbadge{display:none}
-.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(38px,4.2vw,56px);line-height:1.1;color:#3d1500;margin-bottom:14px}
+.hero h1{font-family:'Fredoka One',cursive;font-size:clamp(42px,4.8vw,62px);line-height:1.06;color:#2a0e00;margin-bottom:16px;letter-spacing:-0.5px}
 .hero h1 em{color:var(--or);font-style:normal}
-.hsub{font-size:15px;color:#5a4840;line-height:1.65;margin-bottom:26px;max-width:400px;font-weight:700}
-.hbtns{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-.bg{background:var(--gr);color:#fff;padding:13px 30px;border-radius:50px;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 5px 0 #15803d;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:8px}
+.hsub{font-size:16px;color:#5c3d28;line-height:1.72;margin-bottom:28px;max-width:400px;font-weight:600}
+.hbtns{display:flex;gap:14px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.bg{background:var(--gr);color:#fff;padding:14px 32px;border-radius:50px;font-size:15px;font-weight:800;text-decoration:none;box-shadow:0 5px 0 #15803d;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:8px}
 .bg:hover{transform:translateY(-2px);box-shadow:0 7px 0 #15803d}
-.blink{color:var(--or2);font-size:14px;font-weight:800;text-decoration:none;border-bottom:2px solid var(--or)}
-.hnote{font-size:12px;color:#a8a29e;font-weight:700}
+.blink{color:var(--or2);font-size:14px;font-weight:800;text-decoration:none;border-bottom:2px solid var(--or);transition:opacity .2s}
+.blink:hover{opacity:.75}
+.hnote{font-size:12px;color:#9a7560;font-weight:700;display:flex;align-items:center;gap:6px}
 
-/* hero right — dashboard mockup */
-.hr{position:relative;z-index:1;flex:1;display:flex;justify-content:center;align-items:center}
+/* hero right */
+.hr{position:relative;z-index:2;flex:1;display:flex;justify-content:center;align-items:center}
 .dashboard{background:#fff;border-radius:24px;padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.12);border:2px solid #f0ece8;width:320px}
 .db-bar{display:flex;align-items:center;gap:6px;margin-bottom:16px}
 .db-dot{width:10px;height:10px;border-radius:50%}
@@ -58,13 +119,13 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 .db-char{font-size:40px;text-align:center;padding:8px 0}
 
 /* MARQUEE */
-.mq{background:var(--or);padding:14px 0;overflow:hidden}
+.mq{background:var(--or);padding:14px 0;overflow:hidden;position:relative;z-index:1}
 .mqi{display:flex;gap:36px;animation:sc 22s linear infinite;width:max-content}
 .mqt{font-family:'Fredoka One',cursive;font-size:17px;color:#fff;white-space:nowrap;display:flex;align-items:center;gap:8px}
 @keyframes sc{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* COMPANIONS */
-.sec{padding:56px 64px;max-width:1200px;margin:0 auto}
+.sec{padding:56px 64px;max-width:1200px;margin:0 auto;position:relative;z-index:1}
 .lbl{font-size:11px;font-weight:900;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:6px}
 .stitle{font-family:'Fredoka One',cursive;font-size:clamp(26px,3vw,40px);color:var(--tx);margin-bottom:8px}
 .ssub{font-size:15px;color:var(--mu);max-width:460px;line-height:1.65;font-weight:600;margin-bottom:36px}
@@ -72,7 +133,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 .ccards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
 .cc{border-radius:24px;padding:28px 18px 22px;text-align:center;transition:transform .2s,box-shadow .2s;cursor:default}
 .cc:hover{transform:translateY(-6px)}
-.cc .em{font-size:60px;display:block;margin-bottom:10px;filter:drop-shadow(0 3px 8px rgba(0,0,0,.2))}
+.cc .em{width:90px;height:90px;display:block;margin:0 auto 14px;object-fit:cover;border-radius:50%;background:#fff;padding:6px;box-shadow:0 4px 12px rgba(0,0,0,.15)}
 .cc h3{font-family:'Fredoka One',cursive;font-size:20px;margin-bottom:5px}
 .cc p{font-size:12px;line-height:1.5;font-weight:700;margin-bottom:14px;opacity:.85}
 .sel{display:inline-block;padding:7px 26px;border-radius:50px;font-size:12px;font-weight:900;border:2px solid currentColor;cursor:pointer;transition:background .2s,color .2s;text-decoration:none}
@@ -86,9 +147,9 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 .cc-fox .sel{border-color:#fff;color:#fff} .cc-fox .sel:hover{background:#fff;color:#06b6d4}
 
 /* HOW IT WORKS — reference layout */
-.hiw{background:#fffdf8;padding:60px 0;border-top:2px solid #f5ede0}
+.hiw{background:rgba(255,253,248,.85);padding:60px 0;border-top:2px solid #f5ede0;position:relative;z-index:1}
 .hiw-inner{max-width:1200px;margin:0 auto;padding:0 64px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
-.hiw-col{}
+
 .hiw-title{font-family:'Fredoka One',cursive;font-size:clamp(24px,2.8vw,36px);color:var(--tx);margin-bottom:28px}
 .hiw-bullet{font-family:'Fredoka One',cursive;font-size:17px;color:var(--tx);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .hiw-bullet::before{content:'●';color:var(--ye);font-size:14px}
@@ -111,7 +172,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 .chart-bar.or{background:var(--or)}
 .chart-bar.gr{background:#22c55e}
 /* testimonials */
-.testi{background:#fff;padding:60px 0;border-top:2px solid #f5ede0}
+.testi{background:rgba(255,255,255,.85);padding:60px 0;border-top:2px solid #f5ede0;position:relative;z-index:1}
 .testi-inner{max-width:1200px;margin:0 auto;padding:0 64px}
 .testi h2{font-family:'Fredoka One',cursive;font-size:clamp(22px,2.5vw,32px);color:var(--tx);margin-bottom:6px}
 .testi-sub{font-size:14px;color:var(--mu);font-weight:600;margin-bottom:32px}
@@ -133,7 +194,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 .fc p{font-size:13px;color:var(--mu);line-height:1.6;font-weight:600}
 
 /* CTA */
-.cta{margin:0 40px 80px;background:var(--or);border-radius:36px;padding:70px 48px;text-align:center;position:relative;overflow:hidden;box-shadow:0 8px 0 var(--or2)}
+.cta{margin:0 40px 80px;background:var(--or);border-radius:36px;padding:70px 48px;text-align:center;position:relative;z-index:1;overflow:hidden;box-shadow:0 8px 0 var(--or2)}
 .cta::before{content:'';position:absolute;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.1);top:-100px;left:-80px}
 .cta::after{content:'';position:absolute;width:260px;height:260px;border-radius:50%;background:rgba(255,255,255,.08);bottom:-80px;right:-60px}
 .cta h2{font-family:'Fredoka One',cursive;font-size:clamp(30px,4vw,52px);color:#fff;margin-bottom:12px;position:relative}
@@ -145,7 +206,7 @@ nav{position:sticky;top:0;z-index:200;background:rgba(255,255,255,.95);backdrop-
 .bgh:hover{background:rgba(255,255,255,.15)}
 
 /* FOOTER */
-footer{background:#1a0600;color:rgba(255,255,255,.65);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:14px;font-weight:600}
+footer{background:#1a0600;color:rgba(255,255,255,.65);padding:36px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;font-size:14px;font-weight:600;position:relative;z-index:1}
 footer a{color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
 footer a:hover{color:#fff}
 .flogo{font-family:'Fredoka One',cursive;font-size:20px;color:var(--or)}
@@ -156,11 +217,13 @@ footer a:hover{color:#fff}
 }
 @media(max-width:768px){
   nav{padding:12px 20px}.nm{display:none}
-  .hero{flex-direction:column;padding:70px 24px 50px;gap:32px;min-height:auto}
-  .hr{width:100%}.dashboard{width:100%;max-width:300px}
+  .hero{flex-direction:column;padding:80px 24px 56px;gap:32px;min-height:auto}
+  .hl{width:100%}
   .sec,.hiw-inner,.testi-inner{padding-left:24px;padding-right:24px}
   .cta{margin:0 16px 60px;padding:48px 24px;border-radius:28px}
   footer{flex-direction:column;text-align:center;padding:32px 24px}
+  .bg-doodles{opacity:.7}
+  .hl{padding:28px 24px}
 }
 </style>
 </head>
@@ -176,13 +239,16 @@ footer a:hover{color:#fff}
   <a class="nc" href="#download">Sign up</a>
 </nav>
 
-<section class="hero">
-  <div class="blob b1"></div>
-  <div class="blob b2"></div>
-  <div class="blob b3"></div>
+<div class="bg-doodles" aria-hidden="true">
+  <div class="dblob db-tl"></div>
+  <div class="dblob db-tl-s"></div>
+  <div class="dblob db-tr"></div>
+  <div class="dblob db-br"></div>
+  <div class="dblob db-bl"></div>
+</div>
 
+<section class="hero">
   <div class="hl">
-    <div class="hbadge">🐾 Free &amp; Open Source</div>
     <h1>Your <em>furry</em><br/>productivity<br/>guardian</h1>
     <p class="hsub">Pawzy tracks your screen time and sends a cute companion sliding onto your screen when it's break time. No willpower required.</p>
     <div class="hbtns">
@@ -193,7 +259,7 @@ footer a:hover{color:#fff}
   </div>
 
   <div class="hr">
-    <img src="hero_char.png" alt="Productivity character" style="width:100%;max-width:400px;display:block;margin:0 auto;filter:drop-shadow(0 12px 32px rgba(0,0,0,.13))">
+    <img src="hero_char.png" alt="Productivity character" style="width:100%;max-width:460px;display:block;margin:0 auto">
   </div>
 </section>
 
@@ -216,25 +282,25 @@ footer a:hover{color:#fff}
   <p class="ssub">Pick during first launch or change anytime in Settings. Each one has a unique personality and animations.</p>
   <div class="ccards">
     <div class="cc cc-cat">
-      <span class="em">🐱</span>
+      <img class="em" src="cat.png" alt="Neko Cat">
       <h3>Neko Cat</h3>
       <p>The original. Slides in from the right and judges your productivity silently.</p>
       <a class="sel" href="#download">Select</a>
     </div>
     <div class="cc cc-shi">
-      <span class="em">🐕</span>
+      <img class="em" src="dog.png" alt="Shiba Inu">
       <h3>Shiba Inu</h3>
       <p>Much break. Very rest. Wow. Bobs happily and twitches ears during idle.</p>
       <a class="sel" href="#download">Select</a>
     </div>
     <div class="cc cc-pan">
-      <span class="em">🐼</span>
+      <img class="em" src="panda.png" alt="Chill Panda">
       <h3>Chill Panda</h3>
       <p>Waddling in with bamboo and ZZZs to share. Maximum chill energy.</p>
       <a class="sel" href="#download">Select</a>
     </div>
     <div class="cc cc-fox">
-      <span class="em">🦊</span>
+      <img class="em" src="fox.png" alt="Fox Kit">
       <h3>Fox Kit</h3>
       <p>Trots in with a wagging tail and showers your screen in golden stars.</p>
       <a class="sel" href="#download">Select</a>
@@ -253,10 +319,10 @@ footer a:hover{color:#fff}
       </div>
       <div class="hiw-sub">Work with Your Guardian:</div>
       <div class="hiw-bullet">Earn Rewards:</div>
-      <div class="hiw-rewards">🪙 🏅 🎖️</div>
+      <img src="rewards.png" alt="Earn Rewards" style="width:100%;max-width:240px;display:block;margin-top:16px">
     </div>
     <div class="hiw-col">
-      <img src="dog_desk.png" alt="Dog studying at desk" style="width:100%;max-width:260px;display:block;margin:0 auto 8px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.1))">
+      <img src="dog_desk.png" alt="Dog studying at desk" style="width:100%;max-width:280px;display:block;margin:0 auto 8px">
       <div class="hiw-dog-label">Your companion helps you study &amp; focus</div>
       <div class="hiw-bullet">Track Productivity:</div>
       <div class="chart-card">

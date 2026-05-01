@@ -1295,14 +1295,14 @@
   <div class="cta" id="download">
     <h2>Ready to take real breaks? 🐾</h2>
     <p>Free forever. No setup. Just download and double-click.</p>
-    <div id="actual-downloads" class="ctabtns" style="margin-bottom: 20px; display:flex;">
+    <div id="actual-downloads" class="ctabtns" style="margin-bottom: 20px; display:none;">
       <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest"
         id="dl-linux">🐧 Download for Linux</a>
       <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest"
         id="dl-win">🪟 Download for Windows</a>
       <a class="bgh" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">⭐ Star on GitHub</a>
     </div>
-    <p style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 40px; font-weight: 600; max-width: 400px; margin-left: auto; margin-right: auto;">Windows may show a SmartScreen warning since it's a new indie app — click 'More info' → 'Run anyway'. It's fully open source and safe.</p>
+    <p id="dl-disclaimer" style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 40px; font-weight: 600; max-width: 400px; margin-left: auto; margin-right: auto; display: none;">Windows may show a SmartScreen warning since it's a new indie app — click 'More info' → 'Run anyway'. It's fully open source and safe.</p>
 
     <div id="email-gate" style="position:relative;z-index:2; max-width: 600px; margin: 0 auto;">
       <div style="font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Stay Updated</div>
@@ -1376,6 +1376,13 @@
           submitBtn.innerText = "Subscribed! 🎉";
           submitBtn.style.opacity = "1";
           document.getElementById('user-email').value = '';
+          
+          // Show download links and hide email gate
+          setTimeout(() => {
+            document.getElementById('email-gate').style.display = 'none';
+            document.getElementById('actual-downloads').style.display = 'flex';
+            document.getElementById('dl-disclaimer').style.display = 'block';
+          }, 800);
         })
         .catch(error => {
           console.error("Error saving email:", error);

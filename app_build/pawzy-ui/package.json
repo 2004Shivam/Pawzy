@@ -8,7 +8,7 @@
     "build": "vite build --config vite.character.config.js && vite build --config vite.lockscreen.config.js && vite build --config vite.settings.config.js && vite build --config vite.onboarding.config.js",
     "electron": "electron .",
     "preview": "vite preview",
-    "dist": "npm run build && electron-builder --linux AppImage"
+    "dist": "npm run build && electron-builder --win"
   },
   "dependencies": {
     "@rive-app/react-canvas": "^4.12.3",

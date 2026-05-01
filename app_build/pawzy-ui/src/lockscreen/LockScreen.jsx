@@ -27,6 +27,9 @@ export function LockScreen() {
   const [promptVis,  setPromptVis]  = useState(true);
   const [charKey,    setCharKey]    = useState(DEFAULT_CHARACTER);
 
+  const [previewRemaining, setPreviewRemaining] = useState(null);
+  const [previewCharKey,   setPreviewCharKey]   = useState(null);
+
   // Load character from config on mount
   useEffect(() => {
     if (window.pawzy?.readConfig) {
@@ -38,7 +41,29 @@ export function LockScreen() {
     }
   }, []);
 
-  // Reset to slide phase each new break
+  // Handle preview mode
+  useEffect(() => {
+    if (window.pawzy?.on) {
+      return window.pawzy.on('preview_start', ({ charKey }) => {
+        setPreviewCharKey(charKey);
+        setPreviewRemaining(10);
+        setPhase('slide');
+      });
+    }
+  }, []);
+
+  // Local countdown for preview mode
+  useEffect(() => {
+    if (previewRemaining !== null && previewRemaining > 0) {
+      const t = setTimeout(() => setPreviewRemaining(r => r - 1), 1000);
+      return () => clearTimeout(t);
+    } else if (previewRemaining === 0) {
+      setPreviewRemaining(null);
+      setPreviewCharKey(null);
+    }
+  }, [previewRemaining]);
+
+  // Reset to slide phase each new actual break
   useEffect(() => {
     if (breakRemaining !== null) setPhase('slide');
   }, [breakRemaining !== null]);
@@ -71,9 +96,13 @@ export function LockScreen() {
     return () => clearInterval(iv);
   }, []);
 
-  if (breakRemaining === null) return null;
+  const isPreview = previewRemaining !== null;
+  const activeRemaining = isPreview ? previewRemaining : breakRemaining;
+  const activeCharKey = isPreview ? previewCharKey : charKey;
 
-  const CharComponent = CHARACTERS[charKey]?.component ?? CHARACTERS[DEFAULT_CHARACTER].component;
+  if (activeRemaining === null) return null;
+
+  const CharComponent = CHARACTERS[activeCharKey]?.component ?? CHARACTERS[DEFAULT_CHARACTER].component;
 
   return (
     <div style={s.root}>
@@ -88,19 +117,25 @@ export function LockScreen() {
           from { transform: translateX(100vw); }
           to   { transform: translateX(0); }
         }
+        @keyframes char-slide-in-left {
+          from { transform: translateX(-100vw); }
+          to   { transform: translateX(0); }
+        }
         @keyframes fadeIn { from{opacity:0} to{opacity:1} }
         @keyframes pulse  { 0%,100%{opacity:1} 50%{opacity:.7} }
       `}</style>
 
       {/* Active character — receives phase + callback */}
-      <CharComponent
-        phase={phase}
-        onSlideEnd={() => setPhase('sleep')}
-      />
+      <div style={{ position: 'absolute', inset: 0, zIndex: 20, pointerEvents: 'none' }}>
+        <CharComponent
+          phase={phase}
+          onSlideEnd={() => setPhase('sleep')}
+        />
+      </div>
 
       {/* Timer block — left-centre */}
       <div style={s.timerBlock}>
-        <div style={s.countdown}>{fmt(breakRemaining)}</div>
+        <div style={s.countdown}>{fmt(activeRemaining)}</div>
         <div style={s.prompt} key={promptIdx}>
           <span style={{ opacity: promptVis ? 1 : 0, transition: 'opacity .4s' }}>
             {PROMPTS[promptIdx]}
@@ -127,14 +162,13 @@ const s = {
     display: 'flex',
     flexDirection: 'column',
     gap: '20px',
-    background: 'rgba(0,0,0,0.65)',
+    background: 'transparent',
     borderRadius: '24px',
     padding: '52px 64px',
     animation: 'fadeIn .5s ease both',
     zIndex: 10,
     lineHeight: 1,
-    backdropFilter: 'blur(8px)',
-    border: '1px solid rgba(255,255,255,.08)',
+    border: 'none',
   },
   countdown: {
     fontSize: '140px',
@@ -144,15 +178,16 @@ const s = {
     lineHeight: 1,
     fontFamily: 'sans-serif',
     animation: 'pulse 1s ease-in-out infinite',
+    textShadow: '0 4px 24px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5)',
   },
   prompt: {
     fontSize: '22px',
     fontWeight: 700,
     color: '#ffffff',
     lineHeight: 1.4,
-    borderTop: '1px solid rgba(255,255,255,.2)',
+    borderTop: '2px solid rgba(255,255,255,.4)',
     paddingTop: '16px',
-    textShadow: '0 2px 12px rgba(0,0,0,.8)',
+    textShadow: '0 2px 12px rgba(0,0,0,.9), 0 0 8px rgba(0,0,0,0.6)',
     letterSpacing: '-0.2px',
   },
 };

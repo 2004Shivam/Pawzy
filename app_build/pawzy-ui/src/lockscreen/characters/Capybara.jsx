@@ -1,22 +1,22 @@
 /**
- * ShibaInu.jsx — Video character implementation
+ * Capybara.jsx — Video character implementation
  */
 import { useEffect, useRef } from 'react';
 
-const VIDEO_FILE = './characters/Shibo_Dog.webm';
+const VIDEO_FILE = './characters/CapyBara.webm';
 
-export function ShibaInu({ phase, onSlideEnd }) {
+export function Capybara({ phase, onSlideEnd }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.playbackRate = 0.75;
+      videoRef.current.playbackRate = 0.75; // Slow down for a calmer feel
     }
   }, []);
 
   useEffect(() => {
     if (phase === 'slide') {
-      const timer = setTimeout(onSlideEnd, 4000);
+      const timer = setTimeout(onSlideEnd, 4000); // 4s slide-in
       return () => clearTimeout(timer);
     }
   }, [phase, onSlideEnd]);
@@ -44,7 +44,7 @@ const s = {
     alignItems: 'flex-end',
     justifyContent: 'center',
     overflow: 'hidden',
-    animation: 'char-slide-in 4s cubic-bezier(.22,1,.36,1) forwards',
+    animation: 'char-slide-in-left 4s cubic-bezier(.22,1,.36,1) forwards',
   },
   idleWrap: {
     position: 'absolute',
@@ -59,5 +59,6 @@ const s = {
     width: 'auto',
     display: 'block',
     mixBlendMode: 'screen',
+    transform: 'scaleX(-1)', // Flip Capybara so it looks inward
   },
 };

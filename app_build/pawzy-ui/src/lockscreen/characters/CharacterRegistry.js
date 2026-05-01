@@ -6,8 +6,8 @@
 
 import { CatGatekeeper } from './CatGatekeeper';
 import { ShibaInu }      from './ShibaInu';
-import { ChillPanda }    from './ChillPanda';
-import { FoxKit }        from './FoxKit';
+import { Capybara }      from './Capybara';
+import { Monkey }        from './Monkey';
 
 export const CHARACTERS = {
   cat_gatekeeper: {
@@ -22,17 +22,17 @@ export const CHARACTERS = {
     emoji:       '🐕',
     description: 'Fluffy & loyal',
   },
-  panda: {
-    component:   ChillPanda,
-    label:       'Chill Panda',
-    emoji:       '🐼',
-    description: 'Unbothered & cool',
+  capybara: {
+    component:   Capybara,
+    label:       'Capybara',
+    emoji:       '🦦',
+    description: 'Maximum chill energy',
   },
-  fox: {
-    component:   FoxKit,
-    label:       'Fox Kit',
-    emoji:       '🦊',
-    description: 'Swift & stylish',
+  monkey: {
+    component:   Monkey,
+    label:       'Monkey',
+    emoji:       '🐒',
+    description: 'Playful & curious',
   },
 };
 

@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 const CHARACTERS = [
   { key: 'cat_gatekeeper', emoji: '🐱', label: 'Neko Cat',    desc: 'The original gatekeeper', color: '#f97316' },
   { key: 'shiba',          emoji: '🐕', label: 'Shiba Inu',   desc: 'Fluffy & loyal',          color: '#D4773C' },
-  { key: 'panda',          emoji: '🐼', label: 'Chill Panda', desc: 'Unbothered & cool',        color: '#64748b' },
-  { key: 'fox',            emoji: '🦊', label: 'Fox Kit',     desc: 'Swift & stylish',          color: '#ef4444' },
+  { key: 'capybara',       emoji: '🦦', label: 'Capybara',    desc: 'Maximum chill energy',    color: '#64748b' },
+  { key: 'monkey',         emoji: '🐒', label: 'Monkey',      desc: 'Playful & curious',       color: '#ef4444' },
 ];
 
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
@@ -214,6 +214,15 @@ export default function Settings() {
 
       {/* Actions */}
       <div style={s.actions}>
+        <div style={{ flex: 1 }}>
+          <button 
+            style={s.previewBtn} 
+            onClick={() => window.pawzy?.testCharacter?.(character)}
+            title="Preview how this character looks on your screen for 10 seconds"
+          >
+            👁️ Preview
+          </button>
+        </div>
         <button style={s.cancelBtn} onClick={() => window.close()}>Cancel</button>
         <button
           style={{ ...s.saveBtn, ...(saved ? s.savedBtn : {}) }}
@@ -328,6 +337,13 @@ const s = {
     background: 'rgba(255,255,255,.06)',
     border: '1px solid rgba(255,255,255,.1)',
     color: '#94a3b8', fontSize: '14px', fontWeight: 600, cursor: 'pointer',
+  },
+  previewBtn: {
+    padding: '12px 24px', borderRadius: '12px',
+    background: 'rgba(234, 179, 8, .15)',
+    border: '1px solid rgba(234, 179, 8, .3)',
+    color: '#fef08a', fontSize: '14px', fontWeight: 700, cursor: 'pointer',
+    transition: 'all .2s',
   },
   saveBtn: {
     padding: '12px 32px', borderRadius: '12px',

@@ -1,11 +1,11 @@
 /**
- * ShibaInu.jsx — Video character implementation
+ * Monkey.jsx — Video character implementation
  */
 import { useEffect, useRef } from 'react';
 
-const VIDEO_FILE = './characters/Shibo_Dog.webm';
+const VIDEO_FILE = './characters/Monkey.webm';
 
-export function ShibaInu({ phase, onSlideEnd }) {
+export function Monkey({ phase, onSlideEnd }) {
   const videoRef = useRef(null);
 
   useEffect(() => {

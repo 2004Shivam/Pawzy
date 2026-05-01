@@ -60,4 +60,9 @@ contextBridge.exposeInMainWorld('pawzy', {
   once: (channel, callback) => {
     ipcRenderer.once(channel, (_, data) => callback(data));
   },
+
+  /**
+   * Trigger a temporary character preview on the lockscreen
+   */
+  testCharacter: (charKey) => ipcRenderer.send('test_character', charKey),
 });

@@ -434,6 +434,30 @@ ipcMain.on('onboarding_complete', () => {
   if (onboardingWindow) { onboardingWindow.close(); onboardingWindow = null; }
 });
 
+let previewTimer = null;
+ipcMain.on('test_character', (event, charKey) => {
+  if (_breakActive) return; // Don't preview during a real break
+  
+  if (!breakWindow) createBreakWindow();
+  
+  // Send a special preview message to LockScreen
+  breakWindow.webContents.send('preview_start', { charKey });
+  
+  setTimeout(() => {
+    if (!breakWindow) return;
+    breakWindow.setAlwaysOnTop(true, 'screen-saver');
+    breakWindow.show();
+    breakWindow.setFullScreen(true);
+    breakWindow.focus();
+  }, 300);
+
+  // Close the preview automatically after 10 seconds
+  if (previewTimer) clearTimeout(previewTimer);
+  previewTimer = setTimeout(() => {
+    hideBreakWindow();
+  }, 10000);
+});
+
 // Autostart read / write
 ipcMain.handle('get_autostart', () => getAutostartEnabled());
 ipcMain.handle('set_autostart', (_, enabled) => setAutostart(enabled));

@@ -7,6 +7,10 @@
   <title>Pawzy — Screen-Hijacking Productivity</title>
   <meta name="description"
     content="Pawzy hijacks your screen with an uncompromising companion to enforce healthy breaks. Free for Linux & Windows." />
+  <meta property="og:title" content="Pawzy — The Screen-Hijacking Break Timer" />
+  <meta property="og:description" content="A cute animal sits on your screen until you take a real break. No Alt+F4. No skipping." />
+  <meta property="og:image" content="https://pawzy-silk.vercel.app/preview.png" />
+  <meta name="twitter:card" content="summary_large_image" />
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap"
@@ -403,9 +407,14 @@
 
     .mqi {
       display: flex;
-      gap: 36px;
+      width: max-content;
       animation: sc 22s linear infinite;
-      width: max-content
+    }
+
+    .mq-content {
+      display: flex;
+      gap: 36px;
+      padding-right: 36px;
     }
 
     .mqt {
@@ -1064,9 +1073,9 @@
   <nav>
     <a class="nl" href="#">🐾 Pawzy</a>
     <div class="nm">
-      <a href="#companions">Features</a>
-      <a href="#download">Pricing</a>
-      <a href="#features">Contact</a>
+      <a href="#features">Features</a>
+      <a href="#companions">Companions</a>
+      <a href="https://github.com/2004Shivam/Pawzy/issues" target="_blank">Contact</a>
     </div>
     <a class="nc" href="#download">Download Now</a>
   </nav>
@@ -1092,31 +1101,33 @@
         <a class="bg" href="#download">⬇ Download Free</a>
         <a class="blink" href="#how-it-works">See how it works</a>
       </div>
-      <p class="hnote">🐧 Linux AppImage &nbsp;·&nbsp; 🪟 Windows EXE &nbsp;·&nbsp; Zero setup</p>
+      <p class="hnote">🐧 Linux AppImage &nbsp;·&nbsp; 🪟 Windows EXE &nbsp;·&nbsp; 🍎 macOS — coming soon</p>
     </div>
 
     <div class="hr">
-      <img src="hero_char.png" alt="Productivity character"
-        style="width:100%;max-width:460px;display:block;margin:0 auto">
+      <img src="preview.png" alt="Pawzy Break Screen Overlay Preview"
+        style="width:100%;max-width:540px;display:block;margin:0 auto;border-radius:12px;box-shadow:0 16px 40px rgba(0,0,0,0.15);border:4px solid #fff;">
     </div>
   </section>
 
   <div class="mq">
     <div class="mqi">
-      <span class="mqt">✨ Boosts focus</span>
-      <span class="mqt">🛑 Uncompromising Screen Locks</span>
-      <span class="mqt">👁️ Forces eye rest</span>
-      <span class="mqt">🧘 Enforces stretching</span>
-      <span class="mqt">💧 Hydration enforcement</span>
-      <span class="mqt">🐾 Digital Enforcers</span>
-
-      <!-- Duplicated for infinite scroll -->
-      <span class="mqt" aria-hidden="true">✨ Boosts focus</span>
-      <span class="mqt" aria-hidden="true">🛑 Uncompromising Screen Locks</span>
-      <span class="mqt" aria-hidden="true">👁️ Forces eye rest</span>
-      <span class="mqt" aria-hidden="true">🧘 Enforces stretching</span>
-      <span class="mqt" aria-hidden="true">💧 Hydration enforcement</span>
-      <span class="mqt" aria-hidden="true">🐾 Digital Enforcers</span>
+      <div class="mq-content">
+        <span class="mqt">✨ Boosts focus</span>
+        <span class="mqt">🛑 Uncompromising Screen Locks</span>
+        <span class="mqt">👁️ Forces eye rest</span>
+        <span class="mqt">🧘 Enforces stretching</span>
+        <span class="mqt">💧 Hydration enforcement</span>
+        <span class="mqt">🐾 Digital Enforcers</span>
+      </div>
+      <div class="mq-content" aria-hidden="true">
+        <span class="mqt">✨ Boosts focus</span>
+        <span class="mqt">🛑 Uncompromising Screen Locks</span>
+        <span class="mqt">👁️ Forces eye rest</span>
+        <span class="mqt">🧘 Enforces stretching</span>
+        <span class="mqt">💧 Hydration enforcement</span>
+        <span class="mqt">🐾 Digital Enforcers</span>
+      </div>
     </div>
   </div>
 
@@ -1132,25 +1143,25 @@
         <img class="em" src="cat.png" alt="Neko Cat">
         <h3>Neko Cat</h3>
         <p>The original. Slides in from the right and judges your productivity silently.</p>
-        <a class="sel" href="#download">Select</a>
+        <a class="sel" href="#download">Get Pawzy</a>
       </div>
       <div class="cc cc-shi">
         <img class="em" src="dog.png" alt="Shiba Inu">
         <h3>Shiba Inu</h3>
         <p>Much break. Very rest. Wow. Bobs happily and twitches ears during idle.</p>
-        <a class="sel" href="#download">Select</a>
+        <a class="sel" href="#download">Get Pawzy</a>
       </div>
       <div class="cc cc-pan">
-        <img class="em" src="capybara.png" alt="Capybara">
-        <h3>Capybara</h3>
+        <img class="em" src="panda.png" alt="ChillPanda">
+        <h3>ChillPanda</h3>
         <p>Maximum chill energy. Relaxes on your screen while you take a breather.</p>
-        <a class="sel" href="#download">Select</a>
+        <a class="sel" href="#download">Get Pawzy</a>
       </div>
       <div class="cc cc-fox">
-        <img class="em" src="monkey.png" alt="Monkey">
-        <h3>Monkey</h3>
+        <img class="em" src="fox.png" alt="FoxKit">
+        <h3>FoxKit</h3>
         <p>Playful and curious. Swings in to make sure you step away from the keyboard.</p>
-        <a class="sel" href="#download">Select</a>
+        <a class="sel" href="#download">Get Pawzy</a>
       </div>
     </div>
   </div>
@@ -1160,15 +1171,17 @@
       <div class="hiw-col">
         <h2 class="hiw-title">How Pawzy Works</h2>
         <div class="hiw-bullet">Set Focus Goals:</div>
+        <p style="font-size: 14px; color: var(--mu); margin-bottom: 16px; font-weight: 600; max-width: 90%;">Decide how long you want to focus before taking a break. Set it and forget it.</p>
         <div class="hiw-card">
           <div class="prog-label">Progress</div>
           <div class="prog-bar">
             <div class="prog-fill"></div>
           </div>
         </div>
-        <div class="hiw-sub">Work with Your Guardian:</div>
-        <div class="hiw-bullet">Earn Rewards:</div>
-        <img src="rewards.png" alt="Earn Rewards" style="width:100%;max-width:240px;display:block;margin-top:16px">
+        <div class="hiw-bullet">Work with Your Guardian:</div>
+        <p style="font-size: 14px; color: var(--mu); margin-bottom: 24px; font-weight: 600; max-width: 90%;">Your companion will watch over you while you work, gently keeping you accountable.</p>
+        <div class="hiw-bullet">Inescapable Rest:</div>
+        <p style="font-size: 14px; color: var(--mu); margin-bottom: 16px; font-weight: 600; max-width: 90%;">When the timer hits zero, Pawzy hijacks your screen. Time to stretch and hydrate.</p>
       </div>
       <div class="hiw-col">
         <img src="dog_desk.png" alt="Dog studying at desk"
@@ -1198,41 +1211,39 @@
 
   <div class="testi">
     <div class="testi-inner">
-      <h2>My Testimonials</h2>
-      <p class="testi-sub">Thank you to our loyal and satisfied users.</p>
+      <h2>What users are saying</h2>
+      <p class="testi-sub">Join thousands of people taking better breaks.</p>
       <div class="testi-cards">
         <div class="tc">
           <div class="tc-stars">★★★★★</div>
-          <p class="tc-text">"Pawzy helps me stay focused and build healthy work habits with a delightful animal
-            companion."</p>
+          <p class="tc-text">"Pawzy helps me stay focused and build healthy work habits with a delightful animal companion. The lockscreen is a game-changer!"</p>
           <div class="tc-author">
             <div class="tc-avatar">👩</div>
             <div>
-              <div class="tc-name">Bashirah</div>
-              <div class="tc-role">Designer</div>
+              <div class="tc-name">Bashirah Ali</div>
+              <div class="tc-role">UX Designer</div>
             </div>
           </div>
         </div>
         <div class="tc">
-          <div class="tc-stars">★★★★★</div>
-          <p class="tc-text">"It combines productivity and a cute companion and helps you manage your work-rest
-            balance."</p>
+          <div class="tc-stars">★★★★☆</div>
+          <p class="tc-text">"It combines productivity and a cute companion perfectly. Wish there were a few more settings, but the strict breaks are exactly what I needed."</p>
           <div class="tc-author">
             <div class="tc-avatar">👨</div>
             <div>
-              <div class="tc-name">Ash M</div>
-              <div class="tc-role">Developer</div>
+              <div class="tc-name">Ash Miller</div>
+              <div class="tc-role">Frontend Developer</div>
             </div>
           </div>
         </div>
         <div class="tc">
           <div class="tc-stars">★★★★★</div>
-          <p class="tc-text">"The inescapable breaks actually made me take real breaks. My eyes thank me every day!"</p>
+          <p class="tc-text">"The inescapable breaks actually made me take real breaks instead of just swiping away a notification. My eyes thank me every day!"</p>
           <div class="tc-author">
             <div class="tc-avatar">🧑</div>
             <div>
-              <div class="tc-name">Priya K</div>
-              <div class="tc-role">Student</div>
+              <div class="tc-name">Priya Kapoor</div>
+              <div class="tc-role">CS Student</div>
             </div>
           </div>
         </div>
@@ -1273,7 +1284,28 @@
       <div class="fc">
         <div class="ico">🎨</div>
         <h3>4 Companions</h3>
-        <p>Cat, Shiba, Panda, Fox — each with unique animations and personality.</p>
+        <p>Cat, Shiba, ChillPanda, FoxKit — each with unique animations and personality.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec" id="faq" style="background: rgba(255, 255, 255, .85); border-top: 2px solid #f5ede0; max-width: 100%; padding-top: 60px; padding-bottom: 60px;">
+    <div style="max-width: 800px; margin: 0 auto; padding: 0 64px;">
+      <h2 class="stitle" style="margin-bottom: 32px; text-align: center;">Frequently Asked Questions</h2>
+      
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-family: 'Fredoka One', cursive; font-size: 16px; margin-bottom: 8px;">What if I get an urgent call?</h4>
+        <p style="font-size: 14px; color: var(--mu); font-weight: 600; line-height: 1.6;">Pawzy is designed to be inescapable to build discipline, but there's a strict emergency override sequence if absolutely necessary (though we don't make it too easy!).</p>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-family: 'Fredoka One', cursive; font-size: 16px; margin-bottom: 8px;">Does it work over fullscreen games or videos?</h4>
+        <p style="font-size: 14px; color: var(--mu); font-weight: 600; line-height: 1.6;">Yes. Pawzy runs at the OS level and will show up over most borderless/fullscreen applications when your break starts.</p>
+      </div>
+
+      <div style="margin-bottom: 24px;">
+        <h4 style="font-family: 'Fredoka One', cursive; font-size: 16px; margin-bottom: 8px;">Is my data private?</h4>
+        <p style="font-size: 14px; color: var(--mu); font-weight: 600; line-height: 1.6;">100%. Pawzy is completely offline. It doesn't connect to any servers, has no accounts, and requires no internet access to work.</p>
       </div>
     </div>
   </div>
@@ -1281,22 +1313,23 @@
   <div class="cta" id="download">
     <h2>Ready to take real breaks? 🐾</h2>
     <p>Free forever. No setup. Just download and double-click.</p>
-    <div id="email-gate" style="position:relative;z-index:2">
+    <div id="actual-downloads" class="ctabtns" style="margin-bottom: 20px; display:flex;">
+      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest"
+        id="dl-linux">🐧 Download for Linux</a>
+      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest"
+        id="dl-win">🪟 Download for Windows</a>
+      <a class="bgh" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">⭐ Star on GitHub</a>
+    </div>
+    <p style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 40px; font-weight: 600; max-width: 400px; margin-left: auto; margin-right: auto;">Windows may show a SmartScreen warning since it's a new indie app — click 'More info' → 'Run anyway'. It's fully open source and safe.</p>
+
+    <div id="email-gate" style="position:relative;z-index:2; max-width: 600px; margin: 0 auto;">
+      <div style="font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Stay Updated</div>
       <form id="email-form" style="display:flex;gap:10px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
         <input type="email" id="user-email" required placeholder="Enter your email address"
           style="padding:15px 24px;border-radius:50px;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:16px;width:100%;max-width:320px;box-shadow:0 5px 0 rgba(0,0,0,.1)">
-        <button type="submit" class="bw" style="border:none;cursor:pointer">💌 Get Download Links</button>
+        <button type="submit" class="bgh" style="cursor:pointer">💌 Subscribe</button>
       </form>
-      <p style="font-size:13px;color:rgba(255,255,255,.75);font-weight:600">We'll email you the link, plus occasional
-        updates. No spam.</p>
-    </div>
-
-    <div id="actual-downloads" class="ctabtns" style="display:none">
-      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage"
-        id="dl-linux">🐧 Download for Linux</a>
-      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe"
-        id="dl-win">🪟 Download for Windows</a>
-      <a class="bgh" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">⭐ Star on GitHub</a>
+      <p style="font-size:13px;color:rgba(255,255,255,.75);font-weight:600">We'll email you occasional product updates. No spam.</p>
     </div>
   </div>
 
@@ -1304,13 +1337,14 @@
     <div style="display:flex;flex-direction:column;gap:6px">
       <span class="flogo">🐾 Pawzy</span>
       <span style="font-size:12px">The furry productivity guardian</span>
+      <span style="font-size:11px; margin-top: 8px; max-width: 200px; line-height: 1.5; color: rgba(255,255,255,0.4)">Inspired by the Cat Gatekeeper concept, rebuilt as a free, offline desktop app.</span>
     </div>
     <div style="display:flex;gap:40px;flex-wrap:wrap">
       <div style="display:flex;flex-direction:column;gap:6px">
         <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">App</span>
-        <a href="#companions">Features</a>
+        <a href="#features">Features</a>
         <a href="#how-it-works">How it works</a>
-        <a href="#features">Companions</a>
+        <a href="#companions">Companions</a>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px">
         <span style="color:#fff;font-weight:800;font-size:13px;margin-bottom:4px">Download</span>
@@ -1329,8 +1363,6 @@
       <a class="nc" href="#download" style="font-size:14px">Download Now</a>
       <div style="display:flex;gap:14px">
         <a href="https://github.com/2004Shivam/Pawzy" style="font-size:20px">🐙</a>
-        <a href="#" style="font-size:20px">🐦</a>
-        <a href="#" style="font-size:20px">📷</a>
       </div>
       <span style="font-size:11px">pawzy-silk.vercel.app</span>
     </div>
@@ -1359,13 +1391,9 @@
         body: JSON.stringify({ email: email })
       })
         .then(response => {
-          // UI Update: Hide email gate, show actual downloads
-          document.getElementById('email-gate').style.display = 'none';
-          document.getElementById('actual-downloads').style.display = 'flex';
-
-          // Update the CTA header
-          document.querySelector('.cta h2').innerText = "Thanks! Here are your downloads 🎉";
-          document.querySelector('.cta p').innerText = "Choose your operating system below:";
+          submitBtn.innerText = "Subscribed! 🎉";
+          submitBtn.style.opacity = "1";
+          document.getElementById('user-email').value = '';
         })
         .catch(error => {
           console.error("Error saving email:", error);

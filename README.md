@@ -88,13 +88,17 @@ Autostart is enabled automatically on first launch.
 
 ### Windows
 
-Download `Pawzy-Setup-0.1.0.exe` from [Releases](https://github.com/2004Shivam/Pawzy/releases) and run the installer.
+Download `Pawzy.Setup.0.1.0.exe` from [Releases](https://github.com/2004Shivam/Pawzy/releases) and run the installer.
+
+**Note:** Windows may show a SmartScreen warning ("Windows protected your PC") because the executable is not yet digitally signed. Click **'More info' → 'Run anyway'**. The app is completely open source and safe to use.
 
 ---
 
 ## 🛠️ Development Setup
 
-### Prerequisites
+### Prerequisites (For Contributors Only)
+
+*Note: End users do NOT need to install Python or Node.js. Just download the AppImage or EXE from Releases!*
 
 - Node.js 20+
 - Python 3.11+

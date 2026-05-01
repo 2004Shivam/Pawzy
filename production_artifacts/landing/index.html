@@ -978,6 +978,105 @@
       transform: translateY(-2px);
     }
 
+    /* CAROUSEL & DEVICE FRAME */
+    .pc-frame {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      padding-bottom: 40px;
+    }
+    .pc-bezel {
+      background: #111;
+      padding: 12px;
+      border-radius: 16px;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .pc-screen {
+      background: #000;
+      border-radius: 4px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      position: relative;
+    }
+    .pc-stand {
+      width: 160px;
+      height: 20px;
+      background: #222;
+      margin: 0 auto;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      box-shadow: inset 0 2px 5px rgba(255,255,255,0.1);
+    }
+    .pc-stand::after {
+      content: '';
+      display: block;
+      width: 240px;
+      height: 8px;
+      background: #111;
+      margin: 0 auto;
+      position: relative;
+      top: 20px;
+      left: -40px;
+      border-radius: 4px;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+      height: 100%;
+    }
+    .carousel-slide {
+      min-width: 100%;
+      position: relative;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .pc-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      color: #fff;
+      padding: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .c-nav {
+      position: absolute;
+      top: 45%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      z-index: 10;
+    }
+    .c-nav:hover {
+      background: #fff;
+      color: var(--or2);
+    }
+    .prev { left: -60px; }
+    .next { right: -60px; }
+    @media (max-width: 1000px) {
+      .c-nav { top: auto; bottom: -60px; }
+      .prev { left: 35%; }
+      .next { right: 35%; }
+    }
+
     /* FOOTER */
     footer {
       background: #1a0600;
@@ -1165,26 +1264,40 @@
         <p>Playful and curious. Swings in to make sure you step away from the keyboard.</p>
         <a class="sel" href="#download">Get Pawzy</a>
       </div>
-    </div>
-
     <div style="margin-top: 80px; text-align: center;">
       <div class="lbl">In Action</div>
       <h2 class="stitle">The Hijacking Experience</h2>
-      <p class="ssub" style="margin-left: auto; margin-right: auto;">See exactly how Pawzy takes over your screen to enforce your wellness break.</p>
+      <p class="ssub" style="margin-left: auto; margin-right: auto; margin-bottom: 40px;">See exactly how Pawzy takes over your screen to enforce your wellness break.</p>
       
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; margin-top: 40px;">
-        <div style="background: #fff; padding: 12px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #f0ece8;">
-          <img src="cat_preview.png" style="width: 100%; border-radius: 8px; display: block;" alt="Cat Hijacking Preview">
-          <p style="font-size: 13px; font-weight: 800; color: #4a3728; margin-top: 12px;">Neko Cat enforcing a hydration break</p>
+      <!-- Device Frame / Carousel -->
+      <div class="pc-frame">
+        <div class="pc-bezel">
+          <div class="pc-screen">
+            <div class="carousel-track" id="hijack-carousel">
+              <div class="carousel-slide">
+                <img src="cat_preview.png" alt="Cat Hijacking Preview">
+                <div class="pc-caption">Neko Cat enforcing a hydration break</div>
+              </div>
+              <div class="carousel-slide">
+                <img src="shiba_preview.png" alt="Shiba Hijacking Preview">
+                <div class="pc-caption">Shiba Inu watching your focus session</div>
+              </div>
+              <div class="carousel-slide">
+                <img src="capybara_preview.png" alt="Capybara Hijacking Preview">
+                <div class="pc-caption">Capybara bringing the chill energy</div>
+              </div>
+              <div class="carousel-slide">
+                <img src="monkey_preview.png" alt="Monkey Hijacking Preview">
+                <div class="pc-caption">Monkey making sure you take a break</div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div style="background: #fff; padding: 12px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #f0ece8;">
-          <img src="shiba_preview.png" style="width: 100%; border-radius: 8px; display: block;" alt="Shiba Hijacking Preview">
-          <p style="font-size: 13px; font-weight: 800; color: #4a3728; margin-top: 12px;">Shiba Inu watching your focus session</p>
-        </div>
-        <div style="background: #fff; padding: 12px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 2px solid #f0ece8;">
-          <img src="capybara_preview.png" style="width: 100%; border-radius: 8px; display: block;" alt="Capybara Hijacking Preview">
-          <p style="font-size: 13px; font-weight: 800; color: #4a3728; margin-top: 12px;">Capybara bringing the chill energy</p>
-        </div>
+        <div class="pc-stand"></div>
+        
+        <!-- Controls -->
+        <button class="c-nav prev" onclick="moveCarousel(-1)">❮</button>
+        <button class="c-nav next" onclick="moveCarousel(1)">❯</button>
       </div>
     </div>
   </div>
@@ -1374,6 +1487,14 @@
   </footer>
 
   <script>
+    let currentSlide = 0;
+    function moveCarousel(direction) {
+      const track = document.getElementById('hijack-carousel');
+      const slides = document.querySelectorAll('.carousel-slide');
+      currentSlide = (currentSlide + direction + slides.length) % slides.length;
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+
     // Email Gate Logic (Formspree)
     document.getElementById('email-form').addEventListener('submit', function (e) {
       e.preventDefault();

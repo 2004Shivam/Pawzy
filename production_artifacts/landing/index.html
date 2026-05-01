@@ -980,65 +980,63 @@
 
     /* CAROUSEL & DEVICE FRAME REFACTORED */
     .action-sec {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      padding: 100px 20px;
-      max-width: 1550px;
+      padding: 100px 40px;
+      max-width: 1200px;
       margin: 0 auto;
-      text-align: left;
+      text-align: center;
     }
     .action-info {
-      flex: 0 0 350px;
+      margin-bottom: 60px;
     }
     .action-info .ssub {
-      margin: 0 0 40px 0;
-      text-align: left;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 700px;
+      text-align: center;
     }
     .action-visual {
-      flex: 1;
       width: 100%;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
     }
     .pc-frame {
       position: relative;
       width: 100%;
-      max-width: 1200px;
+      max-width: 1000px;
     }
     .pc-bezel {
       background: #1a1a1a;
-      padding: 10px;
-      border-radius: 20px;
-      box-shadow: 0 40px 80px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.05);
+      padding: 12px;
+      border-radius: 24px;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.25);
       position: relative;
     }
     .pc-screen {
       background: #000;
-      border-radius: 8px;
+      border-radius: 12px;
       overflow: hidden;
       aspect-ratio: 16 / 9;
       position: relative;
     }
     .pc-stand {
-      width: 120px;
-      height: 60px;
-      background: linear-gradient(#222, #111);
-      margin: -2px auto 0;
-      clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+      width: 60px;
+      height: 20px;
+      background: #1a1a1a;
+      margin: 0 auto;
     }
     .pc-base {
-      width: 220px;
-      height: 8px;
+      width: 160px;
+      height: 4px;
       background: #111;
       margin: 0 auto;
-      border-radius: 4px;
+      border-radius: 2px;
     }
     .action-controls {
       display: flex;
       align-items: center;
-      gap: 20px;
-      margin-top: 20px;
+      justify-content: center;
+      gap: 30px;
+      margin-top: 40px;
     }
     .c-nav-btn {
       width: 50px;
@@ -1076,14 +1074,10 @@
       background: var(--or);
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 900px) {
       .action-sec {
-        flex-direction: column;
-        padding: 60px 40px;
-        text-align: center;
+        padding: 60px 20px;
       }
-      .action-info .ssub { text-align: center; margin-left: auto; margin-right: auto; }
-      .action-controls { justify-content: center; }
     }
 
     .carousel-track {
@@ -1302,6 +1296,7 @@
         <h3>FoxKit</h3>
         <p>Playful and curious. Swings in to make sure you step away from the keyboard.</p>
         <a class="sel" href="#download">Get Pawzy</a>
+      </div>
     </div>
   </div>
 
@@ -1310,17 +1305,6 @@
       <div class="lbl">In Action</div>
       <h2 class="stitle">The Hijacking Experience</h2>
       <p class="ssub">See exactly how Pawzy takes over your screen to enforce your wellness break. No skipping, no minimizing—just peace of mind and a moment of rest.</p>
-      
-      <div class="action-controls">
-        <button class="c-nav-btn" onclick="moveCarousel(-1)">❮</button>
-        <div class="c-dots" id="carousel-dots">
-          <div class="dot active"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
-        <button class="c-nav-btn" onclick="moveCarousel(1)">❯</button>
-      </div>
     </div>
 
     <div class="action-visual">
@@ -1333,7 +1317,7 @@
                 <div class="pc-caption">Neko Cat enforcing a hydration break</div>
               </div>
               <div class="carousel-slide">
-                <img src="shiba_preview.png" alt="Shiba Hijacking Preview">
+                <img src="shiba_preview.png" alt="Shiba Inu Hijacking Preview">
                 <div class="pc-caption">Shiba Inu watching your focus session</div>
               </div>
               <div class="carousel-slide">
@@ -1350,6 +1334,17 @@
         <div class="pc-stand"></div>
         <div class="pc-base"></div>
       </div>
+    </div>
+
+    <div class="action-controls">
+      <button class="c-nav-btn" onclick="moveCarousel(-1)">❮</button>
+      <div class="c-dots" id="carousel-dots">
+        <div class="dot active"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+        <div class="dot"></div>
+      </div>
+      <button class="c-nav-btn" onclick="moveCarousel(1)">❯</button>
     </div>
   </div>
 

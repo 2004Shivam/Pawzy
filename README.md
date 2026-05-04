@@ -19,20 +19,43 @@
 
 ![Pawzy Break Screen](production_artifacts/landing/preview.png)
 
+**[🌐 Visit Website](https://pawzy-silk.vercel.app) · [📥 Download Now](https://github.com/2004Shivam/Pawzy/releases/latest)**
+
 </div>
+
+---
+
+## 🐱 Cat Gatekeeper Alternative — For Your Entire Desktop
+
+Love [Cat Gatekeeper](https://chromewebstore.google.com/detail/cat-gatekeeper/elbikiflgfhjdjmficnigpeegjbhdidh)? Pawzy takes that brilliant idea much further.
+
+Cat Gatekeeper is a Chrome extension that works on a handful of websites. **Pawzy is a full desktop app that hijacks your entire screen** — every app, every site, every distraction. There's no "open a new tab" trick. There's no Brave/Firefox workaround. It works at the OS level.
+
+| Feature | Cat Gatekeeper | 🐾 Pawzy |
+|---|---|---|
+| Works on YouTube, TikTok, Instagram | ⚠️ 6 sites only | ✅ All sites |
+| Works on desktop apps (games, IDE, Spotify) | ❌ Browser only | ✅ Entire OS |
+| Bypass-proof (no new-tab workaround) | ❌ Open new tab = reset | ✅ OS-level, unescapable |
+| Works on Brave, Firefox, Arc | ❌ Chrome only | ✅ Any browser (or none) |
+| Multiple animal companions | 1 (cat only) | ✅ 4+ companions |
+| 100% free | ✅ | ✅ |
+
+> **Keywords:** cat gatekeeper alternative · cat gatekeeper desktop · cat gatekeeper not working · forced break timer · screen hijack break timer · inescapable pomodoro · 20-20-20 rule app linux · eye break timer windows
 
 ---
 
 ## ✨ Why Pawzy?
 
-Most break reminder apps send a notification you instantly dismiss. Pawzy **takes over your entire screen** with a fullscreen companion overlay — the break actually happens. It's inspired by the [Cat Gatekeeper](https://www.catgatekeeper.org/) concept but built as a standalone, zero-dependency desktop app.
+Most break reminder apps send a notification you instantly dismiss. Pawzy **takes over your entire screen** with a fullscreen companion overlay — the break actually happens. It's inspired by the [Cat Gatekeeper](https://chromewebstore.google.com/detail/cat-gatekeeper/elbikiflgfhjdjmficnigpeegjbhdidh) concept but rebuilt as a standalone, zero-dependency desktop app with no website restrictions.
 
 - 🔒 **Truly inescapable** — fullscreen overlay, Alt+F4 blocked, Super key handled
+- 🖥️ **Works everywhere** — YouTube, TikTok, VS Code, Steam, your IDE — anything
 - 🐾 **4 animated companions** — Cat, Shiba Inu, Panda, Fox
 - ⏱️ **Configurable timers** — set your own work/break durations
 - 💬 **Wellness prompts** — drink water, stretch, breathe — rotated every 8 seconds
 - 🚀 **Launches on login** — enabled automatically, no manual setup
 - 📦 **Zero install required** — single `.AppImage` on Linux, `.exe` on Windows
+- 🔌 **100% offline** — no accounts, no servers, no tracking
 
 ---
 
@@ -78,33 +101,27 @@ Choose your companion during onboarding — change anytime in Settings.
 ### Linux (AppImage)
 
 ```bash
-# Download from Releases
 chmod +x Pawzy-0.1.0.AppImage
 ./Pawzy-0.1.0.AppImage
 ```
 
-No Python, no Node, no dependencies. Double-click and go.  
+No Python, no Node, no dependencies. Double-click and go.
 Autostart is enabled automatically on first launch.
 
 ### Windows
 
 Download `Pawzy.Setup.0.1.0.exe` from [Releases](https://github.com/2004Shivam/Pawzy/releases) and run the installer.
 
-**Note:** Windows may show a SmartScreen warning ("Windows protected your PC") because the executable is not yet digitally signed. Click **'More info' → 'Run anyway'**. The app is completely open source and safe to use.
+**Note:** Windows may show a SmartScreen warning. Click **'More info' → 'Run anyway'**. The app is completely open source and safe.
 
 ---
 
 ## 🛠️ Development Setup
 
-### Prerequisites (For Contributors Only)
+*End users do NOT need Python or Node.js — just download the release!*
 
-*Note: End users do NOT need to install Python or Node.js. Just download the AppImage or EXE from Releases!*
-
-- Node.js 20+
-- Python 3.11+
+- Node.js 20+, Python 3.11+
 - `pip install -r app_build/pawzy-core/requirements.txt`
-
-### Run in dev mode
 
 ```bash
 git clone https://github.com/2004Shivam/Pawzy.git
@@ -112,46 +129,22 @@ cd Pawzy
 bash run_dev.sh
 ```
 
-Both the Python backend and Electron frontend start together.  
-Look for the 🐾 paw icon in your system tray.
-
-### Build for production
-
-**Linux AppImage:**
-```bash
-cd app_build/pawzy-core
-pip install pyinstaller
-pyinstaller --distpath ./dist --workpath ./build --noconfirm pawzy-core.spec
-
-cd ../pawzy-ui
-npm install
-npm run dist
-# → dist-electron/Pawzy-0.1.0.AppImage
-```
-
-**Windows `.exe` (run on Windows):**
-```bash
-# Same steps above — electron-builder auto-detects Windows and builds NSIS installer
-npm run dist
-# → dist-electron/Pawzy-Setup-0.1.0.exe
-```
-
 ---
 
 ## ⚙️ Configuration
 
-Pawzy stores your settings in `~/.pawzy/config.json`:
+Pawzy stores settings in `~/.pawzy/config.json`:
 
 ```json
 {
   "work_minutes": 25,
   "break_minutes": 5,
-  "character": "cat_gatekeeper",
+  "character": "cat",
   "first_launch": false
 }
 ```
 
-You can change all of these from the **Settings** panel (right-click the tray icon → Settings).
+Change everything from the **Settings** panel (right-click tray icon → Settings).
 
 ---
 
@@ -160,26 +153,10 @@ You can change all of these from the **Settings** panel (right-click the tray ic
 ```
 Pawzy/
 ├── app_build/
-│   ├── pawzy-core/          # Python backend
-│   │   ├── main.py          # Entry point — boots all subsystems
-│   │   ├── rule_engine.py   # Work/break state machine
-│   │   ├── window_tracker.py
-│   │   ├── ws_server.py     # WebSocket bridge to Electron
-│   │   ├── tray.py          # System tray (PyQt6)
-│   │   └── requirements.txt
-│   │
-│   └── pawzy-ui/            # Electron + React frontend
-│       ├── electron/
-│       │   ├── main.js      # Main process — windows, IPC, autostart
-│       │   └── preload.js   # Secure renderer bridge
-│       └── src/
-│           ├── lockscreen/  # Break overlay + character system
-│           ├── onboarding/  # First-run setup flow
-│           └── settings/    # Settings UI
-│
+│   ├── pawzy-core/          # Python backend (rule engine, tray, WS server)
+│   └── pawzy-ui/            # Electron + React frontend (lockscreen, settings)
 ├── production_artifacts/
-│   └── landing/             # Static landing page (deploy to Vercel)
-│
+│   └── landing/             # Static landing page → pawzy-silk.vercel.app
 └── run_dev.sh               # One-command dev launcher
 ```
 
@@ -187,13 +164,10 @@ Pawzy/
 
 ## 🤝 Contributing
 
-Pull requests are welcome. To add a new companion:
-
+To add a new companion:
 1. Create `src/lockscreen/characters/YourCharacter.jsx`
-2. Register it in `src/lockscreen/characters/CharacterRegistry.js`
-3. Add it to the onboarding picker in `src/onboarding/Onboarding.jsx`
-
-Each character receives `{ phase: 'slide' | 'sleep', onSlideEnd: fn }` as props.
+2. Register in `src/lockscreen/characters/CharacterRegistry.js`
+3. Add to onboarding picker in `src/onboarding/Onboarding.jsx`
 
 ---
 
@@ -204,5 +178,5 @@ MIT © [Shivam](https://github.com/2004Shivam)
 ---
 
 <div align="center">
-  <sub>Built for humans who forget they have a body. 🧘</sub>
+  <sub>Inspired by <a href="https://chromewebstore.google.com/detail/cat-gatekeeper/elbikiflgfhjdjmficnigpeegjbhdidh">Cat Gatekeeper</a> · Built for humans who forget they have a body. 🧘</sub>
 </div>

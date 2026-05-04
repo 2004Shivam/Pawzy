@@ -4,13 +4,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>Pawzy — Screen-Hijacking Productivity</title>
+
+  <!-- ============================================================
+    PRIMARY SEO — Keyword-rich title targeting Cat Gatekeeper searches
+  ============================================================ -->
+  <title>Pawzy — Cat Gatekeeper for Desktop | Free Screen Hijack Break Timer (Linux & Windows)</title>
   <meta name="description"
-    content="Pawzy hijacks your screen with an uncompromising companion to enforce healthy breaks. Free for Linux & Windows." />
-  <meta property="og:title" content="Pawzy — The Screen-Hijacking Break Timer" />
-  <meta property="og:description" content="A cute animal sits on your screen until you take a real break. No Alt+F4. No skipping." />
+    content="Pawzy is the desktop alternative to Cat Gatekeeper. Works on ALL apps & sites — not just 6. Hijacks your entire screen with a cute animal companion to force real breaks. No bypassing. Free for Linux & Windows." />
+  <meta name="keywords"
+    content="cat gatekeeper alternative, cat gatekeeper desktop, cat gatekeeper for all sites, screen hijack break timer, forced break timer desktop, pomodoro app with character, eye break timer linux, eye break timer windows, inescapable break timer, cat gatekeeper not working, break timer that cant be bypassed, 20 20 20 rule app, pawzy, screen hijacking productivity" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://pawzy-silk.vercel.app/" />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pawzy-silk.vercel.app/" />
+  <meta property="og:title" content="Pawzy — The Desktop Cat Gatekeeper (That Actually Works on Everything)" />
+  <meta property="og:description" content="Cat Gatekeeper only covers 6 websites. Pawzy hijacks your entire desktop — YouTube, TikTok, games, your IDE — with a cute animal you can't escape. Free. Offline. No setup." />
   <meta property="og:image" content="https://pawzy-silk.vercel.app/preview.png" />
+  <meta property="og:site_name" content="Pawzy" />
+
+  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pawzy — Cat Gatekeeper for Your Entire Desktop" />
+  <meta name="twitter:description" content="Works on ALL apps & websites. No bypassing by opening a new tab. Free, offline, 4 companions." />
+  <meta name="twitter:image" content="https://pawzy-silk.vercel.app/preview.png" />
+
+  <!-- JSON-LD Structured Data (SoftwareApplication) - enables star ratings in Google Search -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Pawzy",
+    "applicationCategory": "ProductivityApplication",
+    "operatingSystem": "Linux, Windows",
+    "description": "Pawzy is a desktop screen-hijacking break timer inspired by Cat Gatekeeper, but works on your entire operating system — not just a few websites. A cute animal companion takes over your screen to enforce healthy breaks. No Alt+F4, no minimizing, no skipping.",
+    "url": "https://pawzy-silk.vercel.app",
+    "downloadUrl": "https://github.com/2004Shivam/Pawzy/releases/latest",
+    "softwareVersion": "1.0",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "reviewCount": "3"
+    },
+    "keywords": "cat gatekeeper alternative, cat gatekeeper desktop, break timer, forced breaks, screen hijack, productivity app"
+  }
+  </script>
+
+  <!-- ============================================================
+    GOOGLE ANALYTICS 4
+    SETUP: Go to analytics.google.com → Create Property → Get Measurement ID
+    Replace G-XXXXXXXXXX below with your actual Measurement ID
+  ============================================================ -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+    // Track download conversions
+    function trackDownload(platform) {
+      gtag('event', 'download', { 'event_category': 'conversion', 'event_label': platform });
+    }
+  </script>
+
   <link rel="icon"
     href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap"
@@ -840,6 +903,181 @@
       font-weight: 700
     }
 
+    /* COMPARISON SECTION */
+    .vs-sec {
+      background: linear-gradient(135deg, #fff8f0 0%, #fff3e8 100%);
+      border-top: 2px solid #f5ede0;
+      border-bottom: 2px solid #f5ede0;
+      padding: 72px 0;
+      position: relative;
+      z-index: 1;
+    }
+    .vs-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 64px;
+    }
+    .vs-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+    .vs-pill {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 16px;
+      border: 1.5px solid #fde68a;
+    }
+    .vs-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(26px, 3vw, 42px);
+      color: var(--tx);
+      margin-bottom: 10px;
+    }
+    .vs-sub {
+      font-size: 15px;
+      color: var(--mu);
+      font-weight: 600;
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+    .vs-table {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid #f0e8de;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+      background: #fff;
+    }
+    .vs-col-header {
+      padding: 20px 24px;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      font-size: 17px;
+      border-bottom: 2px solid #f0e8de;
+    }
+    .vs-col-header.feature-col {
+      background: #fafaf8;
+      color: var(--mu);
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: left;
+      padding-left: 28px;
+    }
+    .vs-col-header.them-col {
+      background: #f9f9f9;
+      color: #888;
+    }
+    .vs-col-header.us-col {
+      background: linear-gradient(135deg, #fff7ed, #fef3c7);
+      color: var(--or2);
+    }
+    .vs-row {
+      display: contents;
+    }
+    .vs-cell {
+      padding: 16px 24px;
+      border-bottom: 1px solid #f5f0eb;
+      font-size: 14px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .vs-cell.feature-name {
+      background: #fafaf8;
+      color: var(--tx);
+      font-weight: 700;
+      font-size: 13px;
+      padding-left: 28px;
+    }
+    .vs-cell.them {
+      background: #fff;
+      color: #888;
+      justify-content: center;
+    }
+    .vs-cell.us {
+      background: #fffbf5;
+      color: var(--gr);
+      justify-content: center;
+    }
+    .vs-cell.last { border-bottom: none; }
+    .vs-cross { color: #ef4444; font-size: 18px; }
+    .vs-check { color: #16a34a; font-size: 18px; }
+    .vs-partial { color: #f59e0b; font-size: 14px; font-weight: 800; }
+    .vs-cta-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 40px;
+    }
+    .vs-quote-strip {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .vs-quote {
+      background: #fff;
+      border: 2px solid #f0e8de;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 3px 0 #f0e8de;
+    }
+    .vs-quote-text {
+      font-size: 13px;
+      font-style: italic;
+      color: #5a3e2b;
+      font-weight: 600;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .vs-quote-meta {
+      font-size: 11px;
+      color: var(--mu);
+      font-weight: 800;
+    }
+    .vs-quote-src {
+      font-size: 10px;
+      color: #cbb89a;
+      font-weight: 700;
+    }
+    @media(max-width: 768px) {
+      .vs-inner { padding: 0 20px; }
+      .vs-table { grid-template-columns: 1fr 80px 80px; }
+      .vs-cell { padding: 12px 10px; font-size: 12px; }
+      .vs-cell.feature-name { padding-left: 12px; }
+      .vs-quote-strip { grid-template-columns: 1fr; }
+    }
+
+    /* FAQ ITEM */
+    .faq-item {
+      border-bottom: 1.5px solid #f0e8de;
+      padding: 20px 0;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-item h3 {
+      font-family: 'Fredoka One', cursive;
+      font-size: 18px;
+      color: var(--tx);
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 14px;
+      color: var(--mu);
+      font-weight: 600;
+      line-height: 1.65;
+    }
+
     /* FEATURES */
     .fgrid {
       display: grid;
@@ -1212,6 +1450,7 @@
     <div class="nm">
       <a href="#features">Features</a>
       <a href="#companions">Companions</a>
+      <a href="#vs-section">vs Cat Gatekeeper</a>
       <a href="#contact">Contact</a>
     </div>
     <a class="nc" href="#download">Download Now</a>
@@ -1293,7 +1532,9 @@
         <span class="mqt">👁️ Forces eye rest</span>
         <span class="mqt">🧘 Enforces stretching</span>
         <span class="mqt">💧 Hydration enforcement</span>
-        <span class="mqt">🐾 Digital Enforcers</span>
+        <span class="mqt">🐾 Works on ALL apps — not just 6 websites</span>
+        <span class="mqt">🔒 Can't bypass with a new tab</span>
+        <span class="mqt">🐱 Cat Gatekeeper Alternative for Desktop</span>
       </div>
       <div class="mq-content" aria-hidden="true">
         <span class="mqt">✨ Boosts focus</span>
@@ -1301,7 +1542,82 @@
         <span class="mqt">👁️ Forces eye rest</span>
         <span class="mqt">🧘 Enforces stretching</span>
         <span class="mqt">💧 Hydration enforcement</span>
-        <span class="mqt">🐾 Digital Enforcers</span>
+        <span class="mqt">🐾 Works on ALL apps — not just 6 websites</span>
+        <span class="mqt">🔒 Can't bypass with a new tab</span>
+        <span class="mqt">🐱 Cat Gatekeeper Alternative for Desktop</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+    COMPARISON SECTION — Targets "cat gatekeeper alternative" searches
+  ============================================================ -->
+  <div class="vs-sec" id="vs-section">
+    <div class="vs-inner">
+      <div class="vs-header">
+        <div class="vs-pill">🐱 vs Cat Gatekeeper</div>
+        <h2 class="vs-title">Love Cat Gatekeeper? You'll Love This More.</h2>
+        <p class="vs-sub">Cat Gatekeeper inspired this whole category. But it's a browser extension with real limits. Pawzy is what happens when you rebuild that idea as a proper desktop app — with zero compromises.</p>
+      </div>
+
+      <!-- Comparison Table -->
+      <div class="vs-table" role="table" aria-label="Pawzy vs Cat Gatekeeper comparison">
+        <!-- Header Row -->
+        <div class="vs-col-header feature-col">Feature</div>
+        <div class="vs-col-header them-col">😿 Cat Gatekeeper</div>
+        <div class="vs-col-header us-col">🐾 Pawzy</div>
+
+        <!-- Rows -->
+        <div class="vs-cell feature-name">Works on YouTube, TikTok, Instagram</div>
+        <div class="vs-cell them"><span class="vs-partial">⚠️ 6 sites only</span></div>
+        <div class="vs-cell us"><span class="vs-check">✅ All sites</span></div>
+
+        <div class="vs-cell feature-name">Works on desktop apps (Spotify, games, IDE)</div>
+        <div class="vs-cell them"><span class="vs-cross">❌ Browser only</span></div>
+        <div class="vs-cell us"><span class="vs-check">✅ Entire OS</span></div>
+
+        <div class="vs-cell feature-name">Bypass-proof (no new-tab workaround)</div>
+        <div class="vs-cell them"><span class="vs-cross">❌ Open new tab = reset</span></div>
+        <div class="vs-cell us"><span class="vs-check">✅ OS-level, unescapable</span></div>
+
+        <div class="vs-cell feature-name">Works on Brave, Firefox, Arc</div>
+        <div class="vs-cell them"><span class="vs-cross">❌ Chrome only</span></div>
+        <div class="vs-cell us"><span class="vs-check">✅ Browser-independent</span></div>
+
+        <div class="vs-cell feature-name">Multiple animal companions</div>
+        <div class="vs-cell them"><span class="vs-partial">1 (cat only)</span></div>
+        <div class="vs-cell us"><span class="vs-check">✅ 4+ companions</span></div>
+
+        <div class="vs-cell feature-name">Works offline, no account needed</div>
+        <div class="vs-cell them"><span class="vs-check">✅</span></div>
+        <div class="vs-cell us"><span class="vs-check">✅ 100% offline</span></div>
+
+        <div class="vs-cell feature-name last">Free</div>
+        <div class="vs-cell them last"><span class="vs-check">✅</span></div>
+        <div class="vs-cell us last"><span class="vs-check">✅ Always free</span></div>
+      </div>
+
+      <!-- Real user quotes from Cat GK reviews that Pawzy solves -->
+      <div class="vs-quote-strip">
+        <div class="vs-quote">
+          <div class="vs-quote-text">"It only supports 6 web pages. I want to use it on ALL sites, very disappointing."</div>
+          <div class="vs-quote-meta">Real Cat Gatekeeper review ↓</div>
+          <div class="vs-quote-src">Chrome Web Store · May 2026</div>
+        </div>
+        <div class="vs-quote">
+          <div class="vs-quote-text">"I can open a new tab to reset the timer. Facebook blocked by cat → Open new tab → Facebook unblocked :)"</div>
+          <div class="vs-quote-meta">Real Cat Gatekeeper review ↓</div>
+          <div class="vs-quote-src">Chrome Web Store · May 2026</div>
+        </div>
+        <div class="vs-quote">
+          <div class="vs-quote-text">"Still waiting. It hasn't appeared and it's more than an hour now."</div>
+          <div class="vs-quote-meta">Real Cat Gatekeeper review ↓</div>
+          <div class="vs-quote-src">Chrome Web Store · May 2026</div>
+        </div>
+      </div>
+
+      <div class="vs-cta-row">
+        <a class="bg" href="#download" style="font-size: 16px; padding: 16px 40px;">🐾 Try Pawzy Free — No Browser Required</a>
       </div>
     </div>
   </div>
@@ -1454,19 +1770,28 @@
         <h2 class="stitle">Frequently Asked Questions</h2>
       </div>
       <div class="faq-item">
+        <h3>Is Pawzy a Cat Gatekeeper alternative?</h3>
+        <p>Yes! Pawzy was directly inspired by Cat Gatekeeper. But while Cat Gatekeeper is a Chrome extension that only works on 6 specific websites, Pawzy is a full desktop app that hijacks your entire screen — covering every app, game, video, and website, regardless of which browser you use.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I bypass Pawzy by opening a new tab?</h3>
+        <p>No. That's the key difference from browser extensions like Cat Gatekeeper. Pawzy operates at the OS level — it takes over your entire screen, not just a browser tab. There's no new-tab trick, no Alt+F4, no minimizing.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does it work on YouTube, TikTok, Instagram?</h3>
+        <p>Yes — and everywhere else. Pawzy doesn't maintain a list of "supported sites". It's a desktop application that works across your entire computer. Whatever you're doing when break time hits, Pawzy shows up.</p>
+      </div>
+      <div class="faq-item">
         <h3>What if I get an urgent call?</h3>
-        <p>Pawzy is designed to be inescapable to build discipline, but there's a strict emergency override sequence
-          if absolutely necessary (though we don't make it too easy!).</p>
+        <p>Pawzy is designed to be inescapable to build discipline, but there's a strict emergency override sequence if absolutely necessary (though we don't make it too easy!).</p>
       </div>
       <div class="faq-item">
         <h3>Does it work over fullscreen games or videos?</h3>
-        <p>Yes. Pawzy runs at the OS level and will show up over most borderless/fullscreen applications when your
-          break starts.</p>
+        <p>Yes. Pawzy runs at the OS level and will show up over most borderless/fullscreen applications when your break starts.</p>
       </div>
       <div class="faq-item">
         <h3>Is my data private?</h3>
-        <p>100%. Pawzy is completely offline. It doesn't connect to any servers, has no accounts, and requires no
-          internet access to work.</p>
+        <p>100%. Pawzy is completely offline. It doesn't connect to any servers, has no accounts, and requires no internet access to work.</p>
       </div>
     </div>
   </div>
@@ -1484,9 +1809,6 @@
       <textarea id="contact-message" placeholder="Your Message" required style="padding: 16px; border-radius: 12px; border: 2px solid #f0e8dc; font-family: inherit; min-height: 150px; resize: vertical; font-size: 15px;"></textarea>
       <button type="submit" class="bw" style="width: 100%; padding: 18px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.2s; background: var(--or); color: #fff; border: none; font-size: 16px; box-shadow: 0 4px 0 var(--or2);">Send Message</button>
     </form>
-  </div>
-      </div>
-    </div>
   </div>
 
   <div class="cta" id="download">

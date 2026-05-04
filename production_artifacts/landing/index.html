@@ -63,8 +63,12 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-5Y6EDCX7XM');
-    function trackDownload(platform) {
-      gtag('event', 'download', { 'event_category': 'conversion', 'event_label': platform });
+    function trackDownload(platform, location) {
+      gtag('event', 'download', { 
+        'event_category': 'conversion', 
+        'event_label': platform,
+        'button_location': location 
+      });
     }
   </script>
 
@@ -1471,8 +1475,8 @@
         Pawzy is an <strong>unescapable screen hijacker</strong> that forces you to take real breaks, rest your eyes, and step away. The ultimate desktop alternative to Cat Gatekeeper — works on <strong>every app and game</strong>.
       </p>
       <div class="hbtns">
-        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" onclick="trackDownload('linux')">🐧 Download Linux</a>
-        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" style="background: #2563eb; box-shadow: 0 5px 0 #1e40af;" onclick="trackDownload('windows')">🪟 Download Win</a>
+        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" onclick="trackDownload('linux', 'hero')">🐧 Download Linux</a>
+        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" style="background: #2563eb; box-shadow: 0 5px 0 #1e40af;" onclick="trackDownload('windows', 'hero')">🪟 Download Win</a>
         <a class="blink" href="#how-it-works" style="margin-left: 10px;">How it works</a>
       </div>
       <p class="hnote">Direct downloads · Free forever · macOS coming soon</p>
@@ -1819,9 +1823,9 @@
     
     <div id="actual-downloads" class="ctabtns" style="margin-bottom: 20px; display:flex;">
       <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage"
-        id="dl-linux" onclick="trackDownload('linux')">🐧 Download for Linux</a>
+        id="dl-linux" onclick="trackDownload('linux', 'footer')">🐧 Download for Linux</a>
       <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe"
-        id="dl-win" onclick="trackDownload('windows')">🪟 Download for Windows</a>
+        id="dl-win" onclick="trackDownload('windows', 'footer')">🪟 Download for Windows</a>
       <a class="bgh" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">⭐ Star on GitHub</a>
     </div>
     <p id="dl-disclaimer" style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 40px; font-weight: 600; max-width: 400px; margin-left: auto; margin-right: auto; display: block;">Windows may show a SmartScreen warning since it's a new indie app — click 'More info' → 'Run anyway'. It's fully open source and safe.</p>

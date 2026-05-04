@@ -1047,9 +1047,9 @@
     }
     @media(max-width: 768px) {
       .vs-inner { padding: 0 20px; }
-      .vs-table { grid-template-columns: 1fr 80px 80px; }
-      .vs-cell { padding: 12px 10px; font-size: 12px; }
-      .vs-cell.feature-name { padding-left: 12px; }
+      .vs-table { grid-template-columns: 1fr 105px 105px; }
+      .vs-cell { padding: 12px 8px; font-size: 11px; }
+      .vs-cell.feature-name { padding-left: 10px; }
       .vs-quote-strip { grid-template-columns: 1fr; }
     }
 
@@ -1460,19 +1460,22 @@
 
   <section class="hero">
     <div class="hl">
-      <h1 style="margin-top:20px;">
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(22, 163, 74, 0.1); color: #15803d; padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 800; margin-bottom: 20px; border: 1px solid rgba(22, 163, 74, 0.2);">
+        <span style="font-size: 14px;">🛡️</span> 100% Open Source & Offline
+      </div>
+      <h1 style="margin-top:0;">
         Stop Doomscrolling.<br />
         <em>Force a Break.</em>
       </h1>
       <p class="hsub">
-        The ultimate desktop alternative to Cat Gatekeeper. Pawzy is an unescapable screen hijacker that forces you to take real breaks, rest your eyes, and step away. Works on <strong>every app and game</strong> — not just your browser.
+        Pawzy is an <strong>unescapable screen hijacker</strong> that forces you to take real breaks, rest your eyes, and step away. The ultimate desktop alternative to Cat Gatekeeper — works on <strong>every app and game</strong>.
       </p>
-      <p style="font-size: 11px; color: var(--mu); margin-top: -20px; margin-bottom: 24px; opacity: 0.8;">Inspired by the Cat Gatekeeper concept, rebuilt as a free, offline, multi-companion OS-level app.</p>
       <div class="hbtns">
-        <a class="bg" href="#download">⬇ Download Free (Linux/Win)</a>
-        <a class="blink" href="#how-it-works">See how it works</a>
+        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" onclick="trackDownload('linux')">🐧 Download Linux</a>
+        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" style="background: #2563eb; box-shadow: 0 5px 0 #1e40af;" onclick="trackDownload('windows')">🪟 Download Win</a>
+        <a class="blink" href="#how-it-works" style="margin-left: 10px;">How it works</a>
       </div>
-      <p class="hnote">🐧 Linux AppImage &nbsp;·&nbsp; 🪟 Windows EXE &nbsp;·&nbsp; 🍎 macOS — coming soon</p>
+      <p class="hnote">Direct downloads · Free forever · macOS coming soon</p>
     </div>
 
     <div class="hr" style="flex-direction: column;">
@@ -1616,34 +1619,7 @@
     </div>
   </div>
 
-  <!-- ============================================================
-    SEO FAQ SECTION — Capturing long-tail queries
-  ============================================================ -->
-  <div class="sec" style="background: #fff; padding-top: 60px; padding-bottom: 60px;">
-    <div style="max-width: 800px; margin: 0 auto; padding: 0 32px;">
-      <h2 style="font-family: 'Fredoka One', cursive; font-size: 32px; margin-bottom: 32px; text-align: center;">Frequently Asked Questions</h2>
-      
-      <div class="faq-item">
-        <h3>What makes this the best Cat Gatekeeper alternative?</h3>
-        <p>Unlike browser extensions that only block a few websites, Pawzy runs as a native desktop application. This means our screen hijacker can block you from doomscrolling on Twitter, but also stop you from playing Steam games, using Discord, or ignoring your work. It's inescapable.</p>
-      </div>
 
-      <div class="faq-item">
-        <h3>How does it stop doomscrolling?</h3>
-        <p>When your focus timer ends, a giant capybara, monkey, dog, or cat will physically slide over your entire screen. You cannot click behind them. You cannot open a new tab to bypass them. The only way to remove them is to wait out your break or type a tedious "I want to ruin my eyes" override code.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Is Pawzy really free?</h3>
-        <p>Yes. 100% free and open source. No premium tiers, no ads, no data tracking. Just pure productivity enforcement.</p>
-      </div>
-
-      <div class="faq-item">
-        <h3>Does it work on Linux and Windows?</h3>
-        <p>Yes! We offer a portable Linux AppImage (works on Ubuntu, Fedora, Arch, etc.) and a standard Windows executable. macOS support is currently in development.</p>
-      </div>
-    </div>
-  </div>
 
   <div class="sec" id="companions">
     <div style="text-align:center; margin-bottom:48px;">
@@ -1793,6 +1769,22 @@
         <h2 class="stitle">Frequently Asked Questions</h2>
       </div>
       <div class="faq-item">
+        <h3>What makes this the best Cat Gatekeeper alternative?</h3>
+        <p>Unlike browser extensions that only block a few websites, Pawzy runs as a native desktop application. This means our screen hijacker can block you from doomscrolling on Twitter, but also stop you from playing Steam games, using Discord, or ignoring your work. It's inescapable.</p>
+      </div>
+      <div class="faq-item">
+        <h3>How does it stop doomscrolling?</h3>
+        <p>When your focus timer ends, a giant capybara, monkey, dog, or cat will physically slide over your entire screen. You cannot click behind them. You cannot open a new tab to bypass them. The only way to remove them is to wait out your break or type a tedious "I want to ruin my eyes" override code.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is Pawzy really free?</h3>
+        <p>Yes. 100% free and open source. No premium tiers, no ads, no data tracking. Just pure productivity enforcement.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Does it work on Linux and Windows?</h3>
+        <p>Yes! We offer a portable Linux AppImage (works on Ubuntu, Fedora, Arch, etc.) and a standard Windows executable. macOS support is currently in development.</p>
+      </div>
+      <div class="faq-item">
         <h3>Is Pawzy a Cat Gatekeeper alternative?</h3>
         <p>Yes! Pawzy was directly inspired by Cat Gatekeeper. But while Cat Gatekeeper is a Chrome extension that only works on 6 specific websites, Pawzy is a full desktop app that hijacks your entire screen — covering every app, game, video, and website, regardless of which browser you use.</p>
       </div>
@@ -1819,6 +1811,22 @@
     </div>
   </div>
 
+
+
+  <div class="cta" id="download">
+    <h2>Ready to take real breaks? 🐾</h2>
+    <p style="margin-bottom: 40px;">Free forever. 100% Open Source. No accounts needed.</p>
+    
+    <div id="actual-downloads" class="ctabtns" style="margin-bottom: 20px; display:flex;">
+      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage"
+        id="dl-linux" onclick="trackDownload('linux')">🐧 Download for Linux</a>
+      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe"
+        id="dl-win" onclick="trackDownload('windows')">🪟 Download for Windows</a>
+      <a class="bgh" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">⭐ Star on GitHub</a>
+    </div>
+    <p id="dl-disclaimer" style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 40px; font-weight: 600; max-width: 400px; margin-left: auto; margin-right: auto; display: block;">Windows may show a SmartScreen warning since it's a new indie app — click 'More info' → 'Run anyway'. It's fully open source and safe.</p>
+  </div>
+
   <div class="sec" id="contact" style="max-width: 800px; margin: 80px auto; text-align: center; padding: 0 20px;">
     <div class="lbl">Contact</div>
     <h2 class="stitle" style="margin-bottom: 16px;">Get in touch 🐾</h2>
@@ -1832,29 +1840,6 @@
       <textarea id="contact-message" placeholder="Your Message" required style="padding: 16px; border-radius: 12px; border: 2px solid #f0e8dc; font-family: inherit; min-height: 150px; resize: vertical; font-size: 15px;"></textarea>
       <button type="submit" class="bw" style="width: 100%; padding: 18px; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.2s; background: var(--or); color: #fff; border: none; font-size: 16px; box-shadow: 0 4px 0 var(--or2);">Send Message</button>
     </form>
-  </div>
-
-  <div class="cta" id="download">
-    <h2>Ready to take real breaks? 🐾</h2>
-    <p>Free forever. No setup. Just download and double-click.</p>
-    <div id="actual-downloads" class="ctabtns" style="margin-bottom: 20px; display:none;">
-      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage"
-        id="dl-linux">🐧 Download for Linux</a>
-      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe"
-        id="dl-win">🪟 Download for Windows</a>
-      <a class="bgh" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">⭐ Star on GitHub</a>
-    </div>
-    <p id="dl-disclaimer" style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 40px; font-weight: 600; max-width: 400px; margin-left: auto; margin-right: auto; display: none;">Windows may show a SmartScreen warning since it's a new indie app — click 'More info' → 'Run anyway'. It's fully open source and safe.</p>
-
-    <div id="email-gate" style="position:relative;z-index:2; max-width: 600px; margin: 0 auto;">
-      <div style="font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Enter email to download</div>
-      <form id="email-form" style="display:flex;gap:10px;justify-content:center;margin-bottom:12px;flex-wrap:wrap">
-        <input type="email" id="user-email" required placeholder="Enter your email address"
-          style="padding:15px 24px;border-radius:50px;border:none;outline:none;font-family:'Nunito',sans-serif;font-size:16px;width:100%;max-width:320px;box-shadow:0 5px 0 rgba(0,0,0,.1)">
-        <button type="submit" class="bw" style="cursor:pointer; border:none;">Download link 🧡</button>
-      </form>
-      <p style="font-size:13px;color:rgba(255,255,255,.75);font-weight:600">We'll email you occasional product updates. No spam.</p>
-    </div>
   </div>
 
   <footer>
@@ -1931,45 +1916,7 @@
     // Initialize auto-scroll
     startAutoScroll();
 
-    // Email Gate Logic (Formspree)
-    document.getElementById('email-form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      const email = document.getElementById('user-email').value;
-      const submitBtn = this.querySelector('button[type="submit"]');
 
-      // Visual feedback while sending
-      submitBtn.innerText = "Sending...";
-      submitBtn.style.opacity = "0.7";
-
-      // IMPORTANT: Replace 'YOUR_FORM_ID' with your actual Formspree ID
-      const formspreeUrl = "https://formspree.io/f/xkoynelg";
-
-      fetch(formspreeUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json"
-        },
-        body: JSON.stringify({ email: email })
-      })
-        .then(response => {
-          submitBtn.innerText = "Success! 🐾";
-          submitBtn.style.opacity = "1";
-          document.getElementById('user-email').value = '';
-          
-          // Show download links and hide email gate
-          setTimeout(() => {
-            document.getElementById('email-gate').style.display = 'none';
-            document.getElementById('actual-downloads').style.display = 'flex';
-            document.getElementById('dl-disclaimer').style.display = 'block';
-          }, 800);
-        })
-        .catch(error => {
-          console.error("Error saving email:", error);
-          submitBtn.innerText = "Error! Try again.";
-          submitBtn.style.opacity = "1";
-        });
-    });
 
     // Contact Form Logic (Formspree)
     document.getElementById('contact-form').addEventListener('submit', function (e) {

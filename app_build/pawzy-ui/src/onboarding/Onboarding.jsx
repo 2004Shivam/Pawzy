@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
 const CHARACTERS = [
-  { key: 'cat_gatekeeper', emoji: '🐱', label: 'Neko Cat',    color: '#f97316' },
-  { key: 'shiba',          emoji: '🐕', label: 'Shiba Inu',   color: '#D4773C' },
-  { key: 'panda',          emoji: '🐼', label: 'Chill Panda', color: '#64748b' },
-  { key: 'fox',            emoji: '🦊', label: 'Fox Kit',     color: '#ef4444' },
+  { key: 'cat_gatekeeper', emoji: '🐱', label: 'Neko Cat',  color: '#f97316' },
+  { key: 'shiba',          emoji: '🐕', label: 'Shiba Inu', color: '#D4773C' },
+  { key: 'capybara',       emoji: '🦦', label: 'Capybara',  color: '#64748b' },
+  { key: 'monkey',         emoji: '🐒', label: 'Monkey',    color: '#ef4444' },
 ];
 
 const steps = ['welcome', 'work', 'break', 'character', 'done'];

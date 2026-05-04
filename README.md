@@ -13,7 +13,7 @@
 
 > Pawzy locks your screen with an animated companion at regular intervals,  
 > forces you to breathe, stretch, and look away — then lets you back in.  
-> No popups. No snooze. Just a cat (or dog, or panda) sitting on your work.
+> No popups. No snooze. Just a cat (or capybara, or monkey) sitting on your work.
 
 <br/>
 
@@ -50,7 +50,7 @@ Most break reminder apps send a notification you instantly dismiss. Pawzy **take
 
 - 🔒 **Truly inescapable** — fullscreen overlay, Alt+F4 blocked, Super key handled
 - 🖥️ **Works everywhere** — YouTube, TikTok, VS Code, Steam, your IDE — anything
-- 🐾 **4 animated companions** — Cat, Shiba Inu, Panda, Fox
+- 🐾 **4 animated companions** — Cat, Shiba Inu, Capybara, Monkey
 - ⏱️ **Configurable timers** — set your own work/break durations
 - 💬 **Wellness prompts** — drink water, stretch, breathe — rotated every 8 seconds
 - 🚀 **Launches on login** — enabled automatically, no manual setup
@@ -89,8 +89,8 @@ The Python backend (`pawzy-core`) watches your active window state and manages t
 |---|---|---|
 | 🐱 | **Neko** (Cat) | The original gatekeeper. Slides in, sits down, judges you. |
 | 🐕 | **Shiba Inu** | Fluffy & loyal. Much break. Very rest. |
-| 🐼 | **ChillPanda** | Somewhere & cool. Will outlast your deadline. |
-| 🦊 | **FoxKit** | Swift & stylish. Takes 5 deep breaths with you. |
+| 🦦 | **Capybara** | Maximum chill energy. Just sits there and radiates peace. |
+| 🐒 | **Monkey**   | Playful & curious. Swings in to make sure you take that break. |
 
 Choose your companion during onboarding — change anytime in Settings.
 

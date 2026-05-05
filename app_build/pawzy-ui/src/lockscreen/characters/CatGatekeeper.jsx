@@ -6,8 +6,8 @@
 import { useEffect } from 'react';
 import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
-const VIDEO_ENTRY = './characters/cat_entry_sbs.webm?v=3';
-const VIDEO_IDLE  = './characters/cat_idle_sbs.webm?v=3';
+const VIDEO_ENTRY = './characters/cat_entry_sbs.webm?v=4';
+const VIDEO_IDLE  = './characters/cat_idle_sbs.webm?v=4';
 
 export function CatGatekeeper({ phase, onSlideEnd }) {
   const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();

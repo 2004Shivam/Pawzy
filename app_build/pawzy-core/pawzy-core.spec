@@ -12,12 +12,11 @@ a = Analysis(
         ('assets', 'assets'),  # tray icons, etc.
     ],
     hiddenimports=[
-        # PyQt6
-        'PyQt6',
-        'PyQt6.QtCore',
-        'PyQt6.QtGui',
-        'PyQt6.QtWidgets',
-        'PyQt6.sip',
+        # pystray & Pillow
+        'pystray',
+        'PIL',
+        'PIL._imaging',
+        'PIL.Image',
         # WebSockets
         'websockets',
         'websockets.server',

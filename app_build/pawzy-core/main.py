@@ -14,14 +14,13 @@ The PyQt6 LockOverlay has been removed — Electron is always connected.
 
 import sys
 import signal
+import os
 
-# Force UTF-8 output so emoji in print() don't crash on Windows (cp1252 terminals)
+# Force UTF-8 output
 if hasattr(sys.stdout, 'reconfigure'):
     sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 if hasattr(sys.stderr, 'reconfigure'):
     sys.stderr.reconfigure(encoding='utf-8', errors='replace')
-
-from PyQt6.QtWidgets import QApplication
 
 import data_store
 from window_tracker import WindowTracker
@@ -40,28 +39,27 @@ def main():
     tracker = WindowTracker()
     tracker.start()
 
-    # 3. Start rule engine (auto-subscribes to EventBus)
+    # 3. Start rule engine
     engine = RuleEngine()
 
     # 4. Start WebSocket server
     ws = WsServer()
     ws.start()
 
-    # 5. Launch PyQt6 app (needed for system tray)
-    app = QApplication(sys.argv)
-    app.setApplicationName("Pawzy")
-    app.setQuitOnLastWindowClosed(False)
-
-    # System tray
-    tray = PawzyTray(app)
+    # 5. Launch System Tray (blocks main thread)
+    tray = PawzyTray()
 
     # Handle Ctrl+C gracefully
-    signal.signal(signal.SIGINT, lambda *_: app.quit())
+    def signal_handler(sig, frame):
+        print("\n[Main] Shutdown signal received.")
+        tray.stop()
+        os._exit(0)
+
+    signal.signal(signal.SIGINT, signal_handler)
 
     print("🐾 Pawzy is running. Check your system tray!")
-    sys.exit(app.exec())
+    tray.run()
 
 
 if __name__ == "__main__":
     main()
-

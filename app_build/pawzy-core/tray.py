@@ -1,107 +1,95 @@
 """
-tray.py — PyQt6 system tray icon and context menu.
+tray.py — pystray system tray icon and context menu.
 
 Provides:
   - Tray icon with live usage tooltip
-  - Context menu: usage label, pause/resume, settings, reset, switch char, quit
+  - Context menu: usage label, pause/resume, settings, reset, quit
   - Reacts to 'stats' and 'state_change' events from EventBus
 """
 
+import os
 import sys
-
-from PyQt6.QtCore import QTimer, pyqtSignal, QObject
-from PyQt6.QtGui import QIcon, QAction
-from PyQt6.QtWidgets import QApplication, QMenu, QSystemTrayIcon, QWidget
+import threading
+from pathlib import Path
+from PIL import Image
+import pystray
+from pystray import MenuItem as item
 
 from event_bus import bus
 import data_store
 
-
-class TraySignals(QObject):
-    """Relay async EventBus events to the Qt main thread via signals."""
-    stats_updated = pyqtSignal(dict)
-    state_changed = pyqtSignal(str)
-
-
 class PawzyTray:
-    def __init__(self, app: QApplication):
-        self._app = app
-        self._signals = TraySignals()
+    def __init__(self):
         self._paused = False
         self._last_stats: dict = {"today_used": 0, "breaks_taken": 0, "streak": 0}
-
-        # System tray icon
-        self._tray = QSystemTrayIcon()
-        self._tray.setIcon(self._load_icon())
-        self._tray.setToolTip("Pawzy — Loading...")
-
-        # Context menu
-        self._menu = QMenu()
-        self._usage_action = QAction("Loading...", self._menu)
-        self._usage_action.setEnabled(False)
-
-        self._skip_break_action = QAction("⏭  Skip Break", self._menu)
-        self._skip_break_action.triggered.connect(self._skip_break)
-        self._skip_break_action.setEnabled(False)  # only active during a break
-
-        self._pause_action = QAction("⏸  Pause Tracking", self._menu)
-        self._pause_action.triggered.connect(self._toggle_pause)
-
-        settings_action = QAction("⚙️  Open Settings", self._menu)
-        settings_action.triggered.connect(self._open_settings)
-
-        reset_action = QAction("🔄  Reset Timer", self._menu)
-        reset_action.triggered.connect(self._manual_reset)
-
-        quit_action = QAction("✖  Quit Pawzy", self._menu)
-        quit_action.triggered.connect(self._quit)
-
-        self._menu.addAction(self._usage_action)
-        self._menu.addSeparator()
-        self._menu.addAction(self._skip_break_action)
-        self._menu.addAction(self._pause_action)
-        self._menu.addAction(settings_action)
-        self._menu.addAction(reset_action)
-        self._menu.addSeparator()
-        self._menu.addAction(quit_action)
-
-        self._tray.setContextMenu(self._menu)
+        self._state = "idle"
+        self._skip_enabled = False
         
-        # Open interface on tray icon click
-        self._tray.activated.connect(self._on_tray_activated)
-
-        # Connect signals (thread-safe Qt updates)
-        self._signals.stats_updated.connect(self._update_stats_display)
-        self._signals.state_changed.connect(self._on_state_changed)
+        # Load icon
+        self._icon_image = self._load_icon_image()
+        
+        # Create the icon
+        self._icon = pystray.Icon(
+            "Pawzy",
+            self._icon_image,
+            title="Pawzy — Loading...",
+            menu=self._create_menu()
+        )
 
         # Subscribe to EventBus
-        bus.subscribe("stats", lambda d: self._signals.stats_updated.emit(d))
-        bus.subscribe("state_change", lambda d: self._signals.state_changed.emit(d.get("state", "")))
+        bus.subscribe("stats", self._on_stats_updated)
+        bus.subscribe("state_change", lambda d: self._on_state_changed(d.get("state", "")))
 
-        # Refresh stats on startup
-        QTimer.singleShot(500, self._refresh_stats)
+        print("[Tray] pystray system tray initialized.")
 
-        self._tray.show()
-        print("[Tray] System tray ready.")
+    def run(self):
+        """Start the tray icon loop (blocks)."""
+        self._icon.run()
+
+    def stop(self):
+        """Stop the tray icon."""
+        self._icon.stop()
 
     # ----------------------------------------------------------------------- #
-    # Display updates                                                          #
+    # Menu Construction                                                        #
     # ----------------------------------------------------------------------- #
-    def _update_stats_display(self, stats: dict) -> None:
-        self._last_stats = stats
-        used = stats.get("today_used", 0)
+    def _create_menu(self):
+        return pystray.Menu(
+            item(lambda _: self._get_usage_label(), lambda: None, enabled=False),
+            pystray.Menu.Separator(),
+            item("⏭  Skip Break", self._skip_break, enabled=lambda _: self._skip_enabled),
+            item(lambda _: "▶  Resume Tracking" if self._paused else "⏸  Pause Tracking", self._toggle_pause),
+            item("⚙️  Open Settings", self._open_settings),
+            item("🔄  Reset Timer", self._manual_reset),
+            pystray.Menu.Separator(),
+            item("✖  Quit Pawzy", self._quit)
+        )
+
+    def _get_usage_label(self):
+        used = self._last_stats.get("today_used", 0)
         limit = data_store.read_config().get("limit_seconds", 3600)
         used_min = used // 60
         limit_min = limit // 60
-        streak = stats.get("streak", 0)
+        streak = self._last_stats.get("streak", 0)
 
         label = f"🐾 Pawzy — {used_min} / {limit_min} min"
         if streak > 0:
             label += f"  🔥 {streak} day streak"
-        self._usage_action.setText(label)
-        self._tray.setToolTip(f"Pawzy — {used_min} min / {limit_min} min used today")
+        return label
+
+    # ----------------------------------------------------------------------- #
+    # Event Handlers                                                           #
+    # ----------------------------------------------------------------------- #
+    def _on_stats_updated(self, stats: dict) -> None:
+        self._last_stats = stats
+        used_min = stats.get("today_used", 0) // 60
+        limit_min = data_store.read_config().get("limit_seconds", 3600) // 60
+        self._icon.title = f"Pawzy — {used_min} min / {limit_min} min used today"
+        # Force a menu refresh if possible (some implementations need this)
+        # self._icon.update_menu() 
 
     def _on_state_changed(self, state: str) -> None:
+        self._state = state
         state_labels = {
             "idle": "😴",
             "warning": "⚠️",
@@ -110,55 +98,39 @@ class PawzyTray:
             "happy": "🎉",
         }
         icon_label = state_labels.get(state, "🐾")
-        self._tray.setToolTip(f"Pawzy {icon_label} — {state.capitalize()}")
-        # Enable skip only during an active break
-        self._skip_break_action.setEnabled(state in ("lock", "break"))
-
-    def _refresh_stats(self) -> None:
-        stats = data_store.get_today_stats()
-        self._signals.stats_updated.emit(stats)
+        self._icon.title = f"Pawzy {icon_label} — {state.capitalize()}"
+        self._skip_enabled = state in ("lock", "break")
 
     # ----------------------------------------------------------------------- #
     # Actions                                                                  #
     # ----------------------------------------------------------------------- #
-    def _skip_break(self) -> None:
-        """End the current break immediately and reset the timer."""
+    def _skip_break(self, icon, item):
         bus.emit("user_action", {"action": "reset"})
-        self._tray.showMessage("Pawzy", "Break skipped ⏭", QSystemTrayIcon.MessageIcon.Information, 1500)
 
-    def _toggle_pause(self) -> None:
+    def _toggle_pause(self, icon, item):
         self._paused = not self._paused
         action = "pause" if self._paused else "resume"
-        self._pause_action.setText(
-            "▶  Resume Tracking" if self._paused else "⏸  Pause Tracking"
-        )
         bus.emit("user_action", {"action": action})
 
-    def _open_settings(self) -> None:
-        bus.emit("open_settings", {})  # ws_server forwards this directly to Electron
+    def _open_settings(self, icon, item):
+        bus.emit("open_settings", {})
 
-    def _manual_reset(self) -> None:
+    def _manual_reset(self, icon, item):
         bus.emit("user_action", {"action": "reset"})
-        self._tray.showMessage("Pawzy", "Timer reset! Fresh start 🐾", QSystemTrayIcon.MessageIcon.Information, 2000)
 
-    def _on_tray_activated(self, reason: QSystemTrayIcon.ActivationReason) -> None:
-        if reason in (QSystemTrayIcon.ActivationReason.Trigger, QSystemTrayIcon.ActivationReason.DoubleClick):
-            self._open_settings()
-
-    def _quit(self) -> None:
+    def _quit(self, icon, item):
         print("[Tray] Quitting Pawzy...")
-        self._app.quit()
+        self.stop()
+        # Trigger global exit if needed, but usually stopping the icon 
+        # and letting the main thread finish is enough.
+        os._exit(0) 
 
     # ----------------------------------------------------------------------- #
     # Utils                                                                    #
     # ----------------------------------------------------------------------- #
-    def _load_icon(self) -> QIcon:
-        """Load tray icon — falls back to a built-in Qt icon if asset is missing."""
-        from pathlib import Path
+    def _load_icon_image(self):
         icon_path = Path(__file__).parent / "assets" / "tray_icon.png"
         if icon_path.exists():
-            return QIcon(str(icon_path))
-        # Fallback: use a standard Qt icon so the tray always shows something
-        from PyQt6.QtWidgets import QStyle
-        style = self._app.style()
-        return style.standardIcon(QStyle.StandardPixmap.SP_ComputerIcon)
+            return Image.open(icon_path)
+        # Fallback: create a simple square if missing
+        return Image.new('RGB', (64, 64), color=(255, 105, 180))

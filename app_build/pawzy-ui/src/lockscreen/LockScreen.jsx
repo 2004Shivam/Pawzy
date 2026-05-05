@@ -22,24 +22,8 @@ function fmt(secs) {
 
 export function LockScreen() {
   const { breakRemaining } = useAppState();
-  const [phase,      setPhase]      = useState('slide');
-  const [promptIdx,  setPromptIdx]  = useState(0);
-  const [promptVis,  setPromptVis]  = useState(true);
-  const [charKey,    setCharKey]    = useState(DEFAULT_CHARACTER);
-
   const [previewRemaining, setPreviewRemaining] = useState(null);
   const [previewCharKey,   setPreviewCharKey]   = useState(null);
-
-  // Load character from config on mount AND when break starts
-  useEffect(() => {
-    if (window.pawzy?.readConfig) {
-      window.pawzy.readConfig().then(cfg => {
-        if (cfg?.character && CHARACTERS[cfg.character]) {
-          setCharKey(cfg.character);
-        }
-      }).catch(() => {});
-    }
-  }, [breakRemaining !== null]);
 
   // Handle preview mode
   useEffect(() => {
@@ -47,7 +31,6 @@ export function LockScreen() {
       return window.pawzy.on('preview_start', ({ charKey }) => {
         setPreviewCharKey(charKey);
         setPreviewRemaining(10);
-        setPhase('slide');
       });
     }
   }, []);
@@ -63,10 +46,49 @@ export function LockScreen() {
     }
   }, [previewRemaining]);
 
-  // Reset to slide phase each new actual break
+  const isPreview = previewRemaining !== null;
+  const activeRemaining = isPreview ? previewRemaining : breakRemaining;
+  const activeCharKey = isPreview ? previewCharKey : null; // CharKey is read inside UI component
+
+  if (activeRemaining === null) return null;
+
+  return (
+    <LockScreenUI 
+      activeRemaining={activeRemaining} 
+      isPreview={isPreview} 
+      previewCharKey={previewCharKey}
+    />
+  );
+}
+
+function LockScreenUI({ activeRemaining, isPreview, previewCharKey }) {
+  const [phase, setPhase] = useState('slide');
+  const [promptIdx, setPromptIdx] = useState(0);
+  const [promptVis, setPromptVis] = useState(true);
+  const [charKey, setCharKey] = useState(DEFAULT_CHARACTER);
+
+  // Load character from config
   useEffect(() => {
-    if (breakRemaining !== null) setPhase('slide');
-  }, [breakRemaining !== null]);
+    if (window.pawzy?.readConfig) {
+      window.pawzy.readConfig().then(cfg => {
+        if (cfg?.character && CHARACTERS[cfg.character]) {
+          setCharKey(cfg.character);
+        }
+      }).catch(() => {});
+    }
+  }, []);
+
+  // Cycle wellness prompts
+  useEffect(() => {
+    const iv = setInterval(() => {
+      setPromptVis(false);
+      setTimeout(() => {
+        setPromptIdx(i => (i + 1) % PROMPTS.length);
+        setPromptVis(true);
+      }, 400);
+    }, 8000);
+    return () => clearInterval(iv);
+  }, []);
 
   // Block ALL keyboard input while the lock screen is active
   useEffect(() => {
@@ -84,24 +106,7 @@ export function LockScreen() {
     };
   }, []);
 
-  // Cycle wellness prompts
-  useEffect(() => {
-    const iv = setInterval(() => {
-      setPromptVis(false);
-      setTimeout(() => {
-        setPromptIdx(i => (i + 1) % PROMPTS.length);
-        setPromptVis(true);
-      }, 400);
-    }, 8000);
-    return () => clearInterval(iv);
-  }, []);
-
-  const isPreview = previewRemaining !== null;
-  const activeRemaining = isPreview ? previewRemaining : breakRemaining;
   const activeCharKey = isPreview ? previewCharKey : charKey;
-
-  if (activeRemaining === null) return null;
-
   const CharComponent = CHARACTERS[activeCharKey]?.component ?? CHARACTERS[DEFAULT_CHARACTER].component;
   const previewCharInfo = isPreview
     ? Object.entries(CHARACTERS).find(([k]) => k === previewCharKey)?.[1]
@@ -109,7 +114,6 @@ export function LockScreen() {
 
   return (
     <div style={s.root}>
-
       <style>{`
         * { margin:0; padding:0; box-sizing:border-box; }
         html, body, #root {
@@ -155,7 +159,7 @@ export function LockScreen() {
             </div>
           )}
           <div style={s.previewCountdown}>
-            Closing in <strong>{previewRemaining}s</strong>
+            Closing in <strong>{activeRemaining}s</strong>
           </div>
           <div style={s.previewHint}>This is just a preview — no changes saved yet</div>
         </div>

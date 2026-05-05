@@ -28,8 +28,10 @@ make_sbs() {
   
   local FILTER=""
   if [ "$OSCILLATE" = "true" ]; then
-    # Oscillate: Forward + Reverse
-    FILTER="[0:v]split=2[f1][f2];[f2]reverse[rev];[f1][rev]concat=n=2:v=1[v];"
+    # Oscillate: Forward + Reverse.
+    # We repeat the sequence 4 times to make the file longer.
+    # This hides the Electron/Chrome loop stutter by making it happen only once every ~40-60s.
+    FILTER="[0:v]split=2[f1][f2];[f2]reverse[rev];[f1][rev]concat=n=2:v=1,split=4[v1][v2][v3][v4];[v1][v2][v3][v4]concat=n=4:v=1[v];"
   else
     FILTER="[0:v]copy[v];"
   fi
@@ -55,8 +57,8 @@ process() {
   echo "=== $LABEL ==="
   # Entry plays once
   make_sbs "$INPUT" "$OUT/${SLUG}_entry_sbs.webm" "" "$IDLE_START" "entry (0s → ${IDLE_START}s)" "false"
-  # Idle oscillates (Ping-Pong loop)
-  make_sbs "$INPUT" "$OUT/${SLUG}_idle_sbs.webm"  "$IDLE_START" ""  "idle oscillate (${IDLE_START}s → end + reverse)" "true"
+  # Idle oscillates (Ping-Pong loop) - repeated 4 times for smoothness
+  make_sbs "$INPUT" "$OUT/${SLUG}_idle_sbs.webm"  "$IDLE_START" ""  "idle oscillate (${IDLE_START}s → end + reverse x4)" "true"
 }
 
 echo "🐾 Generating entry + oscillating idle SBS pairs"

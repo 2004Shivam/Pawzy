@@ -56,12 +56,12 @@ class PawzyTray:
     def _create_menu(self):
         return pystray.Menu(
             item(lambda _: self._get_usage_label(), lambda: None, enabled=False),
-            pystray.Menu.Separator(),
+            pystray.Menu.SEPARATOR,
             item("⏭  Skip Break", self._skip_break, enabled=lambda _: self._skip_enabled),
             item(lambda _: "▶  Resume Tracking" if self._paused else "⏸  Pause Tracking", self._toggle_pause),
             item("⚙️  Open Settings", self._open_settings),
             item("🔄  Reset Timer", self._manual_reset),
-            pystray.Menu.Separator(),
+            pystray.Menu.SEPARATOR,
             item("✖  Quit Pawzy", self._quit)
         )
 

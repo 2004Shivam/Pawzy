@@ -6,8 +6,8 @@
 import { useEffect } from 'react';
 import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
-const VIDEO_ENTRY = './characters/capybara_entry_sbs.webm?v=5';
-const VIDEO_IDLE  = './characters/capybara_idle_sbs.webm?v=5';
+const VIDEO_ENTRY = './characters/capybara_entry_sbs.webm?v=6';
+const VIDEO_IDLE  = './characters/capybara_idle_sbs.webm?v=6';
 
 export function Capybara({ phase, onSlideEnd }) {
   const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();
@@ -66,10 +66,10 @@ const s = {
     zIndex: 100,
   },
   canvas: {
-    height: '100vh',
+    height: '85vh', // Reduced by 15%
     width: 'auto',
     display: 'block',
     pointerEvents: 'none',
-    transform: 'scaleX(-1)', // Capybara is mirrored
+    transform: 'scaleX(-1)', // Horizontal flip
   },
 };

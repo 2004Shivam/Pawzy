@@ -6,8 +6,8 @@
 import { useEffect } from 'react';
 import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
-const VIDEO_ENTRY = './characters/monkey_entry_sbs.webm?v=5';
-const VIDEO_IDLE  = './characters/monkey_idle_sbs.webm?v=5';
+const VIDEO_ENTRY = './characters/monkey_entry_sbs.webm?v=6';
+const VIDEO_IDLE  = './characters/monkey_idle_sbs.webm?v=6';
 
 export function Monkey({ phase, onSlideEnd }) {
   const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();

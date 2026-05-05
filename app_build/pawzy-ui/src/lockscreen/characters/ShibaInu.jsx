@@ -6,8 +6,8 @@
 import { useEffect } from 'react';
 import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
-const VIDEO_ENTRY = './characters/shiba_entry_sbs.webm?v=5';
-const VIDEO_IDLE  = './characters/shiba_idle_sbs.webm?v=5';
+const VIDEO_ENTRY = './characters/shiba_entry_sbs.webm?v=6';
+const VIDEO_IDLE  = './characters/shiba_idle_sbs.webm?v=6';
 
 export function ShibaInu({ phase, onSlideEnd }) {
   const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();

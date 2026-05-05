@@ -29,9 +29,9 @@ make_sbs() {
   local FILTER=""
   if [ "$OSCILLATE" = "true" ]; then
     # Oscillate: Forward + Reverse.
-    # We repeat the sequence 4 times to make the file longer.
-    # This hides the Electron/Chrome loop stutter by making it happen only once every ~40-60s.
-    FILTER="[0:v]split=2[f1][f2];[f2]reverse[rev];[f1][rev]concat=n=2:v=1,split=4[v1][v2][v3][v4];[v1][v2][v3][v4]concat=n=4:v=1[v];"
+    # We repeat the sequence 6 times to make the file even longer (~1 min+).
+    # This hides the Electron/Chrome loop stutter.
+    FILTER="[0:v]split=2[f1][f2];[f2]reverse[rev];[f1][rev]concat=n=2:v=1,split=6[v1][v2][v3][v4][v5][v6];[v1][v2][v3][v4][v5][v6]concat=n=6:v=1[v];"
   else
     FILTER="[0:v]copy[v];"
   fi

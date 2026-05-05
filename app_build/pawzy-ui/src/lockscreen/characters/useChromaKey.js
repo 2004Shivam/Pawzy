@@ -36,6 +36,9 @@ export function useChromaKey() {
     offscreenCanvasRef.current = offscreen;
   }, []);
 
+  const lastTimeRef = useRef(-1);
+  const lastFrameDataRef = useRef(null);
+
   const tick = useCallback(() => {
     if (!runningRef.current) return;
 
@@ -48,10 +51,15 @@ export function useChromaKey() {
       return; 
     }
 
-    if (video.readyState < 2) {
+    // BLINK FIX: 
+    // If the video is seeking (looping back) or stalled, OR if the time hasn't changed,
+    // we skip drawing the NEW frame and just let the canvas keep the PREVIOUS frame.
+    // This turns a "black blink" into a "1-frame freeze", which is invisible for idle animations.
+    if (video.readyState < 2 || video.seeking || video.currentTime === lastTimeRef.current) {
       rafRef.current = requestAnimationFrame(tick);
       return;
     }
+    lastTimeRef.current = video.currentTime;
 
     const offCtx = offscreen.getContext('2d', { willReadFrequently: true });
     const ctx = canvas.getContext('2d', { willReadFrequently: true });
@@ -79,7 +87,6 @@ export function useChromaKey() {
         const a = sbsData[maskIdx];
 
         // Gentle despill: only reduce green on pixels where green dominates both R and B
-        // This removes the green spill on edges without affecting the animal's body colors
         if (g > r && g > b) {
           g = (r + b) >> 1; // average of red and blue
         }

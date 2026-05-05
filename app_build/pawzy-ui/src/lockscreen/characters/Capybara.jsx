@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
 const VIDEO_ENTRY = './characters/capybara_entry_sbs.webm?v=8';
-const VIDEO_IDLE  = './characters/capybara_idle_sbs.webm?v=8';
+const VIDEO_IDLE = './characters/capybara_idle_sbs.webm?v=8';
 
 export function Capybara({ phase, onSlideEnd }) {
   const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();
@@ -74,7 +74,7 @@ const s = {
     transform: 'scaleX(-1)', // BULLETPROOF FLIP
   },
   canvas: {
-    height: '15vh', // 15% scale as requested
+    height: '100vh', // 15% scale as requested
     width: 'auto',
     display: 'block',
     pointerEvents: 'none',

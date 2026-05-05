@@ -16,6 +16,13 @@ const fs   = require('fs');
 const os   = require('os');
 const WebSocket = require('ws');
 
+// ── Force software video decoding on Linux ────────────────────────────────────
+// Electron's hardware decoder on Linux rejects certain VP9/VP8 streams with
+// "Unsupported pixel format: -1". Disabling GPU hardware acceleration forces
+// Chromium to use its software decoder (FFmpeg), which handles all formats.
+app.disableHardwareAcceleration();
+// ─────────────────────────────────────────────────────────────────────────────
+
 // ── Single-instance lock ──────────────────────────────────────────────────────
 // If a second instance is launched (e.g. desktop shortcut clicked while
 // Pawzy is already running in the tray), focus/open Settings instead.

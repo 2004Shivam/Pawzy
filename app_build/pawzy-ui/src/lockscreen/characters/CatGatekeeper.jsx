@@ -1,26 +1,44 @@
 /**
- * CatGatekeeper.jsx — wraps the original neko video assets.
- * Phase 'slide': neko1.webm (walk-in, plays once then calls onSlideEnd)
- * Phase 'sleep': neko2.webm (idle loop)
+ * CatGatekeeper.jsx — Canvas chroma-key character.
  */
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
+import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
-const VIDEO_SLIDE = './characters/cat_gatekeeper/neko1.webm';
-const VIDEO_SLEEP = './characters/cat_gatekeeper/neko2.webm';
+const VIDEO_ENTRY = './characters/cat_sbs.webm?v=2';
+const VIDEO_IDLE  = './characters/cat_sbs.webm?v=2';
 
 export function CatGatekeeper({ phase, onSlideEnd }) {
+  const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();
+
+  useEffect(() => {
+    stopProcessing();
+    const video = videoRef.current;
+    if (!video) return;
+
+    const onPlay = () => startProcessing();
+    video.addEventListener('play', onPlay);
+    video.play().catch(err => console.error('CatGatekeeper play error:', err));
+
+    return () => {
+      video.removeEventListener('play', onPlay);
+      stopProcessing();
+    };
+  }, [phase, startProcessing, stopProcessing]);
+
   return (
     <div style={phase === 'slide' ? s.slideWrap : s.idleWrap}>
       <video
         key={phase}
-        src={phase === 'slide' ? VIDEO_SLIDE : VIDEO_SLEEP}
-        autoPlay
-        loop={phase === 'sleep'}
+        ref={videoRef}
+        src={phase === 'slide' ? VIDEO_ENTRY : VIDEO_IDLE}
+        loop={phase !== 'slide'}
         muted
         playsInline
         onEnded={phase === 'slide' ? onSlideEnd : undefined}
-        style={s.video}
+        onError={e => console.error('CatGatekeeper video error:', e.target.error)}
+        style={{ display: 'none' }}
       />
+      <canvas ref={canvasRef} width={CANVAS_W} height={CANVAS_H} style={s.canvas} />
     </div>
   );
 }
@@ -34,6 +52,7 @@ const s = {
     justifyContent: 'center',
     overflow: 'hidden',
     animation: 'char-slide-in 4s cubic-bezier(.22,1,.36,1) forwards',
+    zIndex: 100,
   },
   idleWrap: {
     position: 'absolute',
@@ -42,11 +61,12 @@ const s = {
     alignItems: 'flex-end',
     justifyContent: 'center',
     overflow: 'hidden',
+    zIndex: 100,
   },
-  video: {
+  canvas: {
     height: '100vh',
     width: 'auto',
     display: 'block',
-    mixBlendMode: 'screen',
+    pointerEvents: 'none',
   },
 };

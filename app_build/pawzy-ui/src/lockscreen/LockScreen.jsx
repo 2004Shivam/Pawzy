@@ -103,14 +103,18 @@ export function LockScreen() {
   if (activeRemaining === null) return null;
 
   const CharComponent = CHARACTERS[activeCharKey]?.component ?? CHARACTERS[DEFAULT_CHARACTER].component;
+  const previewCharInfo = isPreview
+    ? Object.entries(CHARACTERS).find(([k]) => k === previewCharKey)?.[1]
+    : null;
 
   return (
     <div style={s.root}>
+
       <style>{`
         * { margin:0; padding:0; box-sizing:border-box; }
         html, body, #root {
           width:100%; height:100%; overflow:hidden;
-          background:transparent;
+          background: rgba(0,0,0,0.01);
           font-family:system-ui,-apple-system,sans-serif;
         }
         @keyframes char-slide-in {
@@ -123,6 +127,11 @@ export function LockScreen() {
         }
         @keyframes fadeIn { from{opacity:0} to{opacity:1} }
         @keyframes pulse  { 0%,100%{opacity:1} 50%{opacity:.7} }
+        @keyframes previewPop {
+          0%   { transform: translateX(-50%) scale(0.8); opacity:0; }
+          60%  { transform: translateX(-50%) scale(1.05); opacity:1; }
+          100% { transform: translateX(-50%) scale(1); opacity:1; }
+        }
       `}</style>
 
       {/* Active character — receives phase + callback */}
@@ -132,6 +141,25 @@ export function LockScreen() {
           onSlideEnd={() => setPhase('sleep')}
         />
       </div>
+
+      {/* PREVIEW MODE badge — only shown during preview */}
+      {isPreview && (
+        <div style={s.previewBadge}>
+          <div style={s.previewEyeRow}>
+            <span style={s.previewEyeIcon}>👁</span>
+            <span style={s.previewModeLabel}>PREVIEW MODE</span>
+          </div>
+          {previewCharInfo && (
+            <div style={s.previewCharName}>
+              {previewCharInfo.emoji} {previewCharInfo.label}
+            </div>
+          )}
+          <div style={s.previewCountdown}>
+            Closing in <strong>{previewRemaining}s</strong>
+          </div>
+          <div style={s.previewHint}>This is just a preview — no changes saved yet</div>
+        </div>
+      )}
 
       {/* Timer block — left-centre */}
       <div style={s.timerBlock}>
@@ -152,7 +180,7 @@ const s = {
     height: '100vh',
     position: 'relative',
     overflow: 'hidden',
-    background: 'transparent',
+    background: 'rgba(0,0,0,0.01)',
   },
   timerBlock: {
     position: 'absolute',
@@ -189,5 +217,58 @@ const s = {
     paddingTop: '16px',
     textShadow: '0 2px 12px rgba(0,0,0,.9), 0 0 8px rgba(0,0,0,0.6)',
     letterSpacing: '-0.2px',
+  },
+
+  /* Preview badge */
+  previewBadge: {
+    position: 'absolute',
+    top: '32px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    zIndex: 50,
+    background: 'rgba(0,0,0,0.75)',
+    backdropFilter: 'blur(16px)',
+    WebkitBackdropFilter: 'blur(16px)',
+    border: '2px solid rgba(251,191,36,0.6)',
+    borderRadius: '20px',
+    padding: '16px 28px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '6px',
+    animation: 'previewPop .4s cubic-bezier(.22,1,.36,1) both',
+    minWidth: '240px',
+    textAlign: 'center',
+    boxShadow: '0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(251,191,36,0.2)',
+  },
+  previewEyeRow: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+  },
+  previewEyeIcon: { fontSize: '18px' },
+  previewModeLabel: {
+    fontSize: '11px',
+    fontWeight: 900,
+    color: '#fbbf24',
+    letterSpacing: '0.15em',
+    textTransform: 'uppercase',
+  },
+  previewCharName: {
+    fontSize: '22px',
+    fontWeight: 800,
+    color: '#ffffff',
+    letterSpacing: '-0.3px',
+  },
+  previewCountdown: {
+    fontSize: '13px',
+    color: 'rgba(255,255,255,0.7)',
+    fontWeight: 600,
+  },
+  previewHint: {
+    fontSize: '11px',
+    color: 'rgba(255,255,255,0.45)',
+    fontWeight: 600,
+    marginTop: '2px',
   },
 };

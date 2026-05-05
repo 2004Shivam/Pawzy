@@ -37,24 +37,36 @@ const Slider = ({ label, value, min, max, unit, onChange, description }) => {
   );
 };
 
-const CharCard = ({ char, selected, onClick }) => (
-  <button
-    onClick={onClick}
+const CharCard = ({ char, selected, onClick, onPreview }) => (
+  <div
     style={{
       ...s.charCard,
       ...(selected ? s.charCardActive : {}),
-      '--accent': char.color,
       borderColor: selected ? char.color : 'rgba(255,255,255,.1)',
       boxShadow: selected ? `0 0 0 2px ${char.color}44, 0 8px 24px ${char.color}22` : 'none',
+      cursor: 'default',
     }}
   >
-    <span style={s.charEmoji}>{char.emoji}</span>
-    <span style={s.charLabel}>{char.label}</span>
-    <span style={s.charDesc}>{char.desc}</span>
+    {/* Clicking the emoji/label area selects the character */}
+    <button onClick={onClick} style={s.charSelectArea}>
+      <span style={s.charEmoji}>{char.emoji}</span>
+      <span style={s.charLabel}>{char.label}</span>
+      <span style={s.charDesc}>{char.desc}</span>
+    </button>
+
+    {/* Per-card preview button */}
+    <button
+      onClick={(e) => { e.stopPropagation(); onPreview(char.key); }}
+      style={s.cardPreviewBtn}
+      title={`Preview ${char.label} on your screen for 10 seconds`}
+    >
+      👁 Preview
+    </button>
+
     {selected && (
       <span style={{ ...s.charCheck, background: char.color }}>✓</span>
     )}
-  </button>
+  </div>
 );
 
 export default function Settings() {
@@ -167,6 +179,7 @@ export default function Settings() {
                 char={char}
                 selected={character === char.key}
                 onClick={() => setCharacter(char.key)}
+                onPreview={(key) => window.pawzy?.testCharacter?.(key)}
               />
             ))}
           </div>
@@ -220,15 +233,6 @@ export default function Settings() {
 
         {/* Actions */}
         <div style={s.actions}>
-          <div style={{ flex: 1 }}>
-            <button 
-              style={s.previewBtn} 
-              onClick={() => window.pawzy?.testCharacter?.(character)}
-              title="Preview how this character looks on your screen for 10 seconds"
-            >
-              👁️ Preview
-            </button>
-          </div>
           <button style={s.cancelBtn} onClick={() => window.close()}>Cancel</button>
           <button
             style={{ ...s.saveBtn, ...(saved ? s.savedBtn : {}) }}
@@ -343,18 +347,41 @@ const s = {
   charCard: {
     position: 'relative',
     display: 'flex', flexDirection: 'column', alignItems: 'center',
-    gap: '6px',
-    padding: '16px 12px',
+    gap: '0px',
+    padding: '0',
     borderRadius: '20px',
     background: '#fff7ed',
     border: '2px solid #ffedd5',
-    cursor: 'pointer',
+    overflow: 'hidden',
     transition: 'all .15s ease',
     color: '#2d1200',
   },
   charCardActive: {
     background: '#fff',
     transform: 'translateY(-2px)',
+  },
+  charSelectArea: {
+    display: 'flex', flexDirection: 'column', alignItems: 'center',
+    gap: '6px',
+    padding: '16px 12px 12px',
+    width: '100%',
+    background: 'transparent',
+    border: 'none',
+    cursor: 'pointer',
+    color: 'inherit',
+  },
+  cardPreviewBtn: {
+    width: '100%',
+    padding: '8px 0',
+    background: '#fffbeb',
+    border: 'none',
+    borderTop: '1px solid #fde68a',
+    color: '#d97706',
+    fontSize: '12px',
+    fontWeight: 800,
+    cursor: 'pointer',
+    transition: 'background .15s',
+    letterSpacing: '0.02em',
   },
   charEmoji: { fontSize: '38px', lineHeight: 1 },
   charLabel: { fontFamily: "'Fredoka One', cursive", fontSize: '15px', color: '#ea580c' },
@@ -389,13 +416,6 @@ const s = {
     background: '#f5f0eb',
     border: 'none',
     color: '#78716c', fontSize: '15px', fontWeight: 800, cursor: 'pointer',
-  },
-  previewBtn: {
-    padding: '14px 24px', borderRadius: '50px',
-    background: '#fffbeb',
-    border: '2px solid #fde68a',
-    color: '#d97706', fontSize: '14px', fontWeight: 800, cursor: 'pointer',
-    transition: 'all .2s',
   },
   saveBtn: {
     padding: '14px 32px', borderRadius: '50px',

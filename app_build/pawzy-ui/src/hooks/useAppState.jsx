@@ -8,10 +8,10 @@
 import { createContext, useContext, useEffect, useReducer } from 'react';
 
 const initialState = {
-  state: 'idle',        // idle | warning | lock | break | happy
+  state: 'break',        // idle | warning | lock | break | happy
   elapsed: 0,
   limit: 3600,
-  breakRemaining: null,
+  breakRemaining: 100,
   stats: { today_used: 0, breaks_taken: 0, streak: 0 },
 };
 

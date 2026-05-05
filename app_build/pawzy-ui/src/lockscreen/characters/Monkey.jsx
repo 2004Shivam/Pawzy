@@ -1,11 +1,13 @@
 /**
  * Monkey.jsx — Canvas chroma-key character.
+ * Phase "slide": plays entry video ONCE (walks in), then calls onSlideEnd.
+ * Phase "idle":  loops the idle video continuously.
  */
 import { useEffect } from 'react';
 import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
-const VIDEO_ENTRY = './characters/monkey_sbs.webm?v=2';
-const VIDEO_IDLE  = './characters/monkey_sbs.webm?v=2';
+const VIDEO_ENTRY = './characters/monkey_entry_sbs.webm?v=3';
+const VIDEO_IDLE  = './characters/monkey_idle_sbs.webm?v=3';
 
 export function Monkey({ phase, onSlideEnd }) {
   const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();

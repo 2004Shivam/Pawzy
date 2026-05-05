@@ -1,11 +1,13 @@
 /**
  * Capybara.jsx — Canvas chroma-key character (mirrored horizontally).
+ * Phase "slide": plays entry video ONCE (walks in), then calls onSlideEnd.
+ * Phase "idle":  loops the idle video continuously.
  */
 import { useEffect } from 'react';
 import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
-const VIDEO_ENTRY = './characters/capybara_sbs.webm?v=2';
-const VIDEO_IDLE  = './characters/capybara_sbs.webm?v=2';
+const VIDEO_ENTRY = './characters/capybara_entry_sbs.webm?v=3';
+const VIDEO_IDLE  = './characters/capybara_idle_sbs.webm?v=3';
 
 export function Capybara({ phase, onSlideEnd }) {
   const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();
@@ -68,6 +70,6 @@ const s = {
     width: 'auto',
     display: 'block',
     pointerEvents: 'none',
-    transform: 'scaleX(-1)',
+    transform: 'scaleX(-1)', // Capybara is mirrored
   },
 };

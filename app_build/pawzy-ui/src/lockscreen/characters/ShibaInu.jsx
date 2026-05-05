@@ -1,13 +1,13 @@
 /**
  * ShibaInu.jsx — Canvas chroma-key character.
- * Video plays hidden; each frame is drawn onto a canvas in JS
- * with the black background stripped out pixel-by-pixel.
+ * Phase "slide": plays entry video ONCE (walks in), then calls onSlideEnd.
+ * Phase "idle":  loops the idle video continuously.
  */
 import { useEffect } from 'react';
 import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
-const VIDEO_ENTRY = './characters/shiba_sbs.webm?v=2';
-const VIDEO_IDLE  = './characters/shiba_sbs.webm?v=2';
+const VIDEO_ENTRY = './characters/shiba_entry_sbs.webm?v=3';
+const VIDEO_IDLE  = './characters/shiba_idle_sbs.webm?v=3';
 
 export function ShibaInu({ phase, onSlideEnd }) {
   const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();
@@ -29,7 +29,6 @@ export function ShibaInu({ phase, onSlideEnd }) {
 
   return (
     <div style={phase === 'slide' ? s.slideWrap : s.idleWrap}>
-      {/* Hidden source video — decoded by browser, never shown */}
       <video
         key={phase}
         ref={videoRef}
@@ -41,7 +40,6 @@ export function ShibaInu({ phase, onSlideEnd }) {
         onError={e => console.error('ShibaInu video error:', e.target.error)}
         style={{ display: 'none' }}
       />
-      {/* Visible canvas — shows chroma-keyed frames */}
       <canvas ref={canvasRef} width={CANVAS_W} height={CANVAS_H} style={s.canvas} />
     </div>
   );

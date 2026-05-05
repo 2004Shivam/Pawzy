@@ -1,13 +1,12 @@
 /**
- * Capybara.jsx — Canvas chroma-key character (mirrored horizontally).
- * Phase "slide": plays entry video ONCE (walks in), then calls onSlideEnd.
- * Phase "idle":  loops the idle video continuously.
+ * Capybara.jsx — Canvas chroma-key character.
+ * Uses a double-wrapper for bulletproof flipping and slide animations.
  */
 import { useEffect } from 'react';
 import { useChromaKey, CANVAS_W, CANVAS_H } from './useChromaKey';
 
-const VIDEO_ENTRY = './characters/capybara_entry_sbs.webm?v=6';
-const VIDEO_IDLE  = './characters/capybara_idle_sbs.webm?v=6';
+const VIDEO_ENTRY = './characters/capybara_entry_sbs.webm?v=8';
+const VIDEO_IDLE  = './characters/capybara_idle_sbs.webm?v=8';
 
 export function Capybara({ phase, onSlideEnd }) {
   const { videoRef, canvasRef, startProcessing, stopProcessing } = useChromaKey();
@@ -29,18 +28,21 @@ export function Capybara({ phase, onSlideEnd }) {
 
   return (
     <div style={phase === 'slide' ? s.slideWrap : s.idleWrap}>
-      <video
-        key={phase}
-        ref={videoRef}
-        src={phase === 'slide' ? VIDEO_ENTRY : VIDEO_IDLE}
-        loop={phase !== 'slide'}
-        muted
-        playsInline
-        onEnded={phase === 'slide' ? onSlideEnd : undefined}
-        onError={e => console.error('Capybara video error:', e.target.error)}
-        style={{ display: 'none' }}
-      />
-      <canvas ref={canvasRef} width={CANVAS_W} height={CANVAS_H} style={s.canvas} />
+      {/* INNER WRAPPER for horizontal flipping — avoids animation conflicts */}
+      <div style={s.flipWrap}>
+        <video
+          key={phase}
+          ref={videoRef}
+          src={phase === 'slide' ? VIDEO_ENTRY : VIDEO_IDLE}
+          loop={phase !== 'slide'}
+          muted
+          playsInline
+          onEnded={phase === 'slide' ? onSlideEnd : undefined}
+          onError={e => console.error('Capybara video error:', e.target.error)}
+          style={{ display: 'none' }}
+        />
+        <canvas ref={canvasRef} width={CANVAS_W} height={CANVAS_H} style={s.canvas} />
+      </div>
     </div>
   );
 }
@@ -65,11 +67,16 @@ const s = {
     overflow: 'hidden',
     zIndex: 100,
   },
+  flipWrap: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    justifyContent: 'center',
+    transform: 'scaleX(-1)', // BULLETPROOF FLIP
+  },
   canvas: {
-    height: '85vh', // Reduced by 15%
+    height: '15vh', // 15% scale as requested
     width: 'auto',
     display: 'block',
     pointerEvents: 'none',
-    transform: 'scaleX(-1)', // Horizontal flip
   },
 };

@@ -218,13 +218,15 @@
       position: absolute;
       will-change: transform;
       contain: layout style;
+      filter: blur(24px);
+      opacity: 0.7;
     }
 
     /* TOP-LEFT - very subtle, translucent */
     .db-tl {
       width: 560px;
       height: 520px;
-      background: rgba(249,168,37,0.18);
+      background: rgba(249,168,37,0.4);
       top: -200px;
       left: -200px;
       border-radius: 44% 56% 68% 32% / 52% 40% 60% 48%;
@@ -234,7 +236,7 @@
     .db-tl-s {
       width: 120px;
       height: 110px;
-      background: rgba(230,168,0,0.12);
+      background: rgba(230,168,0,0.3);
       top: 460px;
       left: 30px;
       border-radius: 55% 45% 40% 60% / 48% 58% 42% 52%;
@@ -244,7 +246,7 @@
     .db-tr {
       width: 240px;
       height: 220px;
-      background: rgba(230,168,0,0.13);
+      background: rgba(230,168,0,0.3);
       top: -70px;
       right: -70px;
       border-radius: 58% 42% 36% 64% / 52% 64% 36% 48%;
@@ -254,7 +256,7 @@
     .db-br {
       width: 480px;
       height: 440px;
-      background: rgba(251,191,36,0.15);
+      background: rgba(251,191,36,0.35);
       bottom: -140px;
       right: -140px;
       border-radius: 52% 48% 38% 62% / 44% 60% 40% 56%;
@@ -1013,23 +1015,23 @@
     }
     .vs-table {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 160px 160px;
       gap: 0;
-      border: 2px solid #f0e8de;
-      border-radius: 24px;
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.07);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
       background: #fff;
     }
     .vs-col-header {
       padding: 20px 24px;
       text-align: center;
-      font-family: 'Fredoka One', cursive;
-      font-size: 17px;
-      border-bottom: 2px solid #f0e8de;
+      font-weight: 800;
+      font-size: 16px;
+      border-bottom: 1px solid #e5e7eb;
+      background: #fafafa;
     }
     .vs-col-header.feature-col {
-      background: #fafaf8;
       color: var(--mu);
       font-size: 13px;
       letter-spacing: 1px;
@@ -1038,11 +1040,10 @@
       padding-left: 28px;
     }
     .vs-col-header.them-col {
-      background: #f9f9f9;
       color: #888;
     }
     .vs-col-header.us-col {
-      background: linear-gradient(135deg, #fff7ed, #fef3c7);
+      background: #fff;
       color: var(--or2);
     }
     .vs-row {
@@ -1050,29 +1051,29 @@
     }
     .vs-cell {
       padding: 16px 24px;
-      border-bottom: 1px solid #f5f0eb;
+      border-bottom: 1px solid #e5e7eb;
       font-size: 14px;
-      font-weight: 700;
+      font-weight: 600;
       display: flex;
       align-items: center;
       gap: 8px;
     }
     .vs-cell.feature-name {
-      background: #fafaf8;
+      background: #fff;
       color: var(--tx);
-      font-weight: 700;
-      font-size: 13px;
+      font-size: 14px;
       padding-left: 28px;
     }
     .vs-cell.them {
-      background: #fff;
-      color: #888;
+      background: #fafafa;
+      color: #6b7280;
       justify-content: center;
     }
     .vs-cell.us {
-      background: #fffbf5;
+      background: #fff;
       color: var(--gr);
       justify-content: center;
+      font-weight: 700;
     }
     .vs-cell.last { border-bottom: none; }
     .vs-cross { color: #ef4444; font-size: 18px; }
@@ -1151,16 +1152,17 @@
 
     .fc {
       background: #fff;
-      border: 2.5px solid #f0ece8;
-      border-radius: 22px;
-      padding: 26px 20px;
-      box-shadow: 0 4px 0 #f0ece8;
-      transition: transform .2s, border-color .2s
+      border: 1px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 32px 24px;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+      transition: box-shadow .2s, border-color .2s, transform .2s;
     }
 
     .fc:hover {
       transform: translateY(-4px);
-      border-color: var(--or)
+      border-color: #d1d5db;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
     }
 
     .fc .ico {
@@ -1483,14 +1485,48 @@
       .fgrid { grid-template-columns: 1fr 1fr; gap: 12px }
       .fc { padding: 20px 16px }
 
-      .testi-cards { grid-template-columns: 1fr }
-
-      .vs-inner { padding: 0 20px }
-      .vs-table { grid-template-columns: 1fr 90px 90px }
-      .vs-col-header { font-size: 13px; padding: 14px 8px }
-      .vs-cell { padding: 10px 6px; font-size: 11px }
-      .vs-cell.feature-name { padding-left: 8px; font-size: 11px }
-      .vs-quote-strip { grid-template-columns: 1fr }
+      .testi-cards { display: none }
+      
+      .vs-inner { padding: 0 16px }
+      .vs-table {
+        display: flex;
+        flex-direction: column;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+      }
+      .vs-col-header { display: none; }
+      .vs-col-header.feature-col { display: block; border: none; background: transparent; padding: 0 0 12px 0; text-align: center; }
+      
+      .vs-cell {
+        padding: 16px;
+        border: 1px solid #e5e7eb;
+        border-radius: 12px;
+        margin-bottom: 8px;
+        background: #fff;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .vs-cell.feature-name {
+        padding-left: 16px;
+        border-bottom: 1px solid #f9fafb;
+        width: 100%;
+        background: #fafafa;
+        text-align: left;
+      }
+      .vs-cell.them, .vs-cell.us {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 13px;
+        background: #fff;
+      }
+      .vs-cell.them::before { content: "Cat Gatekeeper:"; color: #6b7280; font-weight: 500; }
+      .vs-cell.us::before { content: "Pawzy:"; color: var(--or); font-weight: 800; }
+      .vs-cell.us { border-top: 1px dashed #e5e7eb; padding-top: 12px; }
+      
+      .vs-quote-strip { display: none; }
 
       .cta { margin: 0 12px 60px; padding: 48px 20px; border-radius: 24px }
       .ctabtns { flex-direction: column; align-items: center }
@@ -1772,47 +1808,7 @@
     </div>
   </div>
 
-  <div class="testi">
-    <div class="testi-inner">
-      <h2>What users are saying</h2>
-      <p class="testi-sub">Early adopters on GitHub and Reddit.</p>
-      <div class="testi-cards">
-        <div class="tc">
-          <div class="tc-stars">★★★★★</div>
-          <p class="tc-text">"Pawzy helps me stay focused and build healthy work habits with a delightful animal companion. The lockscreen is a game-changer!"</p>
-          <div class="tc-author">
-            <div class="tc-avatar" style="background: #fde68a; color: #92400e; font-family: 'Fredoka One', cursive; font-size: 17px; font-weight: 900;">B</div>
-            <div>
-              <div class="tc-name">Bashirah A.</div>
-              <div class="tc-role">UX Designer</div>
-            </div>
-          </div>
-        </div>
-        <div class="tc">
-          <div class="tc-stars">★★★★☆</div>
-          <p class="tc-text">"It combines productivity and a cute companion perfectly. The strict breaks are exactly what I needed."</p>
-          <div class="tc-author">
-            <div class="tc-avatar" style="background: #d1fae5; color: #065f46; font-family: 'Fredoka One', cursive; font-size: 17px; font-weight: 900;">A</div>
-            <div>
-              <div class="tc-name">Ash M.</div>
-              <div class="tc-role">Frontend Developer</div>
-            </div>
-          </div>
-        </div>
-        <div class="tc">
-          <div class="tc-stars">★★★★★</div>
-          <p class="tc-text">"The inescapable breaks actually made me take real breaks instead of just swiping away a notification. My eyes thank me!"</p>
-          <div class="tc-author">
-            <div class="tc-avatar" style="background: #fed7aa; color: #c2410c; font-family: 'Fredoka One', cursive; font-size: 17px; font-weight: 900;">P</div>
-            <div>
-              <div class="tc-name">Priya K.</div>
-              <div class="tc-role">CS Student</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+  
 
   <div class="sec" id="features">
     <div class="lbl">Features</div>

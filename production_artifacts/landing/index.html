@@ -388,37 +388,91 @@
       margin-bottom: 16px
     }
 
-    .bg {
-      background: var(--gr);
-      color: #fff;
-      padding: 14px 32px;
-      border-radius: 50px;
-      font-size: 15px;
-      font-weight: 800;
-      text-decoration: none;
-      box-shadow: 0 5px 0 #15803d;
-      transition: transform .15s, box-shadow .15s;
+    /* Professional Button System */
+    .btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px
-    }
-
-    .bg:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 7px 0 #15803d
-    }
-
-    .blink {
-      color: var(--or2);
-      font-size: 14px;
-      font-weight: 800;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
       text-decoration: none;
-      border-bottom: 2px solid var(--or);
-      transition: opacity .2s
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+      font-family: inherit;
     }
 
-    .blink:hover {
-      opacity: .75
+    .btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .btn-primary {
+      background: var(--or);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(249, 115, 22, 0.2);
+    }
+    
+    .btn-primary:hover {
+      background: var(--or2);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(249, 115, 22, 0.3);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--tx);
+      border-color: #e5e7eb;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .btn-secondary:hover {
+      background: #fafafa;
+      border-color: #d1d5db;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+    }
+
+    .btn-white {
+      background: #fff;
+      color: var(--or2);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-white:hover {
+      background: #fafafa;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-outline-white {
+      background: transparent;
+      color: #fff;
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    .btn-outline-white:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--mu);
+    }
+
+    .btn-ghost:hover {
+      background: rgba(0,0,0,0.04);
+      color: var(--tx);
+    }
+
+    .btn-lg {
+      padding: 16px 32px;
+      font-size: 16px;
     }
 
     .hnote {
@@ -1602,9 +1656,15 @@
         Pawzy is an <strong>inescapable screen blocker</strong> that forces real breaks - works on every app, game, and browser. No new-tab bypass. No Alt+F4.
       </p>
       <div class="hbtns">
-        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" style="background: #2563eb; box-shadow: 0 5px 0 #1e40af;" onclick="trackDownload('windows', 'hero')">🪟 Download for Windows</a>
-        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" style="background: rgba(0,0,0,0.08); color: var(--tx); box-shadow: 0 5px 0 rgba(0,0,0,0.12);" onclick="trackDownload('linux', 'hero')">🐧 Linux</a>
-        <a class="blink" href="#how-it-works" style="margin-left: 6px;">How it works</a>
+        <a class="btn btn-primary btn-lg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" onclick="trackDownload('windows', 'hero')">
+          <svg viewBox="0 0 1024 1024" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0 148.887l406.87-55.513v391.2H0V148.887zm406.87 435.5v391.138L0 919.86V584.387h406.87zM461.642 39.46l562.358-78.92v524.032H461.642V39.46zm562.358 578.434v523.955l-562.358-78.841V617.894h562.358z"/></svg>
+          Download for Windows
+        </a>
+        <a class="btn btn-secondary btn-lg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" onclick="trackDownload('linux', 'hero')">
+          <svg viewBox="0 0 448 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zm70.6-39.3c1.3-4.2-3.3-8.3-7.5-7.5-5.9 1.1-10.6 6.1-10.4 12.2.2 6.3 5.5 11.2 11.8 11 5.4-.2 10-5.1 9.4-10.5-.1-1.9-1.4-3.6-3.3-5.2zm-94.8 5.7c.2-6.1-4.6-11.1-10.5-12.2-4.1-.8-8.8 3.3-7.5 7.5.7 2.1 2 3.8 3.5 5.1 5.3 4.8 14.1 4.5 14.5-.4zm166 142.7c-1.5-16.1-10.4-30.4-23.7-39.2-12.3-8.1-27.1-11-41.5-11-2.9 0-5.8.4-8.7 1.3-17.7 5.2-35.8 7.3-54.2 7.3-18.4 0-36.5-2.1-54.2-7.3-2.9-.9-5.8-1.3-8.7-1.3-14.4 0-29.2 2.9-41.5 11-13.3 8.8-22.2 23.1-23.7 39.2-1.3 14 2 28.5 10.4 39.8 4.2 5.6 9.5 10.4 15.5 14.1-1 4-1.6 8.3-1.6 12.6 0 17.5 7.1 34.3 19.8 46.8 12.5 12.5 29.3 19.8 46.8 19.8 17.5 0 34.3-7.3 46.8-19.8 12.5-12.5 19.8-29.3 19.8-46.8 0-4.3-.6-8.6-1.6-12.6 6-3.7 11.3-8.5 15.5-14.1 8.4-11.3 11.7-25.8 10.4-39.8zm-225.6 4.9c-1.4-14.6 7-28.5 20.6-34.9 14.4-6.8 31.7-3.6 43.1 7.2 1.3 1.2 2.8 2.1 4.4 2.8-5.3 4.3-9.5 9.6-12.4 15.6-2.5 5.2-4 10.9-4.3 16.8-.7 13.9 6.2 26.9 17.9 33.7-16.7-1-31.9-10.8-38.3-26.2-4.1-9.9-11-15-21-15zm196.2 0c-10 0-16.9 5.1-21 15-6.4 15.4-21.6 25.2-38.3 26.2 11.7-6.8 18.6-19.8 17.9-33.7-.3-5.9-1.8-11.6-4.3-16.8-2.9-6-7.1-11.3-12.4-15.6 1.6-.7 3.1-1.6 4.4-2.8 11.4-10.8 28.7-14 43.1-7.2 13.6 6.4 22 20.3 20.6 34.9zm-98.1 113.8c-20.2 0-36.6-16.4-36.6-36.6s16.4-36.6 36.6-36.6 36.6 16.4 36.6 36.6-16.4 36.6-36.6 36.6z"/></svg>
+          Linux
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#how-it-works">How it works</a>
       </div>
       <p class="hnote">Direct downloads · Free forever · macOS coming soon</p>
     </div>
@@ -1902,12 +1962,19 @@
     <h2>Ready to take real breaks? 🐾</h2>
     <p style="margin-bottom: 40px;">Free forever. 100% Open Source. No accounts needed.</p>
     
-    <div id="actual-downloads" class="ctabtns" style="margin-bottom: 20px; display:flex;">
-      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage"
-        id="dl-linux" onclick="trackDownload('linux', 'footer')">🐧 Download for Linux</a>
-      <a class="bw" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe"
-        id="dl-win" onclick="trackDownload('windows', 'footer')">🪟 Download for Windows</a>
-      <a class="bgh" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">⭐ Star on GitHub</a>
+    <div id="actual-downloads" class="ctabtns" style="margin-bottom: 20px; display:flex; gap: 16px; justify-content: center;">
+      <a class="btn btn-white" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" id="dl-win" onclick="trackDownload('windows', 'footer')">
+        <svg viewBox="0 0 1024 1024" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M0 148.887l406.87-55.513v391.2H0V148.887zm406.87 435.5v391.138L0 919.86V584.387h406.87zM461.642 39.46l562.358-78.92v524.032H461.642V39.46zm562.358 578.434v523.955l-562.358-78.841V617.894h562.358z"/></svg>
+        Download for Windows
+      </a>
+      <a class="btn btn-outline-white" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" id="dl-linux" onclick="trackDownload('linux', 'footer')">
+        <svg viewBox="0 0 448 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M220.8 123.3c1 .5 1.8 1.7 3 1.7 1.1 0 2.8-.4 2.9-1.5.2-1.4-1.9-2.3-3.2-2.9-1.7-.7-3.9-1-5.5-.1-.4.2-.8.7-.6 1.1.3 1.3 2.3 1.1 3.4 1.7zm-21.9 1.7c1.2 0 2-1.2 3-1.7 1.1-.6 3.1-.4 3.5-1.7.2-.4-.2-.9-.6-1.1-1.6-.9-3.8-.6-5.5.1-1.3.6-3.4 1.5-3.2 2.9.1 1 1.8 1.5 2.8 1.5zm70.6-39.3c1.3-4.2-3.3-8.3-7.5-7.5-5.9 1.1-10.6 6.1-10.4 12.2.2 6.3 5.5 11.2 11.8 11 5.4-.2 10-5.1 9.4-10.5-.1-1.9-1.4-3.6-3.3-5.2zm-94.8 5.7c.2-6.1-4.6-11.1-10.5-12.2-4.1-.8-8.8 3.3-7.5 7.5.7 2.1 2 3.8 3.5 5.1 5.3 4.8 14.1 4.5 14.5-.4zm166 142.7c-1.5-16.1-10.4-30.4-23.7-39.2-12.3-8.1-27.1-11-41.5-11-2.9 0-5.8.4-8.7 1.3-17.7 5.2-35.8 7.3-54.2 7.3-18.4 0-36.5-2.1-54.2-7.3-2.9-.9-5.8-1.3-8.7-1.3-14.4 0-29.2 2.9-41.5 11-13.3 8.8-22.2 23.1-23.7 39.2-1.3 14 2 28.5 10.4 39.8 4.2 5.6 9.5 10.4 15.5 14.1-1 4-1.6 8.3-1.6 12.6 0 17.5 7.1 34.3 19.8 46.8 12.5 12.5 29.3 19.8 46.8 19.8 17.5 0 34.3-7.3 46.8-19.8 12.5-12.5 19.8-29.3 19.8-46.8 0-4.3-.6-8.6-1.6-12.6 6-3.7 11.3-8.5 15.5-14.1 8.4-11.3 11.7-25.8 10.4-39.8zm-225.6 4.9c-1.4-14.6 7-28.5 20.6-34.9 14.4-6.8 31.7-3.6 43.1 7.2 1.3 1.2 2.8 2.1 4.4 2.8-5.3 4.3-9.5 9.6-12.4 15.6-2.5 5.2-4 10.9-4.3 16.8-.7 13.9 6.2 26.9 17.9 33.7-16.7-1-31.9-10.8-38.3-26.2-4.1-9.9-11-15-21-15zm196.2 0c-10 0-16.9 5.1-21 15-6.4 15.4-21.6 25.2-38.3 26.2 11.7-6.8 18.6-19.8 17.9-33.7-.3-5.9-1.8-11.6-4.3-16.8-2.9-6-7.1-11.3-12.4-15.6 1.6-.7 3.1-1.6 4.4-2.8 11.4-10.8 28.7-14 43.1-7.2 13.6 6.4 22 20.3 20.6 34.9zm-98.1 113.8c-20.2 0-36.6-16.4-36.6-36.6s16.4-36.6 36.6-36.6 36.6 16.4 36.6 36.6-16.4 36.6-36.6 36.6z"/></svg>
+        Linux
+      </a>
+      <a class="btn btn-outline-white" href="https://github.com/2004Shivam/Pawzy" id="gh-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+        Star on GitHub
+      </a>
     </div>
     <p id="dl-disclaimer" style="font-size: 12px; color: rgba(255,255,255,0.7); margin-bottom: 40px; font-weight: 600; max-width: 400px; margin-left: auto; margin-right: auto; display: block;">Windows may show a SmartScreen warning since it's a new indie app - click 'More info' → 'Run anyway'. It's fully open source and safe.</p>
   </div>

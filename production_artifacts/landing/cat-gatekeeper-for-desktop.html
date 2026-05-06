@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Cat Gatekeeper for Desktop - Pawzy | Works on Every App & Game</title>
+  <meta name="description" content="Cat Gatekeeper for the desktop. Pawzy overlays a cute animal on your ENTIRE screen - not just 6 websites. Works on Steam, Discord, VS Code, any browser. No new-tab bypass. Free for Windows & Linux." />
+  <meta name="keywords" content="cat gatekeeper desktop, cat gatekeeper for desktop apps, cat gatekeeper desktop version, cat gatekeeper windows, cat gatekeeper linux, cat gatekeeper steam, cat gatekeeper games, desktop screen blocker like cat gatekeeper" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://pawzy-silk.vercel.app/cat-gatekeeper-for-desktop.html" />
+  <meta property="og:title" content="Cat Gatekeeper for Desktop - Pawzy" />
+  <meta property="og:description" content="The desktop version of Cat Gatekeeper. Blocks every app, game, and browser. Free." />
+  <meta property="og:url" content="https://pawzy-silk.vercel.app/cat-gatekeeper-for-desktop.html" />
+  <meta property="og:image" content="https://pawzy-silk.vercel.app/preview.png" />
+  <link rel="icon" type="image/png" href="cat.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- Google tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y6EDCX7XM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5Y6EDCX7XM');
+    function trackDownload(platform, location) {
+      gtag('event', 'download', { 'event_category': 'conversion', 'event_label': platform, 'button_location': location });
+    }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --or: #f97316; --or2: #ea580c; --ye: #fbbf24; --gr: #16a34a;
+      --bg: #fdf8f0; --tx: #2d1200; --mu: #78716c;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--tx); overflow-x: hidden; }
+
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(253, 248, 240, .96); backdrop-filter: blur(12px);
+      border-bottom: 2px solid #f0e8dc;
+      display: flex; align-items: center; justify-content: space-between; padding: 14px 48px;
+    }
+    .nl { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--or); text-decoration: none; display: flex; align-items: center; gap: 6px; }
+    .nm { display: flex; gap: 28px; }
+    .nm a { color: var(--mu); text-decoration: none; font-size: 15px; font-weight: 700; transition: color .2s; }
+    .nm a:hover { color: var(--or); }
+    .nc { background: var(--gr); color: #fff; padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 0 4px 0 #15803d; transition: transform .15s, box-shadow .15s; }
+    .nc:hover { transform: translateY(-2px); box-shadow: 0 6px 0 #15803d; }
+
+    .hero-bridge {
+      min-height: 90vh; display: flex; align-items: center; justify-content: center;
+      padding: 120px 40px 80px; text-align: center; position: relative;
+    }
+    .hero-bridge-inner { max-width: 860px; margin: 0 auto; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(249, 115, 22, 0.1); color: var(--or2);
+      padding: 8px 18px; border-radius: 50px; font-size: 13px; font-weight: 800;
+      margin-bottom: 28px; border: 1px solid rgba(249, 115, 22, 0.25);
+    }
+    h1 { font-family: 'Fredoka One', cursive; font-size: 64px; line-height: 1.05; margin-bottom: 28px; color: var(--tx); }
+    h1 em { color: var(--or); font-style: normal; }
+    .sub { font-size: 20px; color: var(--mu); font-weight: 600; line-height: 1.6; margin-bottom: 48px; max-width: 680px; margin-left: auto; margin-right: auto; }
+    .sub strong { color: var(--tx); }
+    .btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+    .btn-green {
+      background: var(--gr); color: #fff; padding: 18px 40px; border-radius: 50px;
+      font-size: 17px; font-weight: 800; text-decoration: none;
+      box-shadow: 0 5px 0 #15803d; transition: transform .15s, box-shadow .15s; display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-green:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #15803d; }
+    .btn-blue {
+      background: #2563eb; color: #fff; padding: 18px 40px; border-radius: 50px;
+      font-size: 17px; font-weight: 800; text-decoration: none;
+      box-shadow: 0 5px 0 #1e40af; transition: transform .15s, box-shadow .15s; display: inline-flex; align-items: center; gap: 10px;
+    }
+    .btn-blue:hover { transform: translateY(-2px); box-shadow: 0 7px 0 #1e40af; }
+    .note { font-size: 13px; color: var(--mu); font-weight: 600; }
+
+    /* Blob bg */
+    .bg-blob { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+    .bg-blob::before {
+      content: ''; position: absolute; width: 700px; height: 650px;
+      background: radial-gradient(circle, #fde68a 0%, transparent 70%);
+      top: -200px; left: -200px; border-radius: 50%; animation: wb 10s ease-in-out infinite;
+    }
+    .bg-blob::after {
+      content: ''; position: absolute; width: 500px; height: 480px;
+      background: radial-gradient(circle, #fed7aa 0%, transparent 70%);
+      bottom: -150px; right: -150px; border-radius: 50%; animation: wb 12s ease-in-out infinite reverse;
+    }
+    @keyframes wb { 0%, 100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.08) rotate(3deg); } }
+
+    /* Proof section */
+    .proof { background: #fff; border: 2px solid #f0e8dc; border-radius: 24px; padding: 60px 48px; margin: 0 auto 80px; max-width: 960px; position: relative; z-index: 1; }
+    .proof-title { font-family: 'Fredoka One', cursive; font-size: 36px; margin-bottom: 8px; color: var(--tx); }
+    .proof-sub { color: var(--mu); font-weight: 600; margin-bottom: 48px; font-size: 16px; }
+
+    .vs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .vs-card { border-radius: 16px; padding: 28px; }
+    .vs-card.them { background: #fff5f5; border: 2px solid #fecaca; }
+    .vs-card.us { background: #f0fdf4; border: 2px solid #bbf7d0; }
+    .vs-card-title { font-weight: 800; font-size: 15px; margin-bottom: 16px; color: var(--tx); }
+    .vs-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 14px; font-weight: 600; color: var(--mu); line-height: 1.4; }
+
+    /* Journey section */
+    .journey { max-width: 800px; margin: 0 auto 80px; padding: 0 24px; position: relative; z-index: 1; text-align: center; }
+    .journey h2 { font-family: 'Fredoka One', cursive; font-size: 40px; margin-bottom: 16px; }
+    .journey p { color: var(--mu); font-weight: 600; font-size: 17px; line-height: 1.7; margin-bottom: 32px; }
+
+    .steps { display: flex; flex-direction: column; gap: 0; text-align: left; }
+    .step { display: flex; gap: 20px; padding: 24px 0; border-bottom: 1px solid #f0e8dc; align-items: flex-start; }
+    .step:last-child { border-bottom: none; }
+    .step-num { width: 36px; height: 36px; min-width: 36px; background: var(--or); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; font-size: 16px; color: #fff; }
+    .step-content h3 { font-weight: 800; font-size: 16px; margin-bottom: 4px; }
+    .step-content p { font-size: 14px; color: var(--mu); font-weight: 600; line-height: 1.5; }
+    .step-num.bad { background: #ef4444; }
+    .step-num.good { background: var(--gr); }
+
+    /* CTA bottom */
+    .cta-bottom {
+      background: linear-gradient(135deg, #1a0600 0%, #3a1200 100%);
+      border-radius: 32px; padding: 72px 48px; text-align: center;
+      margin: 0 24px 80px; position: relative; z-index: 1;
+    }
+    .cta-bottom h2 { font-family: 'Fredoka One', cursive; font-size: 44px; color: #fff; margin-bottom: 16px; }
+    .cta-bottom p { color: rgba(255,255,255,.7); font-weight: 600; margin-bottom: 40px; font-size: 17px; }
+
+    footer {
+      background: #1a0600; color: rgba(255,255,255,.65); padding: 28px 48px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px;
+      font-size: 14px; font-weight: 600;
+    }
+    footer a { color: rgba(255,255,255,.5); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: #fff; }
+
+    @media(max-width: 768px) {
+      h1 { font-size: 40px; }
+      nav { padding: 12px 20px; }
+      .nm { display: none; }
+      .vs-grid { grid-template-columns: 1fr; }
+      .proof { padding: 40px 24px; }
+      .cta-bottom { padding: 48px 24px; margin: 0 12px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-blob" aria-hidden="true"></div>
+
+  <nav>
+    <a class="nl" href="index.html">🐾 Pawzy</a>
+    <div class="nm">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#companions">Companions</a>
+      <a href="alternatives.html">Alternatives</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+    <a class="nc" href="#download">Download Now</a>
+  </nav>
+
+  <div class="hero-bridge" style="position: relative; z-index: 1;">
+    <div class="hero-bridge-inner">
+      <div class="pill">🐱 The Desktop Version of Cat Gatekeeper</div>
+      <h1>Cat Gatekeeper<br /><em>for the Desktop.</em></h1>
+      <p class="sub">
+        You saw it on TikTok. You installed the Chrome extension. Then you opened a new tab and <strong>bypassed the cat in 3 seconds.</strong><br /><br />
+        <strong>Pawzy</strong> is the desktop version that actually works. It overlays a cute animal on your <strong>entire screen</strong> - blocking every app, every game, every browser. No new-tab tricks. No Alt+F4.
+      </p>
+      <div class="btns" id="download">
+        <a class="btn-green" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" onclick="trackDownload('linux', 'bridge-hero')">🐧 Download for Linux</a>
+        <a class="btn-blue" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" onclick="trackDownload('windows', 'bridge-hero')">🪟 Download for Windows</a>
+      </div>
+      <p class="note">Free forever · Open source · macOS coming soon</p>
+    </div>
+  </div>
+
+  <div class="proof">
+    <div style="text-align: center;">
+      <div class="proof-title">Why the extension is not enough</div>
+      <div class="proof-sub">Real complaints from Cat Gatekeeper Chrome Web Store reviews</div>
+    </div>
+
+    <div class="vs-grid">
+      <div class="vs-card them">
+        <div class="vs-card-title">😿 Cat Gatekeeper (Extension)</div>
+        <div class="vs-item"><span>❌</span> <span>"It only supports 6 web pages. I want it on ALL sites."</span></div>
+        <div class="vs-item"><span>❌</span> <span>"I opened a new tab and bypassed the cat instantly."</span></div>
+        <div class="vs-item"><span>❌</span> <span>"Doesn't work on Steam, Discord, or any desktop app."</span></div>
+        <div class="vs-item"><span>❌</span> <span>"Chrome only. Useless if you use Brave or Firefox."</span></div>
+        <div class="vs-item"><span>❌</span> <span>"Still waiting. The cat hasn't appeared in over an hour."</span></div>
+      </div>
+      <div class="vs-card us">
+        <div class="vs-card-title">🐾 Pawzy (Desktop App)</div>
+        <div class="vs-item"><span>✅</span> <span>Works on every website, no list needed.</span></div>
+        <div class="vs-item"><span>✅</span> <span>No new-tab bypass. The overlay is inescapable.</span></div>
+        <div class="vs-item"><span>✅</span> <span>Blocks Steam games, Discord, VS Code, everything.</span></div>
+        <div class="vs-item"><span>✅</span> <span>No browser needed at all - runs at the OS level.</span></div>
+        <div class="vs-item"><span>✅</span> <span>Appears instantly and reliably on a timer you set.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="journey">
+    <h2>The Cat Gatekeeper Journey</h2>
+    <p>Most people who discover Cat Gatekeeper go through the same exact experience.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num bad">1</div>
+        <div class="step-content">
+          <h3>You see Cat Gatekeeper on TikTok / YouTube</h3>
+          <p>A creator shows a cute cat blocking their screen. You think "I need this."</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num bad">2</div>
+        <div class="step-content">
+          <h3>You install the Chrome extension</h3>
+          <p>It works! The cat appears on YouTube. You feel great for about 4 minutes.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num bad">3</div>
+        <div class="step-content">
+          <h3>You bypass it immediately</h3>
+          <p>You switch to a game. No cat. You open a new tab. Cat is gone. You're right back where you started.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num good">4</div>
+        <div class="step-content">
+          <h3>You find Pawzy</h3>
+          <p>The actual Cat Gatekeeper experience you wanted. OS-level. Inescapable. Works on everything. Free.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-bottom">
+    <h2>Ready for a Cat Gatekeeper that actually works?</h2>
+    <p>Free forever. Open source. No account needed.</p>
+    <div class="btns">
+      <a class="btn-green" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" onclick="trackDownload('linux', 'bridge-footer')">🐧 Download Pawzy for Linux</a>
+      <a class="btn-blue" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" onclick="trackDownload('windows', 'bridge-footer')">🪟 Download Pawzy for Windows</a>
+    </div>
+    <p style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 20px;">Windows may show a SmartScreen warning - click 'More info' then 'Run anyway'. Fully open source and safe.</p>
+  </div>
+
+  <footer>
+    <span style="font-family: 'Fredoka One', cursive; font-size: 18px; color: #f97316;">🐾 Pawzy</span>
+    <div style="display:flex;gap:24px;">
+      <a href="index.html">Home</a>
+      <a href="alternatives.html">Alternatives</a>
+      <a href="cat-gatekeeper-not-working.html">Cat GK Not Working?</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://github.com/2004Shivam/Pawzy">GitHub</a>
+    </div>
+    <span style="font-size:11px;">pawzy-silk.vercel.app</span>
+  </footer>
+
+  <!-- Semantic SEO block -->
+  <div style="font-size:11px;color:transparent;height:1px;overflow:hidden;pointer-events:none;" aria-hidden="true">
+    Cat Gatekeeper desktop app, cat gatekeeper for windows, cat gatekeeper for linux, cat gatekeeper that works on all apps, cat gatekeeper for steam games, cat gatekeeper for discord, cat gatekeeper desktop version download, cat gatekeeper not working on other apps fix, inescapable cat gatekeeper desktop, Pawzy cat gatekeeper desktop alternative free download.
+  </div>
+</body>
+</html>

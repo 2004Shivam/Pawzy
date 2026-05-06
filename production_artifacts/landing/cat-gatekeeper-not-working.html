@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Cat Gatekeeper Not Working? Here's Why (and the Fix)</title>
+  <meta name="description" content="Cat Gatekeeper not working on desktop apps, games, or other websites? This is a known limitation of browser extensions. Here is the fix - a desktop app that actually blocks your entire screen." />
+  <meta name="keywords" content="cat gatekeeper not working, cat gatekeeper bypass, cat gatekeeper new tab trick, cat gatekeeper only 6 sites, cat gatekeeper desktop apps, cat gatekeeper steam, cat gatekeeper fix, cat gatekeeper alternative" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://pawzy-silk.vercel.app/cat-gatekeeper-not-working.html" />
+  <link rel="icon" type="image/png" href="cat.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y6EDCX7XM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-5Y6EDCX7XM');
+    function trackDownload(p, l) { gtag('event', 'download', { 'event_category': 'conversion', 'event_label': p, 'button_location': l }); }
+  </script>
+
+  <!-- FAQ Schema - will appear in Google's "People Also Ask" -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "Why is Cat Gatekeeper not working on desktop apps?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Cat Gatekeeper is a Chrome browser extension. It can only run inside your browser and only on the 6 specific websites it supports. It cannot see or block desktop apps like Steam games, Discord, or VS Code. For a truly inescapable experience across all apps, you need a desktop application like Pawzy." }
+    }, {
+      "@type": "Question",
+      "name": "How do I bypass Cat Gatekeeper?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Cat Gatekeeper can be bypassed easily by opening a new tab (the cat does not follow you there), switching to a non-supported website, or using a different browser like Firefox or Brave. To avoid bypassing your own blocker, use Pawzy - a desktop app that makes the break truly inescapable." }
+    }, {
+      "@type": "Question",
+      "name": "Does Cat Gatekeeper work on more than 6 websites?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No. The Cat Gatekeeper extension only works on 6 pre-selected websites. If you want a break timer that works on every website, every app, and every game, you need a desktop app like Pawzy that runs at the OS level." }
+    }]
+  }
+  </script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root { --or: #f97316; --or2: #ea580c; --gr: #16a34a; --bg: #fdf8f0; --tx: #2d1200; --mu: #78716c; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--tx); overflow-x: hidden; }
+    nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(253,248,240,.96); backdrop-filter: blur(12px);
+      border-bottom: 2px solid #f0e8dc;
+      display: flex; align-items: center; justify-content: space-between; padding: 14px 48px;
+    }
+    .nl { font-family: 'Fredoka One', cursive; font-size: 22px; color: var(--or); text-decoration: none; }
+    .nm { display: flex; gap: 28px; }
+    .nm a { color: var(--mu); text-decoration: none; font-size: 15px; font-weight: 700; transition: color .2s; }
+    .nm a:hover { color: var(--or); }
+    .nc { background: var(--gr); color: #fff; padding: 10px 22px; border-radius: 50px; font-size: 14px; font-weight: 800; text-decoration: none; box-shadow: 0 4px 0 #15803d; }
+
+    .article-wrap { max-width: 760px; margin: 0 auto; padding: 80px 24px; }
+    .breadcrumb { font-size: 13px; color: var(--mu); font-weight: 600; margin-bottom: 32px; }
+    .breadcrumb a { color: var(--or); text-decoration: none; }
+    h1 { font-family: 'Fredoka One', cursive; font-size: 48px; line-height: 1.1; margin-bottom: 20px; }
+    .meta { font-size: 13px; color: var(--mu); font-weight: 600; margin-bottom: 40px; padding-bottom: 24px; border-bottom: 2px solid #f0e8dc; }
+    .lead { font-size: 19px; color: var(--tx); font-weight: 700; line-height: 1.6; margin-bottom: 36px; }
+    h2 { font-family: 'Fredoka One', cursive; font-size: 30px; margin: 48px 0 16px; }
+    p { font-size: 16px; color: var(--mu); font-weight: 600; line-height: 1.8; margin-bottom: 20px; }
+    ul { margin: 0 0 20px 24px; }
+    li { font-size: 16px; color: var(--mu); font-weight: 600; line-height: 1.8; margin-bottom: 8px; }
+
+    .answer-box {
+      background: #fff; border: 2px solid #f0e8dc; border-radius: 20px;
+      padding: 32px; margin: 32px 0;
+    }
+    .answer-box.good { border-color: #bbf7d0; background: #f0fdf4; }
+    .answer-box h3 { font-weight: 800; font-size: 17px; margin-bottom: 12px; color: var(--tx); }
+
+    .cta-inline {
+      background: linear-gradient(135deg, #1a0600, #3a1200); border-radius: 24px;
+      padding: 48px 40px; text-align: center; margin: 48px 0;
+    }
+    .cta-inline h2 { color: #fff; font-family: 'Fredoka One', cursive; font-size: 34px; margin-bottom: 12px; }
+    .cta-inline p { color: rgba(255,255,255,.7); font-size: 16px; margin-bottom: 28px; }
+    .btn-gr { background: var(--gr); color: #fff; padding: 16px 36px; border-radius: 50px; font-size: 16px; font-weight: 800; text-decoration: none; box-shadow: 0 5px 0 #15803d; display: inline-flex; align-items: center; gap: 8px; margin: 6px; }
+    .btn-bl { background: #2563eb; color: #fff; padding: 16px 36px; border-radius: 50px; font-size: 16px; font-weight: 800; text-decoration: none; box-shadow: 0 5px 0 #1e40af; display: inline-flex; align-items: center; gap: 8px; margin: 6px; }
+
+    footer { background: #1a0600; color: rgba(255,255,255,.65); padding: 28px 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; font-size: 14px; font-weight: 600; }
+    footer a { color: rgba(255,255,255,.5); text-decoration: none; }
+    footer a:hover { color: #fff; }
+    @media(max-width: 768px) { nav { padding: 12px 20px; } .nm { display: none; } h1 { font-size: 36px; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nl" href="index.html">🐾 Pawzy</a>
+    <div class="nm">
+      <a href="index.html">Home</a>
+      <a href="cat-gatekeeper-for-desktop.html">Desktop Version</a>
+      <a href="alternatives.html">Alternatives</a>
+    </div>
+    <a class="nc" href="#fix">Get the Fix</a>
+  </nav>
+
+  <div class="article-wrap">
+    <div class="breadcrumb"><a href="index.html">Pawzy</a> › Cat Gatekeeper Not Working?</div>
+
+    <h1>Cat Gatekeeper Not Working? Here's Exactly Why.</h1>
+    <div class="meta">Last updated: May 2026 · 4 min read</div>
+
+    <p class="lead">If Cat Gatekeeper is not working for you, you are not doing anything wrong. The extension has fundamental limitations that cannot be fixed with any settings change. Here is the full breakdown.</p>
+
+    <h2>Reason 1: It only works on 6 specific websites</h2>
+    <p>Cat Gatekeeper is hardcoded to work on a small list of websites - YouTube, Instagram, TikTok, Reddit, X (Twitter), and Facebook. If you try to use it on any other website, nothing happens. The cat simply does not appear.</p>
+    <div class="answer-box">
+      <h3>The Fix</h3>
+      <p style="color: var(--mu);">There is no fix for this within the extension. You need a desktop app that works at the OS level and does not rely on a whitelist of supported sites.</p>
+    </div>
+
+    <h2>Reason 2: Open a new tab and the cat disappears</h2>
+    <p>This is the most well-known bypass. When Cat Gatekeeper blocks you on YouTube, you just open a new tab and your break is effectively cancelled. The extension cannot follow you to a new tab or window.</p>
+    <div class="answer-box">
+      <h3>The Fix</h3>
+      <p style="color: var(--mu);">A desktop screen blocker does not care what browser tab you are on. It takes over your entire screen at the OS level. You cannot open a new tab because the blocker covers your entire monitor.</p>
+    </div>
+
+    <h2>Reason 3: It does not work on desktop apps</h2>
+    <p>Cat Gatekeeper lives inside Chrome. It has zero visibility into anything outside the browser. When you switch to a Steam game, Discord, your IDE, or any other desktop application - the extension cannot do anything.</p>
+    <div class="answer-box">
+      <h3>The Fix</h3>
+      <p style="color: var(--mu);">Use a native desktop app. It runs as a background process on your operating system and can overlay itself on top of any application - games, chat apps, code editors, everything.</p>
+    </div>
+
+    <h2>Reason 4: Does not work on Firefox, Brave, or Arc</h2>
+    <p>Cat Gatekeeper is a Chrome-exclusive extension. It does not exist on any other browser. If you use Brave, Firefox, Safari, or any Chromium fork that does not support the same extension store, it simply will not work.</p>
+
+    <div class="cta-inline" id="fix">
+      <h2>🐾 The Actual Fix: Pawzy</h2>
+      <p>Pawzy is what Cat Gatekeeper would be if it was rebuilt as a desktop app. It overlays a cute animal on your entire screen - no browser needed. No new-tab bypass. No 6-site limit. Free and open source.</p>
+      <a class="btn-gr" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" onclick="trackDownload('linux', 'notworking')">🐧 Download for Linux</a>
+      <a class="btn-bl" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" onclick="trackDownload('windows', 'notworking')">🪟 Download for Windows</a>
+    </div>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <h2 style="font-size: 22px; margin-top: 28px;">Why is Cat Gatekeeper not appearing?</h2>
+    <p>The extension only activates on its supported sites (YouTube, TikTok, etc.) and only within Chrome. If you are on a different site or browser, the cat will not appear. There is also a known bug where the timer sometimes resets without triggering.</p>
+
+    <h2 style="font-size: 22px;">Can I make Cat Gatekeeper work on all websites?</h2>
+    <p>No. This is an architectural limitation of the extension. It cannot be configured to work on arbitrary websites. The only way to get this functionality is to use a desktop application.</p>
+
+    <h2 style="font-size: 22px;">Is there a Cat Gatekeeper for games?</h2>
+    <p>Not in extension form. Pawzy is the closest thing - a free desktop app that overlays a cute animal on top of your game (or any other fullscreen app) when your break timer fires.</p>
+  </div>
+
+  <footer>
+    <span style="font-family: 'Fredoka One', cursive; color: #f97316; font-size: 18px;">🐾 Pawzy</span>
+    <div style="display:flex;gap:24px;flex-wrap:wrap;">
+      <a href="index.html">Home</a>
+      <a href="cat-gatekeeper-for-desktop.html">Desktop Version</a>
+      <a href="alternatives.html">Alternatives</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="https://github.com/2004Shivam/Pawzy">GitHub</a>
+    </div>
+    <span style="font-size:11px;">pawzy-silk.vercel.app</span>
+  </footer>
+
+  <div style="font-size:11px;color:transparent;height:1px;overflow:hidden;pointer-events:none;" aria-hidden="true">
+    cat gatekeeper not working fix, cat gatekeeper bypass new tab, cat gatekeeper only works on 6 sites problem, cat gatekeeper desktop alternative, cat gatekeeper not showing up, cat gatekeeper disappeared, cat gatekeeper extension issues, how to make cat gatekeeper work on all websites, cat gatekeeper steam games discord alternative.
+  </div>
+</body>
+</html>

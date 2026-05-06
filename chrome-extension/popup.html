@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      width: 320px;
+      background: #fdf8f0;
+      color: #2d1200;
+    }
+    .header {
+      background: linear-gradient(135deg, #1a0600, #3a1200);
+      padding: 20px 20px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .logo { font-size: 28px; }
+    .header-text h1 { color: #fff; font-size: 16px; font-weight: 800; line-height: 1.2; }
+    .header-text p { color: rgba(255,255,255,.6); font-size: 11px; font-weight: 600; margin-top: 2px; }
+
+    .body { padding: 20px; }
+
+    .problem-box {
+      background: #fff5f5;
+      border: 1.5px solid #fecaca;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .problem-box h2 { font-size: 12px; font-weight: 800; color: #ef4444; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .problem-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #78716c; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+
+    .solution-box {
+      background: #f0fdf4;
+      border: 1.5px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 16px;
+    }
+    .solution-box h2 { font-size: 12px; font-weight: 800; color: #16a34a; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .solution-item { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #78716c; font-weight: 600; line-height: 1.4; margin-bottom: 6px; }
+
+    .dl-title { font-size: 13px; font-weight: 800; color: #2d1200; margin-bottom: 10px; text-align: center; }
+
+    .btn {
+      display: block; width: 100%; text-align: center;
+      padding: 12px 16px; border-radius: 50px; font-size: 13px; font-weight: 800;
+      text-decoration: none; margin-bottom: 8px; transition: opacity .15s;
+    }
+    .btn:hover { opacity: 0.85; }
+    .btn-win { background: #2563eb; color: #fff; }
+    .btn-linux { background: #f97316; color: #fff; }
+    .btn-gh { background: #fff; color: #2d1200; border: 1.5px solid #e0d8cf; font-size: 12px; }
+
+    .footer { text-align: center; font-size: 10px; color: #78716c; font-weight: 600; padding: 0 20px 16px; }
+    .footer a { color: #f97316; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">🐾</div>
+    <div class="header-text">
+      <h1>Cat Gatekeeper Desktop</h1>
+      <p>Powered by Pawzy - the OS-level version</p>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="problem-box">
+      <h2>⚠️ The extension has limits</h2>
+      <div class="problem-item"><span>❌</span><span>Only works on 6 specific websites</span></div>
+      <div class="problem-item"><span>❌</span><span>Open a new tab = cat is gone</span></div>
+      <div class="problem-item"><span>❌</span><span>No Steam, Discord, or desktop apps</span></div>
+    </div>
+
+    <div class="solution-box">
+      <h2>✅ Pawzy fixes all of this</h2>
+      <div class="solution-item"><span>✅</span><span>Works on every website and app</span></div>
+      <div class="solution-item"><span>✅</span><span>No new-tab bypass possible</span></div>
+      <div class="solution-item"><span>✅</span><span>Blocks Steam, Discord, everything</span></div>
+    </div>
+
+    <div class="dl-title">Download Pawzy Desktop - Free</div>
+    <a class="btn btn-win" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" target="_blank" id="dl-win">🪟 Download for Windows</a>
+    <a class="btn btn-linux" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" target="_blank" id="dl-linux">🐧 Download for Linux</a>
+    <a class="btn btn-gh" href="https://pawzy-silk.vercel.app/cat-gatekeeper-for-desktop.html" target="_blank">🌐 Learn More</a>
+  </div>
+
+  <div class="footer">
+    Free & open source · <a href="https://github.com/2004Shivam/Pawzy" target="_blank">github.com/2004Shivam/Pawzy</a>
+  </div>
+
+  <script>
+    document.getElementById('dl-win').addEventListener('click', () => {
+      chrome.storage.local.set({ 'windows_clicked': Date.now() });
+    });
+    document.getElementById('dl-linux').addEventListener('click', () => {
+      chrome.storage.local.set({ 'linux_clicked': Date.now() });
+    });
+  </script>
+</body>
+</html>

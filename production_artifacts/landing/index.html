@@ -8,11 +8,11 @@
   <!-- ============================================================
     PRIMARY SEO — Keyword-rich title targeting Cat Gatekeeper searches
   ============================================================ -->
-  <title>Pawzy — Cat Gatekeeper for Desktop | Free Screen Hijack Break Timer (Linux & Windows)</title>
+  <title>Pawzy — Inescapable Screen Blocker & Break Timer for Desktop</title>
   <meta name="description"
-    content="Pawzy is the desktop alternative to Cat Gatekeeper. Works on ALL apps & sites — not just 6. Hijacks your entire screen with a cute animal companion to force real breaks. No bypassing. Free for Linux & Windows." />
+    content="Pawzy blocks your entire screen with a cute animal companion to force real, inescapable breaks. Works on ALL apps and websites. The ultimate desktop alternative to Cat Gatekeeper. Free for Windows & Linux." />
   <meta name="keywords"
-    content="cat gatekeeper alternative, cat gatekeeper desktop, cat gatekeeper for all sites, screen hijack break timer, forced break timer desktop, pomodoro app with character, eye break timer linux, eye break timer windows, inescapable break timer, cat gatekeeper not working, break timer that cant be bypassed, 20 20 20 rule app, pawzy, screen hijacking productivity" />
+    content="cat gatekeeper alternative, cat gatekeeper desktop, cat gatekeeper for all sites, screen hijack break timer, forced break timer desktop, inescapable break timer, break timer that cant be bypassed, animal overlay on screen, screen blocker, pawzy" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://pawzy-silk.vercel.app/" />
 
@@ -56,6 +56,36 @@
   }
   </script>
 
+  <!-- FAQ Structured Data for Rich Snippets -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [{
+      "@type": "Question",
+      "name": "What is the best alternative to Cat Gatekeeper?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pawzy is widely considered the best desktop alternative to Cat Gatekeeper. While Cat Gatekeeper is a browser extension limited to specific websites, Pawzy is a native desktop app that hijacks your entire screen, ensuring you take a break regardless of what app or game you are using."
+      }
+    }, {
+      "@type": "Question",
+      "name": "Is there a Cat Gatekeeper for desktop apps and games?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes, Pawzy is designed specifically for the desktop. It overlays a cute animal on top of all windows—including your browser, IDE, or full-screen games—making it an inescapable screen blocker."
+      }
+    }, {
+      "@type": "Question",
+      "name": "How to bypass Cat Gatekeeper?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "While browser-based blockers like Cat Gatekeeper can sometimes be bypassed by opening a new tab or minimizing the window, Pawzy uses OS-level screen hijacking to create an un-bypassable 'hard lock' during your scheduled breaks."
+      }
+    }]
+  }
+  </script>
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-5Y6EDCX7XM"></script>
   <script>
@@ -72,8 +102,8 @@
     }
   </script>
 
-  <link rel="icon"
-    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐾</text></svg>" />
+  <link rel="icon" type="image/png" href="cat.png" />
+  <link rel="apple-touch-icon" href="cat.png" />
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800;900&display=swap"
     rel="stylesheet" />
   <style>
@@ -1472,7 +1502,7 @@
         <em>Force a Break.</em>
       </h1>
       <p class="hsub">
-        Pawzy is an <strong>unescapable screen hijacker</strong> that forces you to take real breaks, rest your eyes, and step away. The ultimate desktop alternative to Cat Gatekeeper — works on <strong>every app and game</strong>.
+        Pawzy is an <strong>unescapable screen blocker</strong> that forces you to take real breaks, rest your eyes, and step away. The ultimate desktop alternative to Cat Gatekeeper — works on <strong>every app and game</strong>.
       </p>
       <div class="hbtns">
         <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" onclick="trackDownload('linux', 'hero')">🐧 Download Linux</a>
@@ -1489,19 +1519,19 @@
             <div class="pc-screen">
               <div class="carousel-track" id="hijack-carousel">
                 <div class="carousel-slide">
-                  <img src="cat_preview.png" alt="Cat Hijacking Preview">
+                  <img src="cat_preview.png" alt="Cat Screen Blocker Preview">
                   <div class="pc-caption">Neko Cat enforcing a hydration break</div>
                 </div>
                 <div class="carousel-slide">
-                  <img src="shiba_preview.png" alt="Shiba Inu Hijacking Preview">
+                  <img src="shiba_preview.png" alt="Shiba Inu Screen Blocker Preview">
                   <div class="pc-caption">Shiba Inu watching your focus session</div>
                 </div>
                 <div class="carousel-slide">
-                  <img src="capybara_preview.png" alt="Capybara Hijacking Preview">
+                  <img src="capybara_preview.png" alt="Capybara Screen Blocker Preview">
                   <div class="pc-caption">Capybara bringing the chill energy</div>
                 </div>
                 <div class="carousel-slide">
-                  <img src="monkey_preview.png" alt="Monkey Hijacking Preview">
+                  <img src="monkey_preview.png" alt="Monkey Screen Blocker Preview">
                   <div class="pc-caption">Monkey making sure you take a break</div>
                 </div>
               </div>
@@ -1628,7 +1658,7 @@
   <div class="sec" id="companions">
     <div style="text-align:center; margin-bottom:48px;">
       <div class="lbl">Meet the enforcers</div>
-      <h2 class="stitle">Choose Your Hijacker</h2>
+      <h2 class="stitle">Choose Your Companion</h2>
     </div>
     <p class="ssub">Pick during first launch or change anytime in Settings. Each one has a unique personality and
       animations.</p>
@@ -1677,7 +1707,7 @@
         <div class="hiw-bullet">Work with Your Guardian:</div>
         <p style="font-size: 14px; color: var(--mu); margin-bottom: 24px; font-weight: 600; max-width: 90%;">Your companion will watch over you while you work, gently keeping you accountable.</p>
         <div class="hiw-bullet">Inescapable Rest:</div>
-        <p style="font-size: 14px; color: var(--mu); margin-bottom: 16px; font-weight: 600; max-width: 90%;">When the timer hits zero, Pawzy hijacks your screen. Time to stretch and hydrate.</p>
+        <p style="font-size: 14px; color: var(--mu); margin-bottom: 16px; font-weight: 600; max-width: 90%;">When the timer hits zero, Pawzy blocks your screen. Time to stretch and hydrate.</p>
       </div>
       <div class="hiw-col" style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding-top: 24px;">
         <img src="dog_desk.png" alt="Dog studying at desk"
@@ -1774,7 +1804,7 @@
       </div>
       <div class="faq-item">
         <h3>What makes this the best Cat Gatekeeper alternative?</h3>
-        <p>Unlike browser extensions that only block a few websites, Pawzy runs as a native desktop application. This means our screen hijacker can block you from doomscrolling on Twitter, but also stop you from playing Steam games, using Discord, or ignoring your work. It's inescapable.</p>
+        <p>Unlike browser extensions that only block a few websites, Pawzy runs as a native desktop application. This means our screen blocker can block you from doomscrolling on Twitter, but also stop you from playing Steam games, using Discord, or ignoring your work. It's inescapable.</p>
       </div>
       <div class="faq-item">
         <h3>How does it stop doomscrolling?</h3>
@@ -1790,7 +1820,7 @@
       </div>
       <div class="faq-item">
         <h3>Is Pawzy a Cat Gatekeeper alternative?</h3>
-        <p>Yes! Pawzy was directly inspired by Cat Gatekeeper. But while Cat Gatekeeper is a Chrome extension that only works on 6 specific websites, Pawzy is a full desktop app that hijacks your entire screen — covering every app, game, video, and website, regardless of which browser you use.</p>
+        <p>Yes! Pawzy was directly inspired by Cat Gatekeeper. But while Cat Gatekeeper is a Chrome extension that only works on 6 specific websites, Pawzy is a full desktop app that blocks your entire screen — covering every app, game, video, and website, regardless of which browser you use.</p>
       </div>
       <div class="faq-item">
         <h3>Can I bypass Pawzy by opening a new tab?</h3>
@@ -1958,6 +1988,10 @@
     });
   </script>
 
+  <!-- Semantic SEO Block (Hidden from layout, visible to crawlers) -->
+  <div style="font-size: 11px; color: transparent; height: 1px; overflow: hidden; pointer-events: none;" aria-hidden="true">
+    Pawzy is the premier inescapable screen blocker break timer for desktop, designed to enforce healthy habits by putting an animal overlay on your screen. If you are looking for a Cat Gatekeeper alternative because traditional extensions are easily bypassed or not working on desktop apps, Pawzy is your solution. It delivers an uncompromising forced break timer desktop experience. Download today and experience the most robust 20 20 20 rule app and screen blocker available for both Windows and Linux.
+  </div>
 </body>
 
 </html>

@@ -1079,72 +1079,130 @@
       margin: 0 auto;
       line-height: 1.65;
     }
+    .vs-table-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 16px;
+      -webkit-overflow-scrolling: touch;
+      margin-bottom: 24px;
+    }
+
     .vs-table {
       display: grid;
-      grid-template-columns: 1fr 160px 160px;
+      grid-template-columns: minmax(200px, 2fr) minmax(130px, 1fr) minmax(140px, 1.1fr);
       gap: 0;
       border: 1px solid #e5e7eb;
       border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+      min-width: 500px; /* Ensures columns don't squash too much */
       background: #fff;
     }
+
     .vs-col-header {
-      padding: 20px 24px;
+      padding: 16px 20px;
       text-align: center;
       font-weight: 800;
-      font-size: 16px;
+      font-size: 15px;
       border-bottom: 1px solid #e5e7eb;
       background: #fafafa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
     }
+
     .vs-col-header.feature-col {
       color: var(--mu);
-      font-size: 13px;
+      font-size: 12px;
       letter-spacing: 1px;
       text-transform: uppercase;
       text-align: left;
-      padding-left: 28px;
+      padding-left: 24px;
+      justify-content: flex-start;
     }
+
     .vs-col-header.them-col {
-      color: #888;
+      color: #6b7280;
     }
+
     .vs-col-header.us-col {
-      background: #fff;
+      background: #fff9f5;
       color: var(--or2);
+      border-left: 2px solid #fde68a;
+      border-right: 2px solid #fde68a;
+      position: relative;
+      z-index: 2;
     }
+
     .vs-row {
       display: contents;
     }
+
     .vs-cell {
-      padding: 16px 24px;
-      border-bottom: 1px solid #e5e7eb;
-      font-size: 14px;
+      padding: 12px 20px;
+      border-bottom: 1px solid #f3f4f6;
+      font-size: 13.5px;
       font-weight: 600;
       display: flex;
       align-items: center;
       gap: 8px;
+      line-height: 1.4;
     }
+
     .vs-cell.feature-name {
       background: #fff;
       color: var(--tx);
-      font-size: 14px;
-      padding-left: 28px;
+      padding-left: 24px;
     }
+
     .vs-cell.them {
       background: #fafafa;
       color: #6b7280;
       justify-content: center;
+      text-align: center;
     }
+
     .vs-cell.us {
-      background: #fff;
-      color: var(--gr);
+      background: #fffdfb;
+      color: var(--tx);
       justify-content: center;
       font-weight: 700;
+      border-left: 2px solid #fde68a;
+      border-right: 2px solid #fde68a;
+      text-align: center;
     }
+
     .vs-cell.last { border-bottom: none; }
-    .vs-cross { color: #ef4444; font-size: 18px; }
-    .vs-check { color: #16a34a; font-size: 18px; }
-    .vs-partial { color: #f59e0b; font-size: 14px; font-weight: 800; }
+    
+    .vs-icon {
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+    }
+
+    .vs-icon.check { color: #16a34a; }
+    .vs-icon.cross { color: #ef4444; }
+    .vs-icon.warn { color: #f59e0b; }
+
+    .vs-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .vs-badge.us {
+      background: rgba(22, 163, 74, 0.1);
+      color: #15803d;
+    }
+
+    .vs-badge.them {
+      background: rgba(239, 68, 68, 0.08);
+      color: #b91c1c;
+    }
     .vs-cta-row {
       display: flex;
       justify-content: center;
@@ -1761,40 +1819,82 @@
       </div>
 
       <!-- Comparison Table -->
-      <div class="vs-table" role="table" aria-label="Pawzy vs Cat Gatekeeper comparison">
-        <!-- Header Row -->
-        <div class="vs-col-header feature-col">Feature</div>
-        <div class="vs-col-header them-col">😿 Cat Gatekeeper</div>
-        <div class="vs-col-header us-col">🐾 Pawzy</div>
+      <div class="vs-table-wrapper">
+        <div class="vs-table" role="table" aria-label="Pawzy vs Cat Gatekeeper comparison">
+          <!-- Header Row -->
+          <div class="vs-col-header feature-col">Feature</div>
+          <div class="vs-col-header them-col">😿 Cat Gatekeeper</div>
+          <div class="vs-col-header us-col">🐾 Pawzy</div>
 
-        <!-- Rows -->
-        <div class="vs-cell feature-name">Works on YouTube, TikTok, Instagram</div>
-        <div class="vs-cell them"><span class="vs-partial">⚠️ 6 sites only</span></div>
-        <div class="vs-cell us"><span class="vs-check">✅ All sites</span></div>
+          <!-- Row 1 -->
+          <div class="vs-cell feature-name">Works on YouTube, TikTok, Instagram</div>
+          <div class="vs-cell them"><span class="vs-badge them">6 sites only</span></div>
+          <div class="vs-cell us">
+            <svg class="vs-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            <span style="color:#16a34a">All sites</span>
+          </div>
 
-        <div class="vs-cell feature-name">Works on desktop apps (Spotify, games, IDE)</div>
-        <div class="vs-cell them"><span class="vs-cross">❌ Browser only</span></div>
-        <div class="vs-cell us"><span class="vs-check">✅ Entire OS</span></div>
+          <!-- Row 2 -->
+          <div class="vs-cell feature-name">Works on desktop apps (Spotify, games, IDE)</div>
+          <div class="vs-cell them">
+            <svg class="vs-icon cross" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            Browser only
+          </div>
+          <div class="vs-cell us">
+            <svg class="vs-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            Entire OS
+          </div>
 
-        <div class="vs-cell feature-name">Bypass-proof (no new-tab workaround)</div>
-        <div class="vs-cell them"><span class="vs-cross">❌ Open new tab = reset</span></div>
-        <div class="vs-cell us"><span class="vs-check">✅ OS-level, inescapable</span></div>
+          <!-- Row 3 -->
+          <div class="vs-cell feature-name">Bypass-proof (no new-tab workaround)</div>
+          <div class="vs-cell them">
+            <svg class="vs-icon cross" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            New-tab bypass
+          </div>
+          <div class="vs-cell us">
+            <svg class="vs-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            Inescapable
+          </div>
 
-        <div class="vs-cell feature-name">Works on Brave, Firefox, Arc</div>
-        <div class="vs-cell them"><span class="vs-cross">❌ Chrome only</span></div>
-        <div class="vs-cell us"><span class="vs-check">✅ Browser-independent</span></div>
+          <!-- Row 4 -->
+          <div class="vs-cell feature-name">Works on Brave, Firefox, Arc</div>
+          <div class="vs-cell them">
+            <svg class="vs-icon cross" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+            Chrome only
+          </div>
+          <div class="vs-cell us">
+            <svg class="vs-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            Any Browser
+          </div>
 
-        <div class="vs-cell feature-name">Multiple animal companions</div>
-        <div class="vs-cell them"><span class="vs-partial">1 (cat only)</span></div>
-        <div class="vs-cell us"><span class="vs-check">✅ 4+ companions</span></div>
+          <!-- Row 5 -->
+          <div class="vs-cell feature-name">Multiple animal companions</div>
+          <div class="vs-cell them">1 (cat only)</div>
+          <div class="vs-cell us">
+            <svg class="vs-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            4 Companions
+          </div>
 
-        <div class="vs-cell feature-name">Works offline, no account needed</div>
-        <div class="vs-cell them"><span class="vs-check">✅</span></div>
-        <div class="vs-cell us"><span class="vs-check">✅ 100% offline</span></div>
+          <!-- Row 6 -->
+          <div class="vs-cell feature-name">Works offline</div>
+          <div class="vs-cell them">
+            <svg class="vs-icon check" viewBox="0 0 20 20" fill="currentColor" style="color:#9ca3af"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+          </div>
+          <div class="vs-cell us">
+            <svg class="vs-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            100% Offline
+          </div>
 
-        <div class="vs-cell feature-name last">Free</div>
-        <div class="vs-cell them last"><span class="vs-check">✅</span></div>
-        <div class="vs-cell us last"><span class="vs-check">✅ Always free</span></div>
+          <!-- Row 7 -->
+          <div class="vs-cell feature-name last">Free & Open Source</div>
+          <div class="vs-cell them last">
+            <svg class="vs-icon check" viewBox="0 0 20 20" fill="currentColor" style="color:#9ca3af"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+          </div>
+          <div class="vs-cell us last">
+            <svg class="vs-icon check" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+            Always Free
+          </div>
+        </div>
       </div>
 
       <!-- Real user quotes from Cat GK reviews that Pawzy solves -->

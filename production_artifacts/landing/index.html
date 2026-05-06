@@ -205,43 +205,60 @@
       background: var(--bg)
     }
 
-    /* Premium Ambient Aura */
+    /* Subtle ambient background layer */
     .bg-doodles {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
-      background: #fdf8f0;
+      overflow: hidden
     }
 
     .dblob {
       position: absolute;
-      width: 600px;
-      height: 600px;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.15;
       will-change: transform;
+      contain: layout style;
     }
 
+    /* TOP-LEFT - very subtle, translucent */
     .db-tl {
-      background: #f97316;
+      width: 560px;
+      height: 520px;
+      background: rgba(249,168,37,0.18);
       top: -200px;
       left: -200px;
-      animation: aura-move 20s linear infinite alternate;
+      border-radius: 44% 56% 68% 32% / 52% 40% 60% 48%;
+      animation: wobble-a 12s ease-in-out infinite;
+    }
+
+    .db-tl-s {
+      width: 120px;
+      height: 110px;
+      background: rgba(230,168,0,0.12);
+      top: 460px;
+      left: 30px;
+      border-radius: 55% 45% 40% 60% / 48% 58% 42% 52%;
+      animation: wobble-b 9s ease-in-out infinite;
+    }
+
+    .db-tr {
+      width: 240px;
+      height: 220px;
+      background: rgba(230,168,0,0.13);
+      top: -70px;
+      right: -70px;
+      border-radius: 58% 42% 36% 64% / 52% 64% 36% 48%;
+      animation: wobble-b 14s ease-in-out infinite;
     }
 
     .db-br {
-      background: #fbbf24;
-      bottom: -200px;
-      right: -200px;
-      animation: aura-move 25s linear infinite alternate-reverse;
-    }
-
-    @keyframes aura-move {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(50px, 30px) scale(1.1); }
+      width: 480px;
+      height: 440px;
+      background: rgba(251,191,36,0.15);
+      bottom: -140px;
+      right: -140px;
+      border-radius: 52% 48% 38% 62% / 44% 60% 40% 56%;
+      animation: wobble-a 13s ease-in-out infinite reverse;
     }
 
     .db-bl {
@@ -996,55 +1013,66 @@
     }
     .vs-table {
       display: grid;
-      grid-template-columns: 1fr 140px 140px;
-      border-radius: 20px;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+      border: 2px solid #f0e8de;
+      border-radius: 24px;
       overflow: hidden;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.07);
       background: #fff;
-      border: 1px solid #eee;
     }
     .vs-col-header {
-      padding: 24px 16px;
+      padding: 20px 24px;
+      text-align: center;
       font-family: 'Fredoka One', cursive;
       font-size: 17px;
-      text-align: center;
-      border-bottom: 2px solid #f8f8f8;
-      background: #fafafa;
+      border-bottom: 2px solid #f0e8de;
     }
-    .vs-col-header.feature-col { text-align: left; padding-left: 28px; color: var(--mu); font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .vs-col-header.them-col { color: #aaa; }
+    .vs-col-header.feature-col {
+      background: #fafaf8;
+      color: var(--mu);
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      text-align: left;
+      padding-left: 28px;
+    }
+    .vs-col-header.them-col {
+      background: #f9f9f9;
+      color: #888;
+    }
     .vs-col-header.us-col {
-      background: #fff;
-      color: var(--or);
-      border-bottom: 2px solid var(--or);
+      background: linear-gradient(135deg, #fff7ed, #fef3c7);
+      color: var(--or2);
     }
     .vs-row {
       display: contents;
     }
     .vs-cell {
-      padding: 20px 24px;
-      border-bottom: 1px solid #eee;
-      font-size: 15px;
-      font-weight: 600;
+      padding: 16px 24px;
+      border-bottom: 1px solid #f5f0eb;
+      font-size: 14px;
+      font-weight: 700;
       display: flex;
       align-items: center;
       gap: 8px;
     }
     .vs-cell.feature-name {
+      background: #fafaf8;
       color: var(--tx);
       font-weight: 700;
+      font-size: 13px;
       padding-left: 28px;
     }
     .vs-cell.them {
       background: #fff;
-      color: var(--mu);
+      color: #888;
       justify-content: center;
     }
     .vs-cell.us {
-      background: rgba(255, 251, 245, 0.5);
-      color: var(--tx);
+      background: #fffbf5;
+      color: var(--gr);
       justify-content: center;
-      font-weight: 800;
     }
     .vs-cell.last { border-bottom: none; }
     .vs-cross { color: #ef4444; font-size: 18px; }
@@ -1117,43 +1145,40 @@
     .fgrid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      gap: 16px;
       margin-top: 48px
     }
 
     .fc {
       background: #fff;
-      border: 1px solid #f1f1f1;
-      border-radius: 20px;
-      padding: 40px 32px;
-      transition: all .3s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-      text-align: left;
+      border: 2.5px solid #f0ece8;
+      border-radius: 22px;
+      padding: 26px 20px;
+      box-shadow: 0 4px 0 #f0ece8;
+      transition: transform .2s, border-color .2s
     }
 
     .fc:hover {
       transform: translateY(-4px);
-      border-color: var(--or);
+      border-color: var(--or)
     }
 
     .fc .ico {
-      font-size: 40px;
-      margin-bottom: 20px;
-      display: inline-block;
+      font-size: 32px;
+      margin-bottom: 12px
     }
 
     .fc h3 {
       font-family: 'Fredoka One', cursive;
-      font-size: 18px;
-      margin-bottom: 10px;
-      color: var(--tx);
+      font-size: 17px;
+      margin-bottom: 6px
     }
 
     .fc p {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--mu);
       line-height: 1.6;
-      font-weight: 500
+      font-weight: 600
     }
 
     /* CTA */
@@ -1450,52 +1475,22 @@
       .hiw-inner { padding: 0 20px }
       .testi-inner { padding: 0 20px }
 
-      .ccards { grid-template-columns: 1fr; gap: 16px }
-      .cc { padding: 24px }
-      .cc .em { width: 80px; height: 80px }
-      .cc h3 { font-size: 18px }
+      .ccards { grid-template-columns: 1fr 1fr; gap: 12px }
+      .cc { padding: 20px 12px 16px }
+      .cc .em { width: 72px; height: 72px }
+      .cc h3 { font-size: 16px }
 
-      .fgrid { grid-template-columns: 1fr; gap: 16px }
-      .fc { padding: 32px 24px }
+      .fgrid { grid-template-columns: 1fr 1fr; gap: 12px }
+      .fc { padding: 20px 16px }
 
       .testi-cards { grid-template-columns: 1fr }
 
-      .vs-inner { padding: 0 12px }
-      .vs-table { 
-        display: flex; 
-        flex-direction: column; 
-        border: none;
-        box-shadow: none;
-        background: transparent;
-      }
-      .vs-col-header { display: none; }
-      .vs-col-header.feature-col { display: block; border: none; background: transparent; padding: 0 0 12px 0; }
-      
-      .vs-cell { 
-        padding: 16px; 
-        border: 1px solid #eee; 
-        border-radius: 12px; 
-        margin-bottom: 8px;
-        background: #fff;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 12px;
-      }
-      .vs-cell.feature-name { 
-        padding-left: 16px; 
-        border-bottom: 1px solid #f8f8f8;
-        width: 100%;
-        background: #fafafa;
-      }
-      .vs-cell.them, .vs-cell.us { 
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        font-size: 13px;
-      }
-      .vs-cell.them::before { content: "Cat Gatekeeper:"; color: #999; font-weight: 500; }
-      .vs-cell.us::before { content: "Pawzy:"; color: var(--or); font-weight: 800; }
-      .vs-cell.us { background: #fffdf9; border-color: #fee2e2; }
+      .vs-inner { padding: 0 20px }
+      .vs-table { grid-template-columns: 1fr 90px 90px }
+      .vs-col-header { font-size: 13px; padding: 14px 8px }
+      .vs-cell { padding: 10px 6px; font-size: 11px }
+      .vs-cell.feature-name { padding-left: 8px; font-size: 11px }
+      .vs-quote-strip { grid-template-columns: 1fr }
 
       .cta { margin: 0 12px 60px; padding: 48px 20px; border-radius: 24px }
       .ctabtns { flex-direction: column; align-items: center }
@@ -1549,7 +1544,10 @@
 
   <div class="bg-doodles" aria-hidden="true">
     <div class="dblob db-tl"></div>
+    <div class="dblob db-tl-s"></div>
+    <div class="dblob db-tr"></div>
     <div class="dblob db-br"></div>
+    <div class="dblob db-bl"></div>
   </div>
 
   <section class="hero">
@@ -1774,25 +1772,45 @@
     </div>
   </div>
 
-  <!-- COMMUNITY SECTION -->
-  <div class="sec" id="community" style="background: rgba(255,255,255,0.4); backdrop-filter: blur(10px); border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
-    <div style="max-width: 1000px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 32px;">
-      <h2 class="stitle" style="font-size: 28px;">Loved by the Community</h2>
-      <div style="display: flex; gap: 48px; flex-wrap: wrap; justify-content: center;">
-        <div style="text-align: center;">
-          <div style="font-size: 40px; font-weight: 900; color: var(--or2);">1,000+</div>
-          <div style="font-size: 14px; font-weight: 700; color: var(--mu);">GitHub Stars</div>
+  <div class="testi">
+    <div class="testi-inner">
+      <h2>What users are saying</h2>
+      <p class="testi-sub">Early adopters on GitHub and Reddit.</p>
+      <div class="testi-cards">
+        <div class="tc">
+          <div class="tc-stars">★★★★★</div>
+          <p class="tc-text">"Pawzy helps me stay focused and build healthy work habits with a delightful animal companion. The lockscreen is a game-changer!"</p>
+          <div class="tc-author">
+            <div class="tc-avatar" style="background: #fde68a; color: #92400e; font-family: 'Fredoka One', cursive; font-size: 17px; font-weight: 900;">B</div>
+            <div>
+              <div class="tc-name">Bashirah A.</div>
+              <div class="tc-role">UX Designer</div>
+            </div>
+          </div>
         </div>
-        <div style="text-align: center;">
-          <div style="font-size: 40px; font-weight: 900; color: var(--gr);">5,000+</div>
-          <div style="font-size: 14px; font-weight: 700; color: var(--mu);">Active Users</div>
+        <div class="tc">
+          <div class="tc-stars">★★★★☆</div>
+          <p class="tc-text">"It combines productivity and a cute companion perfectly. The strict breaks are exactly what I needed."</p>
+          <div class="tc-author">
+            <div class="tc-avatar" style="background: #d1fae5; color: #065f46; font-family: 'Fredoka One', cursive; font-size: 17px; font-weight: 900;">A</div>
+            <div>
+              <div class="tc-name">Ash M.</div>
+              <div class="tc-role">Frontend Developer</div>
+            </div>
+          </div>
         </div>
-        <div style="text-align: center;">
-          <div style="font-size: 40px; font-weight: 900; color: var(--or);">#1</div>
-          <div style="font-size: 14px; font-weight: 700; color: var(--mu);">on Product Hunt</div>
+        <div class="tc">
+          <div class="tc-stars">★★★★★</div>
+          <p class="tc-text">"The inescapable breaks actually made me take real breaks instead of just swiping away a notification. My eyes thank me!"</p>
+          <div class="tc-author">
+            <div class="tc-avatar" style="background: #fed7aa; color: #c2410c; font-family: 'Fredoka One', cursive; font-size: 17px; font-weight: 900;">P</div>
+            <div>
+              <div class="tc-name">Priya K.</div>
+              <div class="tc-role">CS Student</div>
+            </div>
+          </div>
         </div>
       </div>
-      <p class="ssub" style="max-width: 600px; margin: 0 auto;">Join thousands of students and developers who use Pawzy to crush doomscrolling and reclaim their focus.</p>
     </div>
   </div>
 

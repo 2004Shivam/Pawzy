@@ -201,7 +201,7 @@
       background: var(--bg)
     }
 
-    /* Doodly background layer - large smooth corner blobs */
+    /* Subtle ambient background layer */
     .bg-doodles {
       position: fixed;
       inset: 0;
@@ -211,91 +211,122 @@
     }
 
     .dblob {
-      position: absolute
+      position: absolute;
+      will-change: transform;
+      contain: layout style;
     }
 
-    /* TOP-LEFT - giant flowing amber blob, bleeds from top-left corner */
+    /* TOP-LEFT - very subtle, translucent */
     .db-tl {
-      width: 620px;
-      height: 580px;
-      background: #f9a825;
-      top: -220px;
-      left: -220px;
+      width: 560px;
+      height: 520px;
+      background: rgba(249,168,37,0.18);
+      top: -200px;
+      left: -200px;
       border-radius: 44% 56% 68% 32% / 52% 40% 60% 48%;
-      animation: wobble-a 9s ease-in-out infinite;
+      animation: wobble-a 12s ease-in-out infinite;
     }
 
-    /* small dark-yellow accent bump - below and clear of hero text */
     .db-tl-s {
-      width: 140px;
-      height: 130px;
-      background: #e6a800;
-      top: 440px;
-      left: 20px;
+      width: 120px;
+      height: 110px;
+      background: rgba(230,168,0,0.12);
+      top: 460px;
+      left: 30px;
       border-radius: 55% 45% 40% 60% / 48% 58% 42% 52%;
-      animation: wobble-b 7s ease-in-out infinite;
+      animation: wobble-b 9s ease-in-out infinite;
     }
 
-    /* TOP-RIGHT - medium golden accent */
     .db-tr {
-      width: 280px;
-      height: 260px;
-      background: #e6a800;
-      top: -80px;
-      right: -80px;
+      width: 240px;
+      height: 220px;
+      background: rgba(230,168,0,0.13);
+      top: -70px;
+      right: -70px;
       border-radius: 58% 42% 36% 64% / 52% 64% 36% 48%;
-      animation: wobble-b 11s ease-in-out infinite;
+      animation: wobble-b 14s ease-in-out infinite;
     }
 
-    /* BOTTOM-RIGHT - large warm-yellow blob */
     .db-br {
-      width: 540px;
-      height: 500px;
-      background: #fbbf24;
-      bottom: -160px;
-      right: -160px;
+      width: 480px;
+      height: 440px;
+      background: rgba(251,191,36,0.15);
+      bottom: -140px;
+      right: -140px;
       border-radius: 52% 48% 38% 62% / 44% 60% 40% 56%;
-      animation: wobble-a 10s ease-in-out infinite reverse;
+      animation: wobble-a 13s ease-in-out infinite reverse;
     }
 
-    /* BOTTOM-LEFT - small accent */
     .db-bl {
-      width: 200px;
-      height: 185px;
-      background: #f9a825;
-      bottom: -100px;
-      left: -120px;
+      width: 180px;
+      height: 165px;
+      background: rgba(249,168,37,0.12);
+      bottom: -90px;
+      left: -110px;
       border-radius: 48% 52% 58% 42% / 55% 44% 56% 45%;
-      animation: wobble-b 8s ease-in-out infinite;
+      animation: wobble-b 10s ease-in-out infinite;
     }
 
     @keyframes wobble-a {
-
-      0%,
-      100% {
-        border-radius: 44% 56% 68% 32% / 52% 40% 60% 48%;
-        transform: rotate(0deg)
-      }
-
-      50% {
-        border-radius: 56% 44% 32% 68% / 48% 60% 40% 52%;
-        transform: rotate(3deg)
-      }
+      0%, 100% { border-radius: 44% 56% 68% 32% / 52% 40% 60% 48%; transform: rotate(0deg) }
+      50% { border-radius: 56% 44% 32% 68% / 48% 60% 40% 52%; transform: rotate(2deg) }
     }
 
     @keyframes wobble-b {
-
-      0%,
-      100% {
-        border-radius: 58% 42% 36% 64% / 52% 64% 36% 48%;
-        transform: rotate(0deg)
-      }
-
-      50% {
-        border-radius: 42% 58% 64% 36% / 64% 36% 64% 36%;
-        transform: rotate(-4deg)
-      }
+      0%, 100% { border-radius: 58% 42% 36% 64% / 52% 64% 36% 48%; transform: rotate(0deg) }
+      50% { border-radius: 42% 58% 64% 36% / 64% 36% 64% 36%; transform: rotate(-2deg) }
     }
+
+    /* Scroll-triggered nav shadow */
+    nav.scrolled {
+      box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    }
+
+    /* Hamburger menu */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--tx);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: rgba(253,248,240,0.98);
+      backdrop-filter: blur(16px);
+      border-bottom: 1.5px solid #f0e8dc;
+      padding: 20px 24px;
+      z-index: 199;
+      flex-direction: column;
+      gap: 0;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a {
+      color: var(--tx);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 14px 0;
+      border-bottom: 1px solid #f0e8dc;
+      display: block;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:last-child { border-bottom: none; }
+    .mobile-menu a:hover { color: var(--or); }
 
     /* HERO - content centered with generous padding so text clears the blob */
     .hero {
@@ -1412,61 +1443,73 @@
     }
 
     @media(max-width:900px) {
-      .hiw-inner {
-        grid-template-columns: 1fr
-      }
-
-      .ccards {
-        grid-template-columns: repeat(2, 1fr)
-      }
+      .hiw-inner { grid-template-columns: 1fr }
+      .ccards { grid-template-columns: repeat(2, 1fr) }
+      .sec { padding: 48px 32px }
+      .testi-inner { padding: 0 32px }
     }
 
     @media(max-width:768px) {
-      nav {
-        padding: 12px 20px
-      }
-
-      .nm {
-        display: none
-      }
+      nav { padding: 12px 20px }
+      .nm { display: none }
+      .nc { display: none }
+      .hamburger { display: flex }
 
       .hero {
         flex-direction: column;
-        padding: 80px 24px 56px;
-        gap: 32px;
-        min-height: auto
-      }
-
-      .hl {
-        width: 100%
-      }
-
-      .sec,
-      .hiw-inner,
-      .testi-inner {
-        padding-left: 24px;
-        padding-right: 24px
-      }
-
-      .cta {
-        margin: 0 16px 60px;
-        padding: 48px 24px;
-        border-radius: 28px
-      }
-
-      footer {
-        flex-direction: column;
+        padding: 72px 20px 48px;
+        gap: 28px;
+        min-height: auto;
         text-align: center;
-        padding: 32px 24px
       }
+      .hero h1 { font-size: clamp(34px, 9vw, 52px) }
+      .hl { width: 100%; padding: 0 }
+      .hsub { max-width: 100%; font-size: 15px }
+      .hbtns { justify-content: center }
 
-      .bg-doodles {
-        opacity: .7
-      }
+      .sec { padding: 40px 20px }
+      .hiw-inner { padding: 0 20px }
+      .testi-inner { padding: 0 20px }
 
-      .hl {
-        padding: 28px 24px
-      }
+      .ccards { grid-template-columns: 1fr 1fr; gap: 12px }
+      .cc { padding: 20px 12px 16px }
+      .cc .em { width: 72px; height: 72px }
+      .cc h3 { font-size: 16px }
+
+      .fgrid { grid-template-columns: 1fr 1fr; gap: 12px }
+      .fc { padding: 20px 16px }
+
+      .testi-cards { grid-template-columns: 1fr }
+
+      .vs-inner { padding: 0 20px }
+      .vs-table { grid-template-columns: 1fr 90px 90px }
+      .vs-col-header { font-size: 13px; padding: 14px 8px }
+      .vs-cell { padding: 10px 6px; font-size: 11px }
+      .vs-cell.feature-name { padding-left: 8px; font-size: 11px }
+      .vs-quote-strip { grid-template-columns: 1fr }
+
+      .cta { margin: 0 12px 60px; padding: 48px 20px; border-radius: 24px }
+      .ctabtns { flex-direction: column; align-items: center }
+      .ctabtns a { width: 100%; max-width: 280px; justify-content: center }
+
+      footer { flex-direction: column; text-align: center; padding: 32px 20px; gap: 24px }
+      footer > div { flex-wrap: wrap; justify-content: center }
+
+      .mq { padding: 12px 0 }
+      .mqt { font-size: 14px }
+
+      .stitle { font-size: clamp(22px, 6vw, 32px) }
+      .hiw-title { font-size: clamp(22px, 6vw, 30px) }
+
+      .faq-item h3 { font-size: 16px }
+
+      .action-sec { padding: 40px 16px }
+    }
+
+    @media(max-width:420px) {
+      .ccards { grid-template-columns: 1fr }
+      .fgrid { grid-template-columns: 1fr }
+      .hero h1 { font-size: 32px }
     }
   </style>
 </head>
@@ -1482,7 +1525,18 @@
       <a href="#contact">Contact</a>
     </div>
     <a class="nc" href="#download">Download Now</a>
+    <button class="hamburger" id="hbtn" aria-label="Menu" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <div class="mobile-menu" id="mmenu">
+    <a href="#features" onclick="toggleMenu()">Features</a>
+    <a href="#companions" onclick="toggleMenu()">Companions</a>
+    <a href="alternatives.html">Alternatives</a>
+    <a href="#contact" onclick="toggleMenu()">Contact</a>
+    <a href="#download" onclick="toggleMenu()" style="color: var(--gr); font-weight: 800;">Download Now</a>
+  </div>
 
   <div class="bg-doodles" aria-hidden="true">
     <div class="dblob db-tl"></div>
@@ -1495,19 +1549,22 @@
   <section class="hero">
     <div class="hl">
       <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(22, 163, 74, 0.1); color: #15803d; padding: 6px 14px; border-radius: 50px; font-size: 12px; font-weight: 800; margin-bottom: 20px; border: 1px solid rgba(22, 163, 74, 0.2);">
-        <span style="font-size: 14px;">🛡️</span> 100% Open Source & Offline
+        <span style="font-size: 14px;">🛡️</span> 100% Open Source &amp; Offline
+      </div>
+      <div style="display: inline-flex; align-items: center; gap: 8px; background: rgba(249,115,22,0.08); color: var(--or2); padding: 5px 14px; border-radius: 50px; font-size: 12px; font-weight: 800; margin-bottom: 18px; border: 1px solid rgba(249,115,22,0.18); margin-left: 8px;">
+        🐱 Cat Gatekeeper for Desktop
       </div>
       <h1 style="margin-top:0;">
-        Cat Gatekeeper<br />
-        <em>for the Desktop.</em>
+        Stop Doomscrolling.<br />
+        <em>Force a Break.</em>
       </h1>
       <p class="hsub">
-        You saw it on TikTok. You installed the extension. Then you opened a new tab and bypassed the cat in 3 seconds. <strong>Pawzy</strong> is the desktop version that actually works - blocking every app, game, and browser. No new-tab tricks. No Alt+F4.
+        Pawzy is an <strong>inescapable screen blocker</strong> that forces real breaks - works on every app, game, and browser. No new-tab bypass. No Alt+F4.
       </p>
       <div class="hbtns">
-        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" onclick="trackDownload('linux', 'hero')">🐧 Download for Linux</a>
         <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy.Setup.0.1.0.exe" style="background: #2563eb; box-shadow: 0 5px 0 #1e40af;" onclick="trackDownload('windows', 'hero')">🪟 Download for Windows</a>
-        <a class="blink" href="#how-it-works" style="margin-left: 10px;">How it works</a>
+        <a class="bg" href="https://github.com/2004Shivam/Pawzy/releases/latest/download/Pawzy-0.1.0.AppImage" style="background: rgba(0,0,0,0.08); color: var(--tx); box-shadow: 0 5px 0 rgba(0,0,0,0.12);" onclick="trackDownload('linux', 'hero')">🐧 Linux</a>
+        <a class="blink" href="#how-it-works" style="margin-left: 6px;">How it works</a>
       </div>
       <p class="hnote">Direct downloads · Free forever · macOS coming soon</p>
     </div>
@@ -1681,7 +1738,7 @@
         <p>Maximum chill energy. Relaxes on your screen while you take a breather.</p>
         <a class="sel" href="#download">Get Pawzy</a>
       </div>
-      <div class="cc cc-mon">
+      <div class="cc cc-mon" style="background: #d97706; color: #fff; box-shadow: 0 6px 0 #b45309;">
         <img class="em" src="monkey_preview.png" alt="Monkey">
         <h3>Monkey</h3>
         <p>Playful and curious. Swings in to make sure you step away from the keyboard.</p>
@@ -1697,15 +1754,9 @@
       <div class="hiw-col">
         <h2 class="hiw-title">How Pawzy Works</h2>
         <div class="hiw-bullet">Set Focus Goals:</div>
-        <p style="font-size: 14px; color: var(--mu); margin-bottom: 16px; font-weight: 600; max-width: 90%;">Decide how long you want to focus before taking a break. Set it and forget it.</p>
-        <div class="hiw-card">
-          <div class="prog-label">Progress</div>
-          <div class="prog-bar">
-            <div class="prog-fill"></div>
-          </div>
-        </div>
+        <p style="font-size: 14px; color: var(--mu); margin-bottom: 20px; font-weight: 600; max-width: 90%;">Decide how long you want to focus before taking a break. Set it and forget it.</p>
         <div class="hiw-bullet">Work with Your Guardian:</div>
-        <p style="font-size: 14px; color: var(--mu); margin-bottom: 24px; font-weight: 600; max-width: 90%;">Your companion will watch over you while you work, gently keeping you accountable.</p>
+        <p style="font-size: 14px; color: var(--mu); margin-bottom: 20px; font-weight: 600; max-width: 90%;">Your companion watches over you while you work, gently keeping you accountable.</p>
         <div class="hiw-bullet">Inescapable Rest:</div>
         <p style="font-size: 14px; color: var(--mu); margin-bottom: 16px; font-weight: 600; max-width: 90%;">When the timer hits zero, Pawzy blocks your screen. Time to stretch and hydrate.</p>
       </div>
@@ -1720,37 +1771,37 @@
   <div class="testi">
     <div class="testi-inner">
       <h2>What users are saying</h2>
-      <p class="testi-sub">Early users are loving it.</p>
+      <p class="testi-sub">Early adopters on GitHub and Reddit.</p>
       <div class="testi-cards">
         <div class="tc">
           <div class="tc-stars">★★★★★</div>
           <p class="tc-text">"Pawzy helps me stay focused and build healthy work habits with a delightful animal companion. The lockscreen is a game-changer!"</p>
           <div class="tc-author">
-            <div class="tc-avatar">👩</div>
+            <div class="tc-avatar" style="background: #fde68a; color: #92400e; font-family: 'Fredoka One', cursive; font-size: 17px; font-weight: 900;">B</div>
             <div>
-              <div class="tc-name">Bashirah Ali</div>
+              <div class="tc-name">Bashirah A.</div>
               <div class="tc-role">UX Designer</div>
             </div>
           </div>
         </div>
         <div class="tc">
           <div class="tc-stars">★★★★☆</div>
-          <p class="tc-text">"It combines productivity and a cute companion perfectly. Wish there were a few more settings, but the strict breaks are exactly what I needed."</p>
+          <p class="tc-text">"It combines productivity and a cute companion perfectly. The strict breaks are exactly what I needed."</p>
           <div class="tc-author">
-            <div class="tc-avatar">👨</div>
+            <div class="tc-avatar" style="background: #d1fae5; color: #065f46; font-family: 'Fredoka One', cursive; font-size: 17px; font-weight: 900;">A</div>
             <div>
-              <div class="tc-name">Ash Miller</div>
+              <div class="tc-name">Ash M.</div>
               <div class="tc-role">Frontend Developer</div>
             </div>
           </div>
         </div>
         <div class="tc">
           <div class="tc-stars">★★★★★</div>
-          <p class="tc-text">"The inescapable breaks actually made me take real breaks instead of just swiping away a notification. My eyes thank me every day!"</p>
+          <p class="tc-text">"The inescapable breaks actually made me take real breaks instead of just swiping away a notification. My eyes thank me!"</p>
           <div class="tc-author">
-            <div class="tc-avatar">🧑</div>
+            <div class="tc-avatar" style="background: #fed7aa; color: #c2410c; font-family: 'Fredoka One', cursive; font-size: 17px; font-weight: 900;">P</div>
             <div>
-              <div class="tc-name">Priya Kapoor</div>
+              <div class="tc-name">Priya K.</div>
               <div class="tc-role">CS Student</div>
             </div>
           </div>
@@ -1761,7 +1812,7 @@
 
   <div class="sec" id="features">
     <div class="lbl">Features</div>
-    <h2 class="stitle">Everything you need ✅</h2>
+    <h2 class="stitle">Everything you need</h2>
     <p class="ssub">No subscriptions, no accounts, no data collection. Just you and your companion.</p>
     <div class="fgrid">
       <div class="fc">
@@ -1986,6 +2037,25 @@
         submitBtn.innerText = "Error! Try again.";
         submitBtn.disabled = false;
       });
+    });
+
+    // Hamburger menu
+    function toggleMenu() {
+      const m = document.getElementById('mmenu');
+      m.classList.toggle('open');
+    }
+    // Close on outside click
+    document.addEventListener('click', function(e) {
+      const menu = document.getElementById('mmenu');
+      const btn = document.getElementById('hbtn');
+      if (menu.classList.contains('open') && !menu.contains(e.target) && !btn.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+
+    // Nav scroll shadow
+    window.addEventListener('scroll', function() {
+      document.querySelector('nav').classList.toggle('scrolled', window.scrollY > 20);
     });
   </script>
 

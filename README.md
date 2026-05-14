@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🐾 Pawzy
+# 🐱 Cat Gatekeeper for Desktop — Pawzy
 
-### Your screen break companion that actually stops you.
+### The desktop version of Cat Gatekeeper that actually works.
 
 [![Platform](https://img.shields.io/badge/platform-Linux%20%7C%20Windows-blueviolet?style=flat-square)](https://github.com/2004Shivam/Pawzy/releases)
 [![Electron](https://img.shields.io/badge/Electron-33-47848F?style=flat-square&logo=electron)](https://electronjs.org)
@@ -11,15 +11,13 @@
 
 <br/>
 
-> Pawzy locks your screen with an animated companion at regular intervals,  
-> forces you to breathe, stretch, and look away — then lets you back in.  
-> No popups. No snooze. Just a cat (or capybara, or monkey) sitting on your work.
+> **Pawzy** is a free, open-source desktop app that hijacks your **entire OS screen** during scheduled breaks.
+> Unlike the Cat Gatekeeper Chrome extension (which only blocks 6 websites), Pawzy works on every app,
+> game, browser, and Discord — at the OS level. No new-tab bypass. No Alt+F4. Inescapable.
 
 <br/>
 
-![Pawzy Break Screen](production_artifacts/landing/preview.png)
-
-**[🌐 Visit Website](https://pawzy-silk.vercel.app) · [📥 Download Now](https://github.com/2004Shivam/Pawzy/releases/latest)**
+**[🌐 cat-gatekeeper-desktop.vercel.app](https://cat-gatekeeper-desktop.vercel.app) · [📥 Download Now](https://github.com/2004Shivam/Pawzy/releases/latest)**
 
 </div>
 
@@ -156,7 +154,7 @@ Pawzy/
 │   ├── pawzy-core/          # Python backend (rule engine, tray, WS server)
 │   └── pawzy-ui/            # Electron + React frontend (lockscreen, settings)
 ├── production_artifacts/
-│   └── landing/             # Static landing page → pawzy-silk.vercel.app
+│   └── landing/             # Static landing page → cat-gatekeeper-desktop.vercel.app
 └── run_dev.sh               # One-command dev launcher
 ```
 

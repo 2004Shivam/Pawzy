@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pawzy-silk.vercel.app/sitemap.xml
+Sitemap: https://cat-gatekeeper-desktop.vercel.app/sitemap.xml
